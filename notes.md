@@ -9,262 +9,544 @@ header-includes:
 output: pdf_document
 ---
 
-<!-- # Pigeon-Hole Principle -->
+# Basic Methods
 
-<!-- ## Introduction -->
+## Addition and Subtraction
 
-<!-- **Theorem 1.1 (Pigeon-Hole Principle)**: Let $n, k \in Z^+$ with $n > k$. Suppose we have $n$ balls to place into $k$ boxes. Then at least one box will have $\geq 2$ balls -->
+**Theorem 1.1 - Addition Principle**: If $A, B$ are 2 disjoint finite sets, then $|A \cup B| = |A| + |B|$
 
-<!-- *Proof by Contradiction*: Assume no boxes has $\geq 2$ balls. Then each box either has $0$ or $1$ balls in it. Let $m$ be the number of boxes with $0$ balls and $k-m$ be the number of boxes with $1$ ball. -->
+*Proof*: Both sounds count the number of elements in $A \cup B$
 
-<!-- This creates a contradiction since we would have $k -m < n$ balls in boxes -->
+LHS directly counts the number of elements whereas RHS counts the number of elements in $A$ and the number of elemnets in $B$
 
-<!-- **Example**: There is an element in the sequence $7, 77, 777, \ldots$ that is divisible by $2003$ -->
+Since $A, B$ are disjoint, LHS equals RHS
 
-<!-- **Solution**: We show that one of the first $2003$ elements is divisible by $2003$. --> 
+&nbsp;
 
-<!-- Assume by contradiction this is false and take the first $2003$ elements of this sequence and divide by $2003$ -->
+**Theorem 1.2 - Generalized Addition Principle**: Let $A_1, \ldots, A_n$ be disjoint, finite sets. Then $|A_1 \cup \cdots \cup A_n| = |A_1| + \cdots + |A_n|$
 
-<!-- Since none of them are divisible by $2003$, they will all have a remainder $\in \{1, \ldots, 2002\}$ -->
+*Proof*: similar to the proof of Theorem 1.1, both sides count the number of elements in $A_1 \cup \cdots \cup A_n$.
 
-<!-- Since we are testing $2003$ numbers and there are only $2002$ possible remainders, $2$ elements, $a_i$ and $a_j$, must have the same remainder by PHP -->
+Since these sets are djsoint, LHS equals RHS
 
-<!-- Thus $2003 \mid a_j - a_i$. In particular, $a_j - a_i$ has $j-1$ digits equal to $7$ and $i$ digits equal to $0$ -->
+&nbsp;
 
-<!-- Thus $a_j - a_i = a_{j-i} \cdot 10^{i} \implies 2003 \mid a_{j-1}$ since $2003 \nmid 10^{i}$ -->
+**Theorem 1.4 - Subtraction Principle**: Let $A$ be a finite set and $B \subseteq A$. Then $|A - B| = |A| - |B|$
 
-<!-- **Example**: Consider a chess tournament with $n$ players where any $2$ players must play a game against each other. Then at any point $2$ players have finished the same number of games -->
+*Proof*: First we show that $|A - B| + |B| = |A|$. Note that $A-B, B$ are disjoint and their union is $A$
 
-<!-- **Solution**: Consider the PHP scenario: Let balls be the number of players and boxes be the number of games finished -->
+Both sides count the number of elements in $A$
 
-<!-- Note that if a player has $n-1$ games completed, then no player can have $0$ games played -->
+- LHS first counts the elements not in B then those in B
+- RHS counts the elements directly
 
-<!-- Thus only $n-1$ boxes are used at any point, and by PHP, $2$ players have finished the same number of games at any time -->
+Thus $|A - B| + |B| = |A| \implies |A-B| = |A| - |B|$
 
-# Introduction
+- **Note**: We must have $B \subseteq A$ otherwise their union has elements NOT in $A$
 
-**Combinatorics** is concerned with the existence, enumeration, analysis, and optimization of discrete structures (finite sets)
+## Multiplication
 
-Combinatorics problems can be generalized into 2 types of problems
+**Theorem 1.6 - Product Principle**: Let $X, Y$ be finite sets. The number of pairs $(x, y)$ satisfying $x \in X$ and $y \in Y$ is $|X| \times |Y|$
 
-- *Existence of arrangement*: can we arrange objects of a set such that certain conditions are met?
-- *Enumeration/classification of arrangements*: if a special arrangement is possible, there may be several ways of achieving it. Classify them into types
+*Proof*: There are $|X|$ choices for $x$, each of which has $|Y|$ choices for $y$
 
-# Permutations and Combinations
+&nbsp;
 
-## Basic Counting Principles
+**Theorem 1.8 - Generalized Product Principle**: Let $X_1 \ldots, X_k$ be finite sets. The number of k-tuples $(x_1, \ldots, x_k)$ satisfying $x_i \in X_i$ is $|X_1| \times \cdots \times |X_k|$
 
-**Partition**: Let $S$ be a set. A **partition** of $S$ is a collection of subsets $S_1, \ldots, S_m$ of $S$ such that each element of $S$ is in exactly one subset
-$$S = S_1 \cup S_2 \cup \cdots \cup S_m$$
+*Proof by Induction*: Base case clearly holds for $k = 1$. Base case for $k= 2$ by Theorem 1.6
 
-Where $S_1, \ldots, S_m$ are pairwise disjoint
+IH: Assume the statement holds for $k-1$
 
-**Addition Principle**: Suppose $S$ is partitioned into pairwise disjoint parts $S_1, \ldots, S_m$. Then the number of elements in $S$ is determined by the number of elements in each part
-$$|S| = |S_1| + |S_2| + \cdots + |S_m|$$
+IS: Prove the statement for $k$
 
-**Multiplication Principle**: Let $S$ be a set of ordered pairs $(a, b)$ where $a$ comes from a set of size $p$ and for each $a$, there are $q$ choices for $b$. Then
-$$|S| = p \times q$$
+$(x_1, \ldots, x_k)$ can be decomposed into an ordered pair $((x_1, \ldots x_{k-1}), x_k)$ which has $x_i \in X_i$
 
-This results from the additional principle. Let $a_1, \ldots, a_p$ be different choices for $a$ and are each in a partition $S_i$ of $S$. Then
-$$|S_i| = q \implies |S| = |S_1| + \cdots + |S_p| = p \times q$$
-This can be generalized for ordered pairs with $\geq 2$ elements
+The number of elements satisfying the $(k-1)$ tuple, by IH is $|X_1| \times \cdots \times |X_{k-1}|$.
 
-- **Example**: Determine the number of positive factors of $3^4 * 5^2 * 11^7 * 13^8$
+The number of elements satisfying $x_k \in X_k$ is $|X_k|$.
 
-    **Solution**: number of factors is $5 * 3 * 8 * 9 = 1080$
+Thus by the product principle, the number of k-tuples satisfying the condition is $(|X_1| \times \cdots \times |X_{k-1}|) \times |X_k|$
 
-**Subtraction Principle**: Let $A \subset U$ and $\bar{A} = U \setminus A$ be the complement of $A$ in $U$. Then
-$$|A| = |U| - |\bar{A}|$$
+&nbsp;
 
-- **Example**: Suppose passwords compose of $6$ symbols from $\{0, \ldots, 9, a, \ldots, z\}$. How many passwords have repeated symbols?
+**Example**: How many 4-digit positive integers both start and end on an even number
 
-    **Solution**: $|U| = 36^6$ and $|\bar{A}| = 36 * 35 * 34 * 33 * 32 * 31 \implies |A| = |U| - |\bar{A}| = 774, 372, 096$
+- first digit $\in \{2, 4, 6, 8\}$
+- second digit $\in \{0, \ldots, 9\}$
+- third digit $\in \{0, \ldots, 9\}$
+- foruth digit $\in \{0, 2, 4, 6, 8\}$
 
-**Division Principle**: Let $S$ be a finite set partitioned into $k$ parts such that each part has the same number of elements. Then
-$$k = \frac{A}{\# \text{ of elements per part}}$$
+Thus answer is $4 * 10 * 10 * 5 = 2000$
 
-- **Example**: Suppose we have $740$ pigeons and pigeonholes of size $5$. How many pigeonholes do we have?
+&nbsp;
 
-    **Solution**: $\frac{740}{5} = 148$ pigeonholes
+**Corollary 1.11**: The number of k-letter strings over an n-element alphabet $A$ is $n^k$
 
-Counting problems can be classified into 2 types of problems
+*Proof*: Apply Theorem 1.8 with $X_1 = X_2 = \cdots = A$
 
-- **Permutation**: count the number of ordered arrangements
-  - Without repeating any object
-  - With repetition permitted
-- **Combination**: count the number of unordered arrangements
-  - Without repeating any object
-  - With repetition permitted
+&nbsp;
 
-**Example**: Find the number of odd numbers between $1000, 9999$ that have distinct digits
+**Note**: Notationwise, $[n] = \{1, 2, \ldots, n\}$
 
-**Solution**: unit digit restricted to $\{1, 3, 5, 7, 9\}$, tens and hundreds place restricted to $\{0, \ldots, 9\}$, thousands place restricted to $\{1, \ldots, 9\}$
+**Theorem 1.15**: For an $n \in Z^{+}$, the number of ways to arrange all elements of $[n]$ is $n!$
 
-We quantify units, thousands, hundreds, tens: $5 * 8 * 8 * 7 = 2240$
+*Proof*: There are $n$ ways to select the first element, $n-1$ ways to select the second element, $\ldots$
 
-- **NOTE**: we start with the most restrictive choice first (unit digit)
+Applying the Product Principle, we get the desired result $n!$
 
-**Example**: Number of integers between $0$ and $10, 000$ with one digit equal to $5$
+&nbsp;
 
-**Solution**: First partition $S$ into
+**Definition - Permutation**: List of each elements in $S$ that appear exactly once
 
-- $S_1$: set of one digits numbers. $|S_1| = 5$
-- $S_2$: set of two digit numbers. $|S_2| = 8 + 9 = 17$
-- $S_3$: set of three digit numbers. $|S_3| = 8*9 + 8*9 + 9*9 = 225$
-- $S_4$: set of four digit numbers. $|S_4| = 8 *9 *9 + 8*9*9 + 8*9*9 + 9*9*9 = 2673$
+&nbsp;
 
-Thus $|S| = 2916$
+**Theorem 1.17**: Let $n, k \in Z^{+}$ such that $n \geq k$. Then the number of ways to make a k-element list from $[n]$ without repeating any elements is
+$$(n)_k = (n)(n-1) \cdots (n-k+1)$$
+*Proof*: $n$ choices for the first element, $\ldots$, $n-k +1$ choices for the kth element
 
-## Permutation of Sets
+&nbsp;
 
-Let $r$ be a positive integer. A **r-permutation** of a set $S$ with $n$ elements is an ordered arrangements of $r$ of the $n$ elements
+**Example**: If we go north, we can visit 4 out of 10 schools. If we go south, we can visit 5 out of 8 schools. Assuming we can only go one way, how many different itineraries can we set up?
 
-- If $r > n$ then $P(n, r) = 0$
-- $P(n, 1) = n$
-- $P(n, 0) = 1$
+$(10)_4 + (8)_5 = 5040 + 6720 = 11760$
 
-**Theorem 2.2.1**: $P(n, r) = n * (n-1) * \cdots * (n - r + 1)$
+## Division
 
-**Proof**: We can choose the first item $n$ ways, the second item $n-1$ ways, $\ldots$, the $rth$ item $n - (r - 1)$ ways. 
+**Definition - d-to-One Function**: Let $S, T$ be a finite sets and $d$ be a fixed integer. Then a function $f: T \rightarrow S$ is a d-to-one function if for each $s \in S$, there are $d$ elements in $T$ such that $f(t) = s$
 
-By multiplication principle we get $P(n, r) = n * (n-1) * \cdots * (n- r + 1)$
+&nbsp;
 
-**Example**: the number of ways to order $26$ letters such that no $2$ vowels occur consecutively
+**Theorem 1.21 - Division Principle**: Let $S, T$ be finite sets such that $f: T \rightarrow S$ is d-to-one. Then $|S| = \frac{|T|}{d}$
 
-**Solution**: There are $21$ consonants $\implies 21!$ permutations of consonants
+*Proof*: results from the definition of d-to-one functions
 
-Vowels must be in $5$ of the spaces before, between, or after consonants $P(22, 5) = \frac{22!}{17!}$
+&nbsp;
 
-Thus number of arrangements is $21! * \frac{22!}{17!}$
+**Example**: Number of different seatings for $n$ people at a circular table is $(n-1)!$
 
-**Example**: How many $7$ digit numbers are there with distinct digits and don't have $5, 6$ appearing consecutively in either order
+If the table were linear, then there are $n!$ arrangements.
 
-**Solution 1**: We count various partitions and sum their orders together
+Let $T$ be the number of arrangements on a linear table and $S$ be the arrangements around a circular table.
 
-- $S_1$: neither $5, 6$ appear $\implies P(7, 7) = 7! = 5040$
-- $S_2$: $5$ appears but not $6$ $\implies 7 * P(7, 6) = 7 * 7! = 35280$
-- $S_3$: $5$ appears but not $5$ $\implies 7 * P(7, 6) = 7 * 7! = 35280$
-- $S_4$: Both $5, 6$ appear
+Each $s \in S$ corresponds to $n$ different $t \in T$
 
-  - First digit is $5$ and second digit is not $6 \implies 5 * P(7, 5) = 126000$
-  - Last digit is $5$ and second to last digit is not $6 \implies 5 * P(7, 5) = 126000$
-  - $5$ occupies one of the interior $5$ places so $6$ can appear only in $4$ places $\implies 5 *4 * P(7, 5) = 50400$
+Clearly $f: T \rightarrow S$ is n-to-one so by Division Principle $|S| = \frac{|T|}{n} = (n-1)!$
 
-Thus answer is $151200$
+&nbsp;
 
-**Solution 2**: Consider the set of all digits $P(9, 7) = 181400$
+**Theorem 1.23**: Let $n \in Z^{+}$ and $k \leq n$ be non-negative. Then the number of k-element subsets of $[n]$ is
+$${n \choose k} = \frac{n(n-1) \cdots (n- k + 1)}{k!} = \frac{n!}{k!(n-k)!}$$
 
-Let $\bar{S}$ be the complement of the set we need.
+*Proof*: The number of ways to make a k-element list from $[n]$ is $(n)_k$
 
-- There are $6$ ways to position $5$ followed by $6$
-- There are $6$ ways to position $6$ followed by $5$
+Since each k-element subset has $k!$ ways of being listed, each k-subset will be counted $k!$ times in $(n)_k$
 
-Thus $|\bar{S}| = 2 * 6 * P(7, 5) = 30240$
+Thus by Division Principle, the number of k-subsets is $\frac{(n)_k}{k!}$
 
-Thus $|S| = |U| - |\bar{S}| = 181400 - 30240 = 151200$
+&nbsp;
 
+**Definition - Binomial Coefficients**: Values of ${n \choose k}$
 
-**Theorem 2.2.2**: Number of circular r-permuations is
-$$\frac{P(n, r)}{r} = \frac{n!}{r(n-r)!}$$
+&nbsp;
 
-**Proof**: Set of linear r-permutations can be partitioned into parts such that 2 linear r-permutations correspond to the same r-permutation if and only if they are in the same part (these are of size $r$)
+**Theorem 1.24 Binomial Theorem**: Let $n \in Z^{+}$. Then $(x+y)^n = \sum_{n=0}^n {n \choose k} x^k y^{n-k}$
 
-This means that the number of circular permuations is the number of parts
+*Proof*: LHS is the product of $(x+y)$ $n$ times
 
-Thus by the division principle, the number circular permutations is $\frac{P(n, r)}{r}$
+RHS takes a term ($x$ or $y$) from each of the $n$ factors and multiplies the selected terms ($2^n$ possibilities) and add all of the $2^n$ sums
 
-**Note**: one way to view circular permutations of $A, B, C, D, E, F$ is to fix $A$ and identify the linear permutations of $B, c, d, e, f$
+The sum $x^k y^{n-k}$ appears ${n \choose k}$ times since we chose $x$ from $k$ factors (${n \choose k}$ ways of doing this) and $y$ receives the remaining factors
 
-- In this case, there are $5!$ circular permutations of $A, B, C, D, E, F$
+&nbsp;
 
-**Example**: Consider seating 10 people around a round table but 2 people don't want to sit next to each other. How many seating arrangements are there?
+**Example**: Given $110$ bus lines and a machine that punches either 2 or 3 holes on a ticket within some of the 9 numbered squares, can a city set up machines such that each line will punch the tickets differently?
 
-**Solution 1**: Let $P_1, \ldots, P_{10}$ be the people and suppose $P_1, P_2$ don't want to sit next to each other
+${9 \choose 2} + {9 \choose 3} = 36 + 84 = 120 > 110$. Thus the city can punch the ticket differently for each bus line
 
-Consider seating arrangements for $9$ people: $X, P_3, \ldots, P_{10}$. There are $8!$ arrangements for this
+## Applications of Basic Counting Principles
 
-If we replace $X$ with $P_1, P_2$ or $P_2, P_1$ we get the complement of the set we want
+### Bijection
 
-Thus the number of seating arrangements is $9! - 2*8! = 282240$
+**Definition - Bijection**: A map $f: S \rightarrow T$ is called a **bijection** if it is one-to-one and onto
 
-**Solution 2**: Let $P_1$ be the head of the table. $P_2$ cannot be next to $P_1$
+&nbsp;
 
-Thus there are $8$ choices for $P_1$'s left and $7$ choices for $P_1$'s right
+**Corollary 1.28**: Let $S, T$ be finite sets. If a bijection $f: S \rightarrow T$ exists, then $|S| = |T|$
 
-Finally we permute the remaining $7$ seats
+*Proof*: Follows from the Division Principle with $d = 1$
 
-Thus answer is $8 * 7 * 7! = 282240$
+&nbsp;
 
-## Combinations of Sets
+**Example**: Consider the possible lattice paths from $(0, 0)$ to $(6, 4)$ moving only eastward and northward.
 
-**Combination**: unordered selection of elements in $S$
+- Number of ways to reach $X = (6, 4)$ is ${10 \choose 6}$
+- Number of ways to stop at $Y = (4, 2)$ and then $X = (6, 4)$ is ${6 \choose 4} {4 \choose 2}$
+- Number of ways stop at $U = (3, 2)$ and $X = (6, 4)$ or stop at $V = (2, 3)$ and $X = (6, 4)$ is ${5 \choose 3} {5 \choose 3} + {5 \choose 2} {5\choose 4}$
 
-- If $r > n$, ${n \choose r} = 0$
-- If $r > 0$, ${0 \choose r} = 0$
-- ${n \choose 0} = {0 \choose 0} = 1$
-- ${n \choose 1} = n$
-- ${n \choose n} = 1$
+The calculation above works because there is a bijection between the set $S$ of lattice paths and the set $T$ of six-element subsets of $[10]$
 
-**Theorem 2.3.1**: For $0 \leq r \leq$
-$$P(n, r) = r! {n \choose r}, \quad \quad {n \choose r} = \frac{n!}{r!(n-r)!}$$
+&nbsp;
 
-**Proof**: Each r-permutation of $S$ arises exactly one way as a result of
+**Proposition 1.29**: For $n \in Z^+$, the number of divisors of $n$ greater than $\sqrt{n}$ is equal to the number divisors less than $\sqrt{n}$
 
-- Choose $r$ elements of $S$
-- Ordering these elements
+*Proof*: Let $S$ be the set of divisors of $n$ larger than $\sqrt{n}$ and $T$ be the set of divisors less than $\sqrt{n}$
 
-First step is done by ${n \choose r}$
+Define $f: S \rightarrow T$ by $f(s) = n/s$
 
-Second step is done by $P(r, r) = r!$
+- For all $s \in S$, $s \cdot f(s) = n \implies f(s) \mid n$ and $f(s) < \sqrt{n} \implies f(s) \in T$. Thus $f$ is a function from $S$ into $T$
+- Show that $f$ is one-to-one
 
-Thus $P(n, r) = r! {n \choose r} \implies {n \choose r} = \frac{n!}{r!(n-r)!}$
+  - For all $t \in T$, there is at least one $s \in S$ such that $f(s) = t$, namely $s = n/t$
+  - On the other hand, if $f(s) = t$, there is only one good $s$ since $s \cdot f(s) = n \implies s t = n \implies s = n/t$
 
-**Example**: $15$ people are enrolled in math class but only $12$ students attend class per day. If there are $25$ seat, how many ways might the instructor see the students?
+Thus we have shown $f$ is a bijection and thus $|S| = |T|$
 
-**Solution**: ${15 \choose 12} = \frac{15!}{12!3!} = 455$ combinations of $12$ students attending class
+&nbsp;
 
-For $12$ students and $25$ seats, there are $P(25, 12)$ ways of seating themselves
+**Upshot**: Steps to show a bijection exists
 
-Thus there are ${15 \choose 12} P(25, 12)$ ways the instructor might see $12$ students
+1. Define a function $f$ from $S$ into $T$
+2. Show that for all $s \in S$, $f(s) \in T$ holds
+3. Show that for all $t \in T$, there is only one $s \in S$ that satisfies $f(s) = t$
+   - Show there at least one $s$ satisfying $f(s) = t$
+   - Show that there is at most one $s$ satisfying $f(s) = t$
 
-**Example**: How many $8$ letter words are there if each word has $3, 4,$ or $5$ vowels
+&nbsp;
 
-**Solution**: 
+**Lemma 1.32**: The number of lattice paths from $(0, 0)$ to $(n, n)$ that never go above the line $x = y$ is equal to the number of ways to fill a $2 \times n$ (Standard Young Tableaux) grid such that each row and column is increasing (right, down)
 
-- $|S_3| = {8 \choose 3} *5^3 * 21^5$
-- $|S_4| = {8 \choose 4} *5^4 * 21^4$
-- $|S_5| = {8 \choose 5} *5^5 * 21^3$
+*Proof*: Let $S$ be the set of all lattice paths from $(0, 0)$ to $(n, n)$ that do not go above the line $y = x$ and $T$ be the set of all Standard Young Tableaux
 
-Thus $|S| = |S_3| + |S_4| + |S_5|$
 
-**Corollary 2.3.2**: For $0 \leq r \leq n$
-$${n \choose r} = {n \choose n - r}$$
 
-**Theorem 2.3.3 (Pascal's Formula)**: for integers $n, k$ such that $1 \leq k \leq n - 1$
-$${n \choose k} = {n \choose k} + {n - 1  \choose k - 1}$$
+- Take $s \in S$. Let $e_1, e_2, \ldots, e_n$ denote the positions of the $n$ east steps of $s$ and $n_1, n_2, \ldots, n_n$ denote the $n$ north steps of $s$
 
-**Proof**: Let $|S| = n$ and take $x \in S$
+    The ith east/north step always occur before the (i+1)th east/north step. Thus rows are horizontally increasing.
 
-Consider $S \setminus \{x\}$ and partition set $X$ of k-subsets of $S$ where into
+    We also have $n_j < e_j$ since otherwise we would be above the main diagonal. Thus columns are also increasing.
 
-- $A$: k-subsets without $x$. This has size ${n-1 \choose k}$
-- $B$: k-subsets with $x$. This has size ${n - 1 \choose k - 1}$
+    Thus we have shown that for all $s \in S, f(s) \in T$ holds
+- Take $t \in T$ If there is an $s \in S$ such that $f(s) = t$, then $s$ has to be the lattice path whose east steps correspond to the first row of $t$ and whose north steps correspond to the second row of $t$
 
-Thus $|X| = {n \choose k} = |A| + |B| = {n \choose k} + {n - 1  \choose k - 1}$
+    On the other hand, this lattice path $s$ never goes above the main diagonal by the increasing property of the columns
 
-**Theorem 2.3.4**: For $n \geq 0$
-$${n \choose 0} + {n \choose 1} + \cdots + {n \choose n} = 2^n$$
+Thus we have shown that $f$ is a bijection
 
-**Proof**: We use double counting. First, ${n \choose 0} + {n \choose 1} + \cdots + {n \choose n}$ is the number of subsets of $S$
+### Binomial Coefficients
 
-Secondly, for a subset of $S$, we need to decide if $x_1, x_2, \ldots, x_n$ goes into the subset or not. Thus there are $2^n$ to form a subset of $S$
+**Proposition 1.35**: For $k \leq n, {n \choose k} = {n \choose n -k }$
 
-Thus the Theorem holds since we counted values on both sides of the equation
+*Proof 1*: ${n \choose k}$ can be looked as all possible lattice paths from $(0,0)$ to $P = (k, n-k)$
 
-**Example**: Show that the number of 2-subsets of $\{1, 2, \ldots, n\}$ is ${n \choose 2}$
+Similarly, ${n \choose n-k}$ can be looked as all possible lattice paths from $(0,0)$ to $Q = (n-k, k)$
 
-**Solution**: Partition the 2-subsets according to the largest largest integer they contain
+We can define a bijection using a reflection over $y = x$
 
-The number of 2-subsets in which $i$ is the largest integer is $i-1$
+This will map $OP$ paths to $OQ$ paths in a bijective fashion
 
-Thus we must have $0 + 1 + \cdots + (n-1) = {n \choose 2} = \frac{n(n-1)}{2}$
+*Proof 2*: LHS counts the number of $k$-element subsets of $[n]$, and RHS counts the number of $n-k$-element subsets of $[n]$
+
+Let $S$ be the set of $k$-subsets and $T$ be the set of $n-k$-subsets
+
+We can define the mapping $f(A) = A^c$ which takes the complement of $A \in S$
+
+For all $A \in S$, clearly $f(A)$ is a $n-k$ element subset. Thus $f(A) \in T$
+
+Furthermore, if $B \in T$, then there is exactly one $A \in S$ satisfying $f(A) = B$, namely $A = B^c$
+
+Thus $f$ is a bijection from $S$ to $T$. Thus $|S| = |T|$
+
+&nbsp;
+
+**Note**: $\displaystyle 2^n = \sum_{k=0}^n {n \choose k}$
+
+**Note**: ${n \choose k}$ form the nth row of Pascal's Triangle
+
+**Theorem 1.36**: $\displaystyle {n \choose k} + {n \choose k + 1} = {n + 1 \choose k}$
+
+*Proof 1*: RHS counts the number of lattice paths to $R = (k+1, n-k)$
+
+LHS counts the number of paths to $R$ via $U = (k, n-k)$ or $V = (k + 1, n - k - 1)$
+
+*Proof 2*: RHS counts the number of $k+1$-element subsets of $[n + 1]$
+
+LHS counts the number of $k+1$-element subsets WITH and WITHOUT the new element $n+1$. The remaining $k$ come from $[n]$
+
+&nbsp;
+
+**Example 1.38**: $\displaystyle \sum_{k = 1}^n k {n \choose k}^2 = n {2n - 1 \choose n - 1}$
+
+*Solution*: We can look at this problem as trying to form a committee of $n$ people from $n$ partners and $n$ associates, with a president who is on the committee and a partner
+
+RHS selects one president from $n$ partners ($n$ ways of doing this). Then selects the remaining $n-1$ members on the committee (${2n-1 \choose n-1}$ ways of doing this)
+
+LHS selects $k$ partners (${n \choose k}$ ways of doing this), selects a president from these selected partners ($k$ ways of doing this), and then selects the remaining $n-k$ associates (${n \choose n-k} = {n \choose k}$ ways of doing this)
+
+&nbsp;
+
+**Example 1.39**: For $\displaystyle n \geq 2, n(n-1) 2^{n-2} = \sum_{k = 2}^{n}{n \choose k} k (k-1)$
+
+*Solution*: We can view this problem as selecting a committee of at least $2$ people (including a president and a vice president) from a group of $n$ people
+
+LHS selects the president and the vice president ($n(n-1)$ ways of doing this), and then looks at the possible subsets of people from a group of $n-2$ people ($2^{n-2}$ possible subsets)
+
+RHS selects a committee of $k$ people (${n \choose k}$ ways of doing this), and then selects a president and vice president from this committee ($k(k-1)$ ways of doing this)
+
+### Permutation with Repetition
+
+**Theorem 1.41**: Suppose we want to arrange $n$ objects in a line with $k$ different types of objects that are indistinguishable from each other. Let $a_i$ be the number of objects of type $i$. Then the total number of arrangements is
+$$\frac{n!}{a_1! a_2! \cdots a_k!}$$
+
+*Proof 1*: If we ignore the object types, then there are $n!$ ways to arrange $n$ objects
+
+We can permute each object amongst its own type. Thus for any arrangement, there are $a_1! a_2! \cdots a_k!$ identical arrangements
+
+Thus using the division principle, we see that the total number of indistinguishable arrangements is $\frac{n!}{a_1! a_2! \cdots a_k!}$
+
+*Proof 2*: The arrangement of $n$ objects with $k$ different types is determined by the positions of $a_1$ objects of type $1$, $a_2$ objects of type $2$, $\ldots$
+
+There are ${n \choose a_1}$ choices for positioning objects of type 1, ${n - a_1 \choose a_2}$ choices for positioning objects of type 2, $\ldots$, ${a_k \choose a_k} = 1$ choices for positioning objects of type $k$
+
+Thus we see
+$${n \choose a_1} {n - a_1 \choose a_2} \cdots {a_k \choose a_k} = \frac{n!}{a_1! a_2! \cdots a_k!}$$
+
+&nbsp;
+
+**Definitino - Multinomial coefficient**: $\displaystyle {n \choose a_1, a_2, \ldots, a_k} = \frac{n!}{a_1! a_2! \cdots a_k!}$
+
+- **NOTE**: ${n \choose a_1, a_2} = {n \choose a_1} = {n \choose a_2}$
+
+&nbsp;
+
+**Example**: Suppose a person wants to visit 4 factories $A, B, C, D$ twice over $8$ days. How many different orders can the person visit, with the restriction that he doesn't visit factory $A$ on 2 consecutive days
+
+*Solution*: Ignoring the restriction on factory $A$, we have $\displaystyle {8 \choose 2, 2, 2, 2} = 2520$
+
+To consider the restriction on $A$, let's treat $A$ and $A'$ as one single unit. Thus we have $\displaystyle {7 \choose 1, 2, 2, 2} = 630$
+
+Thus there are $2520 - 630 = 1890$ possible orderings that meet the criteria
+
+## Pigeonhole Principle
+
+**Theorem 1.44 Pigeonhole Principle**: Let $A_1, A_2, \ldots, A_k$ be pairwise disjoint finite sets and $|A_1 \cup A_2 \cup \cdots \cup A_k| > kr$. Then there exists at least one index $i$ such that $|A_i| > r$
+
+*Proof by Contradiction*: Assume that for all $i$, $|A_i| \leq r$. Then we have $|A_1 \cup A_2 \cup \cdots \cup A_k|  = |A_1| + |A_2| + \cdots + |A_k| \leq kr$ which contradicts are assumption
+
+Thus we must have at least one index $i$ such that $|A_i| > r$
+
+&nbsp;
+
+**Example**: Consider the sequence $a_i = 2^i - 1$ and let $q$ be an odd integer. Then the sequence has an element divisible by $q$
+
+*Solution*: Consider the first $q$ elements of the sequence. If one is divisible by $q$, we are done
+
+Otherwise consider the remainder of these elements mod $q$
+$$a_i = d_iq + r_i$$
+Since $r_i \in (0, q)$, by PHP, there are at least 2 elements $a_n, a_m$ that share the same remainder
+
+Thus $a_n - a_m = (d_n - d_m)q = (2^n - 1) - (2^m - 1) = 2^m(2^{n-m} - 1) = 2^m a_{n-m}$
+
+Since $2^m$ and $q$ are relatively prime, we must have that $q \mid a_{n-m}$
+
+&nbsp;
+
+**Example**: Suppose we select $n+1$ distinct integers from $[2n]$. Then
+
+- There is at least one pair that has sum $2n + 1$
+- There is at least one pair that has difference of $n$
+
+*Solution*:
+
+- Split $[2n]$ into $n$ subsets $\{i, 2n + 1 - i\}$. Since we chose $n + 1$ elements, by PHP $2$ of the elements must lie in the same subset. Thus clearly $i + 2n + 1 - i = 2n + 1$
+- Split $[2n]$ into $n$ subsets $\{i, n + i\}$. Since we chose $n + 1$ elements, by PHP $2$ of the elements must lie in the same subset. Thus clearly $n+ i - i = n$
+
+# Application of Basic Methods
+
+## Multiset/Composition
+
+**Definition - Multiset**: collection that allows for repetition of elements
+
+- A multiset is determined by the multiplicities of each element
+
+**Definition - Weak Composition**: Let $a_1, a_2, \ldots, a_k \geq 0$ such that $\displaystyle \sum_{i=1}^{k}a_i = n$. Then the ordered tuple $(a_1, a_2, \ldots, a_k)$ is a **weak composition** of $n$ into $k$ parts
+
+- **Note**: There is a bijection between weak compositions of $[n]$ into $k$ parts AND $n$-element multisets over a $k$-element set
+
+&nbsp;
+
+**Theorem 2.2**: The number of weak compositions of $[n]$ into $k$ parts is ${n+k-1 \choose n} = {n + k - 1 \choose k - 1}$
+
+*Proof*: Consider $n$ balls distributed across $k$ boxes. Each distribution is equivalent to a weak composition
+
+To count the ways of distributing balls, we can insert a wall between each box $i$ and $i+ 1$
+
+- Each distribution corresponds with arrangement of $n$ balls and $k-1$ walls
+- Conversely, each arrangement corresponds to a unique distribution of balls
+
+Thus the number of ways to arrange $n$ balls and $k-1$ walls is ${n+k-1 \choose k-1}$
+
+${n+k-1 \choose n} = {n + k - 1 \choose k - 1}$ follows from Proposition 1.35
+
+&nbsp;
+
+**Definition - Composition**: Let $a_1, a_2, \ldots, a_k \in Z^+$ such that $\displaystyle \sum_{i=1}^{k}a_i = n$. Then the ordered tuple $(a_1, a_2, \ldots, a_k)$ is a **composition** of $n$ into $k$ parts
+
+- **Note**: compositions involve only positive integers, whereas weak compositions allow numbers to be $0$
+
+&nbsp;
+
+**Corollary 2.5**: The number of compositions of $n$ into $k$ parts is ${n-1 \choose k-1}$
+
+*Proof*: We show a bijection exists from $W$, the set of weak compositions of $n-k$ into $k$ parts, into $C$, the set of compositions of $n$ into $k$ parts.
+
+Simply add an additional element to each part, assuring that each part will have a positive size. Thus the bijection shows $|W| = |C|$
+
+From Theorem 2.2, we see that $|W| = {n -k +k - 1 \choose k - 1} = {n - 1 \choose k - 1} = |C|$
+
+## Set Partitions
+
+**Definition - Blocks**: Let $k \leq n$ and let $B = \{B_1, \ldots, B_k\}$ where $B_i \subseteq [n]$ and each $B_i$ are non-empty and pairwise disjoint where $\bigcup_{i=1}^k B_i = [n]$. Then $B$ is a partition of $[n]$ into $k$ **blocks**
+
+&nbsp;
+
+**Example**: Find the number of partitions of $[5]$ into $3$ blocks
+
+*Solution*: Possible block sizes are 3-1-1 or 2-2-1
+
+- Possibilities of selecting $3$ blocks is ${5 \choose 3} = 10$ ways. The last 2 singleton blocks are automatically determined. Thus this results in $10$ possible arrangements
+- $5$ choices for singleton blocks, and ${4 \choose 2}$ choices for the first doubleton. The last doubleton is automatically determined but we need to divide by $2$ to consider double counting. Thus this results in $15$ possible arrangements
+
+Thus we have total number of arrangements is $25$
+
+&nbsp;
+
+**Definition - Stirling Number of the Second Kind**: Number of partitions of $[n]$ into $k$ blocks denoted $S(n, k)$
+
+- If $k > n$ then $S(n, k) = 0$
+- If $n > 0$ then $S(n, 0) = 0$
+- $S(0, 0) = 1$
+- $S(n, 1) = S(n, n) = 1$
+
+&nbsp;
+
+**Theorem 2.10**: For $n \geq k, S(n, k) = S(n-1, k-1) + kS(n-1, k)$
+
+*Proof*: LHS counts all partitions of $[n]$ into $k$ blocks
+
+RHS counts 2 classes of arrangements
+
+- The element $n$ is by itself. Then we look at $S(n-1, k-1)$, the number of partitions of $[n-1]$ into $k-1$ blocks
+- The element $n$ is NOT by itself. The remaining $n-1$ elements are partitioned in $k$ blocks ($S(n-1, k)$). And then there are $k$ ways to place the element $n$
+
+&nbsp;
+
+Let $h(n, k)$ be the sum of all ${n-1 \choose k-1}$ products that consist of $n-k$ factors such that all of these factors are elements of $[k]$
+
+**Examples**:
+
+- For $n = 4, k = 2$, h(4, 2) = 1 *1 + 1*2 + 2 *2 = 7 = S(4, 2)$
+- For $n = 4, k = 3, h(4, 3) = 1 + 2 + 3 = 6 = S(4, 3)$
+
+&nbsp;
+
+**Lemma 2.14**: $h(n, k) = h(n-1, k-1) + kh(n-1, k)$
+
+*Proof*: LHS is the sum of all $(n-k)$-factor products from $[k]$
+
+RHS splits into 2 classes
+
+- Those that contain the factor $k$. These also contain an $(n-k-1)$-factor product over the set $[k]$. Summing all of these products, we get $kh(n-1, k)$
+- Those that do not contain $k$. This is handled by $h(n-1, k-1)$
+
+&nbsp;
+
+**Example**: For $n = 4, k = 2, h(4, 2) = 1 * 1 + 2*1 +2*2 = 1*1 + 2(1 + 2) = h(3, 1) + 2*h(3, 2)$
+
+&nbsp;
+
+**Theorem 2.11**: $h(n, k) = S(n, k)$
+
+*Proof by Induction*:
+
+Base case: $n + k = 0 \implies h(0, 0) = S(0, 0) = 1$ is clearly true
+
+IH: Assume if $n+k \leq m$, then $S(n, k) = h(n, k)$
+
+IS: Show for $n+k = m + 1$. Then we have
+\begin{align*}
+ S(n, k) &= S(n-1, k-1) + kS(n-1, k)\\
+ &= h(n-1, k-1) + h(n-1, k)\\
+ &= h(n, k)
+\end{align*}
+
+&nbsp;
+
+**Theorem 2.16**: For $n \geq k, S(n+1, k) = \sum_{i=0}^{n}{n \choose i}S(n-i, k-1)$
+
+*Proof*: LHS counts the number of partitions of $[n+1]$ into $k$ blocks
+
+RHS counts the number of partitions of $[n+1]$ into $k$ blocks where the element $n+1$ is in a block of size $i+1$
+
+- ${n \choose i}$ ways to choose $i$ elements to share a block with the element $n+1$
+- Then there are $S(n-i, k-1)$ ways to partition the remaining $k-1$ blocks
+
+&nbsp;
+
+**Bell Number**: Number of all partitions of $[n]$, denote $B(n)$
+
+| $n$ | $B(n)$ |
+| ----| -------|
+| $0$ | $1$    |
+| $1$ | $1$    |
+| $2$ | $2$    |
+| $3$ | $5$    |
+| $4$ | $15$   |
+| $5$ | $52$   |
+| $5$ | $52$   |
+| $6$ | $203$  |
+| $7$ | $877$  |
+| $8$ | $4140$ |
+
+**Theorem 2.18**: $\displaystyle B(n+1) = \sum_{k=0}^{n}B(k) {n \choose k}$
+
+## Partitions of Integers
+
+**Partition**: finite sequence $(a_1, a_2, \ldots, a_k)$ of positive integers such that $a_1 \geq a_2 \geq \cdots \geq a_k$ and $a_1 + a_2 + \cdots + a_k = k$. Then this sequence is called a **partition** of the integer $n$
+
+- Number of partitions of $n$ is denoted $p(n)$
+
+**Example**: For $n = 4$. There are $5$ partitions
+
+- $(4), (3, 1), (2, 2), (2, 1, 1), (1, 1, 1, 1) \implies p(4) = 5$
+
+**Theorem 2.21**: As $n \rightarrow \infty, p(n)$ satisfies
+$$p(n) \approx \frac{1}{4\sqrt{3}}e^{\pi \sqrt{\frac{2n}{3}}}$$
+
+**SKIPPING FERRERS SHAPES and EULER PENTAGONAL NUMBER THEOREM**
+
+## Inclusion-Exclusion Principle
+
+**Lemma 2.32**: $|A \cup B| = |A| + |B| - |A \cap B|$
+
+*Proof*: LHS counts the number of elements in $|A \cup B|$
+
+RHS also does the same but $|A| + |B|$ ends up double counting elements in both $A$ AND $B$. Subtracting by $|A \cap B|$ corrects this anomaly
+
+&nbsp;
+
+**Example**: Find the number of positive integers $\leq 300$ that are divisible by $2$ or $3$
+
+*Solution*: Number of eligible integers divisible by $2$ is $300 / 2 = 150$
+
+Number of eligible integers divisible by $3$ is $300/ 3 = 100$
+
+Number of eligible integers that were double counted is $300 / 6 = 50$
+
+Thus answer is $|A \cup B| = 150 + 100 - 50 = 200$
+
+&nbsp;
+
+**Example**: Suppose there are $30$ guests that we want to split into $3$ groups of $10$. However, guest $U$ cannot be in the same group as guest $V$, and guest $X$ cannot be in the same group as guest $Y$. How many possible arrangements are there?
+
+*Solution*: First count the bad partitions of $[30]$ into $3$ blocks. When $1, 2$ are in the same block, when $3, 4$ are in the same block, or when both events occur
