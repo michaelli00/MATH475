@@ -63,7 +63,7 @@ $${n \choose k} = \frac{n!}{k!(n-k)!} = \frac{P(n, k)}{k!}$$
 
 &nbsp;
 
-**Example**: There are $5$ cats, $5$ dogs, and $4$ mice . $3$ are chosen at once
+**Example**: There are $5$ cats, $5$ dogs, and $4$ mice. $3$ are chosen at once
 
 - How many total number of ways  to get $2$ cats, $1$ dog?
 
@@ -115,7 +115,7 @@ Thus there are $\displaystyle {n \choose a_1, \ldots, a_k}$ distinct ways of rep
 
    - What about when the first digit cannot be zero?
 
-      Since $0$ can only appear as the first digit, this is identical to the first question, but restricted $\{1, \ldots, 9\}$
+      Since $0$ can only appear as the first digit, this is identical to the first question, but restricted to $\{1, \ldots, 9\}$
 
       $\boxed{\displaystyle {9 \choose 6}}$ ways
 
@@ -217,6 +217,86 @@ Thus we have $\displaystyle {n \choose k} = \displaystyle {n-1 \choose k} + \dis
 
 **Example**: $\displaystyle \sum_{k = 0}^n k\displaystyle {n \choose k} = n2^{n-1}$
 
-RHS: Picks 1 element to be the leader, then determine the number of groups he's in charge of
+RHS: Picks 1 element to be the leader ($n$ choices)
 
-LHS: Pick of group of size $k$ and then select a leader amongst them ($k$ possible choices)
+Then from the remaining $n-1$ people, pick a subset ($2^{n-1}$ ways)
+
+LHS: Picks a group of size $k$ ($\displaystyle {n \choose k}$ ways) and then select a leader amongst them ($k$ possible choices)
+
+Thus $\displaystyle \sum_{k = 0}^{n} k \displaystyle {n \choose k} = n 2^{n-1}$
+
+&nbsp;
+
+**Example**: $\displaystyle \sum_{i=1}^{n}i (n - i + 1) = \displaystyle {n + 2 \choose 3}$
+
+LHS: Let $a, b, c$ be numbers with $a < b< c$ from $[n+2]$. Fix $b = i + 1$ (the $i$th $+ 1$ element). Then there are $i$ choices for the element $a$ and $(n+ 2) - (i + 1) = n - i + 1$ choices for the element $c$
+
+Thus the total ways to create a 3-size subset $\{a,b,c\}$ from $[n+2]$ is $\displaystyle \sum_{i=1}^{n} i(n-i+1) = \displaystyle {n+2 \choose 3}$
+
+RHS: Counts the number of subsets of size $3$ from $[n+2]$
+
+&nbsp;
+
+## Pigeon Hole Principle
+
+**Theorem - Pigeon Hole Principle**: If $n+1$ pigeons are placed into $n$ pigeonholes, then there is at least one pigeonhole with at least $2$ pigeons
+
+**Theorem - Generalized Pigeon Hole Principle**: If $n$ pigeons are placed into $k$ holes, then at least one hole has
+
+- At most $\displaystyle \lfloor \frac{n-1}{k} \rfloor$ pigeons (round down)
+- At least $\displaystyle \lceil \frac{n}{k} \rceil$ pigeons (round up)
+- **Note**: the statements above are equivalent
+
+*Proof*: Suppose all holes have $\displaystyle \leq \lfloor \frac{n-1}{k} \rfloor$ pigeons
+
+Then there are at most $\displaystyle k \lfloor \frac{n-1}{k} \rfloor \leq n - 1 < n$ pigeons total. Which is a contradiction
+
+&nbsp;
+
+**Example**: Prove that in a group of 40 people, at least 4 people have a same birthday in the same month
+
+40 pigeons and 12 holes $\implies \lceil \frac{40}{12} \rceil = 4$. Thus by PHP, the statement holds
+
+&nbsp;
+
+**Example**: Prove that if 6 distinct numbers are chosen from $[9]$, then 2 numbers will sum to 10
+
+6 pigeons and 5 holes $(\{(1, 9), \ldots, (5, 5)\} \implies \lceil \frac{6}{5}\rceil = 2$. Thus by PHP, 2 of the numbers belong to the same pair and sum to 10
+
+&nbsp;
+
+**Example**; An athlete wants to work out 45 hours over a 30-day month and will work out at least 1 hour each day. Prove that there is a period of consecutive days such that the cumulative hours he has worked out is exactly 14
+
+Let $a_i$ be the total hours accumulated up to day $i$
+
+This creates a strictly increasing sequence $a_1, a_2, \ldots, a_{30} = 45$ where each $a_i$ is distinct
+
+Define a new sequence $b_i = a_i + 14$
+
+This creates a strictly increasing sequence $b_1, b_2, \ldots, b_{30} = 59$ where each $b_i$ is distinct
+
+Since $\{a_i\}_{i=1}^{30}$ is distinct and $\{b_i\}_{i=1}^{30}$ is distinct (only within their own respective sequence), we can have at most $60$ possible values, which we treat as pigeons
+
+Furthermore, $b_i$ can take on any of 59 distinct values, which we treat as the holes
+
+Thus by PHP, some $a_j = b_k = a_k + 14$
+
+Thus from day $k+1$ to day $j$, the total number of hours worked out is 14
+
+## Compositions and Set Partitions
+
+**Definition - Weak Composition**: Take $a_1, \ldots a_k \geq 0$ such that $\displaystyle \sum_{i=1}^{k} a_i = n$. Then the ordered $k$-tuple ($a_1, \ldots, a_k)$ is a **weak composition** of $n$ into $k$ partitions
+
+- **Note**: This can be seen as distributing $n$ unlabelled balls into $k$ labelled boxes
+
+&nbsp;
+
+**Theorem - Stars and Bars**: The number of weak compositions of $n$ into $k$ parts is $\displaystyle {n + k - 1 \choose k - 1}$
+
+&nbsp;
+
+**Example**: How many ways can we distribute \$100 to 5 people?
+
+- Can also be rephrased as how many non-negative integer solutions are there to $x_1 + \cdots + x_5 = 100$
+
+Using the Stars and Bars Theorem, we have $\displaystyle {100 + 5 - 1 \choose 5 - 1} = \displaystyle {104 \choose 4}$ ways
