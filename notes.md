@@ -237,6 +237,16 @@ RHS: Counts the number of subsets of size $3$ from $[n+2]$
 
 &nbsp;
 
+**Example**: $\displaystyle {2n \choose n} = \sum_{k=0}^{n} \displaystyle {n \choose k}^2$
+
+LHS: Count the number of size $n$ subsets of $[2n]$
+
+RHS: Can be written as $\displaystyle \displaystyle {n \choose k} \displaystyle {n \choose n-k}$
+
+So choose $k$ people from a group of size $n$ and $n-k$ people from another group of size $n$
+
+Thus $\displaystyle \displaystyle {n \choose k} \displaystyle {n \choose n-k} = \displaystyle {2n \choose n}$
+
 ## Pigeon Hole Principle
 
 **Theorem - Pigeon Hole Principle**: If $n+1$ pigeons are placed into $n$ pigeonholes, then there is at least one pigeonhole with at least $2$ pigeons
@@ -293,6 +303,18 @@ Thus from day $k+1$ to day $j$, the total number of hours worked out is 14
 
 **Theorem - Stars and Bars**: The number of weak compositions of $n$ into $k$ parts is $\displaystyle {n + k - 1 \choose k - 1}$
 
+*Proof*:
+
+Denote the $n$ objects as stars. We model a distribution as follows:
+
+Place $k$ bars where stars to the right of each bar is how many stars the corresponding part contains
+
+**Note**: we must begin with a bar. Thus the rest involves $n$ stars and $k -1$ bars
+
+Thus we can choose $k-1$ from these $n + k-1$ objects, resulting in $\displaystyle {n + k - 1 \choose k-1}$
+
+Each one of these combination generates a different weak composition
+
 &nbsp;
 
 **Example**: How many ways can we distribute \$100 to 5 people?
@@ -300,3 +322,72 @@ Thus from day $k+1$ to day $j$, the total number of hours worked out is 14
 - Can also be rephrased as how many non-negative integer solutions are there to $x_1 + \cdots + x_5 = 100$
 
 Using the Stars and Bars Theorem, we have $\displaystyle {100 + 5 - 1 \choose 5 - 1} = \displaystyle {104 \choose 4}$ ways
+
+&nbsp;
+
+**Example**: Suppose we want to choose 3 lollipop flavors from 5 orange, 4 strawberry, and 3 grapes. How many ways can we choose 3 lollipops?
+
+Here we want $x_O + x_S + x_G = 3$ where $x_O, x_S, x_G \geq 0$
+
+Thus $\displaystyle {3 + 3 -1 \choose 3 - 1}$
+
+&nbsp;
+
+**Definition - Compositions**: Same as weak compositions but with the restriction that each $x_i \geq 1$
+
+We can derive this with the formula above but ensuring that each of the $k$ boxes starts with 1 star, and then we distribute the remaining $n-k$ stars in a weak composition fashion. Thus the number of compositions of $n$ into $k$ parts is
+$$\displaystyle {n - k + k - 1 \choose k - 1} = \displaystyle {n - 1 \choose k - 1}$$
+
+**Note**: This problem is placing unlabelled balls into labelled bins
+
+&nbsp;
+
+**Definition - Partition**: Let $X$ be a finite set and $A_1, \ldots, A_k$ be non-empty subsets of $X$. Then a **partition** of $X$, $\{A_1, \ldots, A_k\}$ satisfies
+
+- $\displaystyle \bigcup_{i=1}^k A_i = X$
+- Each $A_i, A_j$ are pairwise disjoint
+
+**Note**: This problem can be stated as: for a given $k$, $X$ is partitioned into $k$ **blocks**
+
+&nbsp;
+
+**Example**: $\{\{1, 2, 4\}, \{3, 5\}, \{6\}\}$ is a partition of $[6]$
+
+The first inner set here can be considered placing balls $1, 2, 4$ into its own (unlabelled) bin
+
+&nbsp;
+
+**Definition - Stirling Number of the 2nd Kind**: The number of partitions of $[n]$ into $k$ **blocks**, denoted $S(n, k)$
+
+- $S(0, 0) = 1$ by convention
+- $S(n, 0) = 0$ for $n \geq 1$ is a partition of $[6]$
+
+&nbsp;
+
+**Example**: Use counting arguments to compute $S(n, 2)$
+
+For each ball, we decide if it either it goes into block 1 or block 2, resulting in $2^n$
+
+However, we require that each block has $\geq 1$ elements. Thus we need to subtract by $2$ for the cases where block 1 has all balls or block 2 has all balls by $2$ for the cases where block 1 has all balls or block 2 has all balls
+
+Finally, we need to divide by 2 since the order of the blocks doesn't matter
+
+$\displaystyle \frac{2^n - 2}{2}$
+
+&nbsp;
+
+**Theorem**: For $n \geq k$, we have
+$$S(n, k) = S(n-1, k-1) + kS(n-1, k)$$
+
+*Proof*:
+
+LHS: Counts the number of ways to partition $[n]$ into $k$ blocks
+
+RHS looks at partitions where
+
+- $\{1\}$ is in its own bin. Then we need to partition $[n-1]$ into $k-1$ bins, resulting in $S(n-1, k-1)$
+- $\{1\}$ is in a bin with other elements. Then we need to partition $[n-1]$ into $k$ bins, and then choose a bin to place $\{1\}$ into, resulting in $kS(n-1, k)$
+
+**Theorem**: $S(n, k) = \displaystyle \frac{1}{k!} \sum_{i = 0}^k (-1)^i \displaystyle {k \choose i} (k-i)^n$
+
+*Proof*: will show later
