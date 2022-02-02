@@ -5,6 +5,7 @@ geometry: "left=1cm,right=1cm,top=1cm,bottom=2cm"
 header-includes:
     - \usepackage{amsmath}
     - \usepackage{mathrsfs}
+    - \usepackage{youngtab}
     - \DeclareMathOperator{\lcm}{lcm}
 output: pdf_document
 ---
@@ -391,3 +392,101 @@ RHS looks at partitions where
 **Theorem**: $S(n, k) = \displaystyle \frac{1}{k!} \sum_{i = 0}^k (-1)^i \displaystyle {k \choose i} (k-i)^n$
 
 *Proof*: will show later
+
+&nbsp;
+
+**Definition - Bell Number**: Total number of partitions of $[n]$, denoted $B(n) = \displaystyle \sum_{k=1}^{n} S(n, k)$
+
+- **Note**: $B(0) = 1$ by convention
+
+&nbsp;
+
+**Example**: Take $n=3$. Then we have
+$$\{\{1, 2, 3\}\}, \{\{1\},\{2\},\{3\}\}, \{\{1\}, \{2, 3\}\}, \{\{2, \{1, 3\}\}\}, \{\{3\} \{1, 2\}\}$$
+Thus $B(3) = 5$
+
+&nbsp;
+
+**Theorem**: $B(n) = \displaystyle \sum_{i=1}^{n}\displaystyle {n-1 \choose i-1} B(n-i)$
+
+*Proof*:
+
+LHS: counts the total number of partitions of $[n]$
+
+RHS:
+
+- Fix the $n$th element and determine the number of subsets of size $i$ that contain this element: $\displaystyle {n-1 \choose i-1}$ ways
+- Partition the remaining $n-i$ elements: $B(n-i)$ ways
+
+Thus we see that $B(n) = \displaystyle \sum_{i=1}^{n}\displaystyle {n-1 \choose i-1} B(n-i)$
+
+
+&nbsp;
+
+**Example**: Consider $f: A \rightarrow B$ where $|A| = n$ and $|B| = k$ for $n \geq k$. What is the total number of surjective functions?
+
+- Recall that $f$ is surjective if for $\forall b \in B$, there exists at least one $a \in A$ such that $f(a) = b$
+
+This problem can be viewed as partitioning $A$ into $\{A_1, \ldots, A_k\}$ and determining how they map to $B$, where $A_i = \{a \in A \mid f(a) = i\}$
+
+Clearly the number of ways to partition $[n]$ into $k$ parts is $S(n, k)$
+
+However, we also need to consider the order of the boxes (since they determine which subsets map to which values of $B$). Thus we need to multiply by $k!$
+
+Thus the final answer is $k! S(n, k)$
+
+## Integer Partitions
+
+**Definition - Partition of Integer $\mathbf{n}$**: Positive sequence of integers $a_1, \ldots, a_k$, with $a_1 \geq a_2 \geq \cdots \geq a_k$ such that
+$$a_1 + a_2 + \cdots + a_k = n$$
+Total number of such sequences is denoted $p(n)$
+
+- **Note**: Observe that since the values are non-increasing, the order "doesn't matter" so we don't need to distinguish $1 + 3 = 4$ from $3 + 1 = 4$
+- **Note**: By convention, we have $p(0) = 1$
+
+&nbsp;
+
+**Example**: Take $n = 4$. Then we have
+$$4 = 3 + 1 = 2 + 2 = 2 + 1 + 1 = 1 + 1 + 1 + 1$$
+Thus $p(4) = 5$
+
+&nbsp;
+
+**Definition - Ferrers Diagram**: Represents a partition $(a_1, \ldots, a_k)$ by taking a partial rectangular grid with $k$ rows whose rows contain $a_i$ dots, such that $a_1 \geq \cdots \geq a_k$
+
+&nbsp;
+
+**Example**:
+
+$$\young(~~~~,~~~,~,~,~)$$
+
+This corresponds to $4 + 3 + 1 + 1 + 1= 10$
+
+&nbsp;
+
+**Definition - Conjugate of a Partition**: Diagram created by reflecting a Ferrers Diagram along the diagonal
+
+- **Note**: Can be see as replacing columns as rows and rows as columns
+
+&nbsp;
+
+**Example**: Conjugate of the previous example
+
+$$\young(~~~~~,~~,~~,~~,~)$$
+
+This corresponds to $5 + 2 + 2 + 1 = 10$
+
+&nbsp;
+
+**Theorem**: Let $P_1$ denote the number of partitions where $a_1 = a_2 \geq a_3 \geq \cdots \geq a_k$ (for unfixed $k$). Let $P_2$ be the number of partitions whose smallest part is at least $2$. Then
+$$P_1 = P_2$$
+
+*Proof*: Take a partition where $a_1 = a_2$. Then take it's conjugate.
+
+$$\young(~~~~~,~~~~~,~~,~~,~) \quad \quad \young(~~~~~,~~~~,~~,~~,~~)$$
+
+Clearly every part of the conjugate has length $\geq 2$
+
+Adding more dots to the original diagram doesn't affect the minimal lengths of the conjugate
+
+Thus the conjugate assures each row has at least 2 dots $\implies$ each part has at least size $2$
