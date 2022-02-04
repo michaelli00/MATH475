@@ -481,7 +481,7 @@ This corresponds to $5 + 2 + 2 + 1 = 10$
 **Theorem**: Let $P_1$ denote the number of partitions where $a_1 = a_2 \geq a_3 \geq \cdots \geq a_k$ (for unfixed $k$). Let $P_2$ be the number of partitions whose smallest part is at least $2$. Then
 $$P_1 = P_2$$
 
-*Proof*: Take a partition where $a_1 = a_2$. Then take it's conjugate.
+*Proof*: $\implies$ Take a partition where $a_1 = a_2$. Then take it's conjugate.
 
 $$\young(~~~~~,~~~~~,~~,~~,~) \quad \quad \young(~~~~~,~~~~,~~,~~,~~)$$
 
@@ -490,3 +490,77 @@ Clearly every part of the conjugate has length $\geq 2$
 Adding more dots to the original diagram doesn't affect the minimal lengths of the conjugate
 
 Thus the conjugate assures each row has at least 2 dots $\implies$ each part has at least size $2$
+
+$\impliedby$ Given a partition with $a_k \geq 2$, the conjugate creates a partition with $2$ rows that are the largest and have the same size. Thus $a_1 = a_2$ in the conjugate
+
+&nbsp;
+
+**Example**: Show that the total partition of $n$ containing a part of size $1$ is $p(n-1)$
+
+$\implies$ Take partition $P$ of $n$ containing a part of size $1$
+
+This part will be the bottom row. Deleting that row yields $p(n-1)$
+
+$\impliedby$ Given a partition $P_2$ of $n-1$, add a dot to the bottom. This yields a partition of $n$ with a part of size $1$
+
+&nbsp;
+
+**Definition - $\mathbf{p_k(n)}$**: Number of partitions of $n$ into exactly $k$ parts
+
+&nbsp;
+
+**Theorem**: For $1 < k < n$
+$$P_k(n) = P_{k-1}(n-1) + P_k(n-k)$$
+*Proof*:
+
+LHS: counts the number of partitions of $n$ into $k$ parts
+
+RHS:
+
+- Count the number of partitions such that there is a partition of size $1$: $p_{k-1}(n-1)$
+- Count the number of partitions such that every part has size $\geq 1$: $p_k(n-k)$
+
+**Note**: Each part must have size $\geq 1$ by definition
+
+## Twelvefold Way
+
+Goal is to distribute $n$ (labelled or unlabelled) balls into $k$ (labelled or unlabelled) bins, depending on if the bins
+
+- Have no restriction
+- Have at least 1 ball
+- Have at most 1 ball
+
+This results in 12 possible scenarios
+
+1. **$\mathbf{n}$ Labelled Balls into $\mathbf{k}$ Labelled Bins**
+
+    - No restrictions: For each ball, pick a bin to put it into $\implies k^n$
+    - At least 1: Can be viewed as the number of surjective functions $\implies k! S(n, k)$
+    - At most 1:
+      - If $n > k \implies 0$
+      - Otherwise $n \leq k$ and we pick $n$ bins in a specific order $\implies P(k, n)$
+
+2. **$\mathbf{n}$ Unlabelled Balls into $\mathbf{k}$ Labelled Bins**
+
+    - No restrictions: Weak composition $\implies \displaystyle {n+k-1 \choose k-1}$
+    - At least 1: Composition $\implies \displaystyle {n-1 \choose k-1}$
+    - At most 1:
+      - If $n > k \implies 0$
+      - Otherwise $n \leq k$ and we just need to choose $n$ bins to use $\implies \displaystyle {k \choose n}$
+
+3. **$\mathbf{n}$ Labelled Balls into $\mathbf{k}$ Unlabelled Bins**
+
+    - No restrictions: Need to count all possible partitions with $0$ to $k$ parts $\implies \displaystyle \sum_{i=1}^{k}S(n, i)$
+      - **Note**: This is NOT Bell's Number since we might have $k < n$
+    - At least 1: Partition $[n]$ into $k$ parts $\implies$ $S(n, k)$
+    - At most 1:
+      - If $n > k \implies 0$
+      - Otherwise $n \leq k$ and the bins are indistinguishable $\implies 1$ way
+
+4. **$\mathbf{n}$ Unlabelled Balls into $\mathbf{k}$ Unlabelled Bins**
+
+    - No restrictions: need to count all possible partitions with $0$ to $k$ parts $\implies \displaystyle \sum_{i=1}^{k}p_i(n)$
+    - At least 1: Partition $n$ into $k$ parts $\implies p_k(n)$
+    - At most 1:
+      - If $n > k \implies 0$
+      - Otherwise $n \leq k$ and the bins are indistinguishable $\implies 1$ way
