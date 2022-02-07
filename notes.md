@@ -26,7 +26,7 @@ $$P(n, k) = \frac{n!}{(n-k)!} = n(n-1) \cdots (n-k + 1)$$
 
 &nbsp;
 
-**Example**: 10 people can run for office for a committee with a President, Vice President, Treasurer. The total number of possible committees is $P(10, 3)$
+**Example**: 10 people can run for office for a committee with a President, Vice President, and Treasurer. The total number of possible committees is $P(10, 3)$
 
 &nbsp;
 
@@ -47,7 +47,7 @@ Thus the number of rearrangements is $\displaystyle \frac{10!}{4!3!2!1!}$
 
 &nbsp;
 
-**Theorem 1**: Suppose object $1$ occurs $a_1$ times, object $2$ occurs $a_2$ times, $\ldots$, object $k$ occurs $a_k$ times. Furthermore, suppose $a_1 + \cdots + a_k = n$
+**Theorem**: Suppose object $1$ occurs $a_1$ times, object $2$ occurs $a_2$ times, $\ldots$, object $k$ occurs $a_k$ times. Furthermore, suppose $a_1 + \cdots + a_k = n$
 
 Then the total number of arrangements if $\displaystyle \frac{n!}{a_1 ! \cdots a_k!} = {n \choose a_1, a_2, \ldots, a_k}$
 
@@ -156,8 +156,7 @@ Thus there are $\displaystyle {n \choose a_1, \ldots, a_k}$ distinct ways of rep
 
       $\boxed{5 * 10^4 * 5}$
 
-   - How many codes begin and end with an even number?
-
+   - How many 5-digit codes use exactly 2 different numbers?
 
       $\displaystyle {5 \choose 2}$ ways to choose two digits
 
@@ -495,7 +494,7 @@ $\impliedby$ Given a partition with $a_k \geq 2$, the conjugate creates a partit
 
 &nbsp;
 
-**Example**: Show that the total partition of $n$ containing a part of size $1$ is $p(n-1)$
+**Example**: Show that the total number of partitions of $n$ containing a part of size $1$ is $p(n-1)$
 
 $\implies$ Take partition $P$ of $n$ containing a part of size $1$
 
@@ -510,7 +509,7 @@ $\impliedby$ Given a partition $P_2$ of $n-1$, add a dot to the bottom. This yie
 &nbsp;
 
 **Theorem**: For $1 < k < n$
-$$P_k(n) = P_{k-1}(n-1) + P_k(n-k)$$
+$$p_k(n) = p_{k-1}(n-1) + p_k(n-k)$$
 *Proof*:
 
 LHS: counts the number of partitions of $n$ into $k$ parts
@@ -564,3 +563,82 @@ This results in 12 possible scenarios
     - At most 1:
       - If $n > k \implies 0$
       - Otherwise $n \leq k$ and the bins are indistinguishable $\implies 1$ way
+
+&nbsp;
+
+**Definition - Multiset**: Set of elements such that elements may repeat
+
+&nbsp;
+
+**Example**: How many multisets of size $5$ can be created using $[7]$?
+
+Weak compositions for $1, 2, \ldots, 7$ such that the number of balls in each bin totals up to $5 \implies \displaystyle {5+7-1 \choose 7-1}$
+
+&nbsp;
+
+**Example**: How many injective functions $f: [n] \rightarrow [k]$ are there?
+
+$n$ labelled balls into $k$ labelled bins where each big gets at most $1 \implies P(k, n)$
+
+&nbsp;
+
+**Example**: $20$ kids split into $4$ study groups. $2$ brothers must be in the same group and $2$ sisters must be in the same group. What is the total number of ways to split the kids
+
+Treat the brothers and sisters each as one unit then partition $[18]$ into $4$ bins $\implies S(18, 4)$
+
+## Inclusion-Exclusion Principle
+
+**Theorem**: Let $A_1, \ldots, A_n \subseteq X$ where $X$ is finite and each $A_i$ is non-empty. Also let
+
+- $I \subseteq [n]$
+- $\displaystyle A_I = \bigcap_{i \in I} A_i$ with $A_{\emptyset} = X$
+
+Then
+$$\big| \bigcup_{i=1}^n A_i \big| = |X| - \displaystyle \sum_{I \subseteq [n]}^{} (-1)^{|I|} |A_I|$$
+
+&nbsp;
+
+**Note**: By De Morgan's Law, this is equivalent to
+
+$$\displaystyle \big| \bigcap_{i = 1}^n \bar{A_i} \big| = |X| - \sum_{I \subseteq [n]}^{}(-1)^{|I|}|A_I|$$
+
+&nbsp;
+
+**Example**: For $n = 2 \implies I = \emptyset, \{1\}, \{2\}, \{1, 2\}$
+
+\begin{align*}
+\big| \bigcup_{i = 1}^2 A_i| &= |X| - \big((-1)^0 |X| + (-1)^1 |A_1| + (-1)^1 |A_2| + (-1)^2 |A_{\{1, 2\}}|\big) \\
+&= |A_1| + |A_2| - |A_1 \cap A_2|
+\end{align*}
+
+&nbsp;
+
+**Example**: How many integer solutions satisfy
+$$x_1 + x_2 + x_3 = 35 \quad \quad \text{for } 0 \leq x_1, x_2, x_3, \leq 15$$
+
+Consider the problem where $X_1 \geq 16$. We can place $16$ balls into the first bin then perform weak composition. We now use the negation form of the theorem above
+
+Let $X$ be the set of all weak compositions. Now define
+
+- $A_1 = \{\text{ weak compositions } \mid x_1 \geq 16\}$
+- $A_2 = \{\text{ weak compositions } \mid x_2 \geq 16\}$
+- $A_3 = \{\text{ weak compositions } \mid x_3 \geq 16\}$
+
+Now we see that
+
+\begin{align*}
+\big| \bar{A_1} \cap \bar{A_2} \cap \bar{A_3} \big| &= \sum_{I \subseteq [3]}^{} (-1)^{|I|} |A_I| \\
+&= \underbrace{{35 + 3 - 1 \choose 3 - 1}}_{I = \emptyset} - \underbrace{{3 \choose 1} {35 - 16 + 3 - 1 \choose 3 - 1}}_{I = \{1\}, \{2\}, \{3\}} + \underbrace{{3 \choose 2} \displaystyle {35 - 32 + 3 - 1 \choose 3 - 1}}_{I = \{1, 2\} \{1, 3\}, \{2, 3\}} - \underbrace{{3 \choose 3}(0)}_{\text{impossible since } 48 > 35}
+\end{align*}
+
+&nbsp;
+
+**Example**: Count the total number of surjective functions $f: [n] \rightarrow [k]$, where $n \geq k$
+
+Let $X$ be all functions from $[n] \rightarrow [k]$ and let $A_i$ be the set of functions that DO NOT map to $i \in [k]$. Then the total number of surjective functions is
+
+\begin{align*}
+\big| \bigcap_{i = 1}^k \bar{A_i}| &= \sum_{I \subseteq [k]}^{}(-1)^{|I|} |A_i|  \\
+&= \sum_{i = 0}^{k} \displaystyle {k \choose i} (-1)^i (k-i)^n  \quad \quad \text{out of k, choose a set of image points not mapped to}\\
+&= k!S(n, k)
+\end{align*}
