@@ -6,6 +6,7 @@ header-includes:
     - \usepackage{amsmath}
     - \usepackage{mathrsfs}
     - \usepackage{youngtab}
+    - \usepackage{mathtools}
     - \DeclareMathOperator{\lcm}{lcm}
 output: pdf_document
 ---
@@ -642,3 +643,91 @@ Let $X$ be all functions from $[n] \rightarrow [k]$ and let $A_i$ be the set of 
 &= \sum_{i = 0}^{k} \displaystyle {k \choose i} (-1)^i (k-i)^n  \quad \quad \text{out of k, choose a set of image points not mapped to}\\
 &= k!S(n, k)
 \end{align*}
+
+&nbsp;
+
+**Example**: Consider the Euler Totient Function
+$$\phi(n) = \big| \{i \in Z^+ \mid 1 \leq i \leq n, \gcd(i, n) = 1\} \big|$$
+
+Let $p_1^{e_1} p_2^{e_2} \cdots p_t^{e_t}$, for $e_1 \geq 1$ be the prime factorization
+
+Let $A_i = \{a \in [n] \mid p_1 \mid a\}$. Then we see value of $\phi(n)$ is
+
+- Note $|A_1| = \frac{n}{p_1} \quad \quad$ how many numbers in $[n]$ have $2$ as a factor
+- Note $|A_{\{1, 2\}}| = \frac{n}{p_1p_2} \quad \quad$ how many numbers in $[n]$ have $2$ AND $3$ as factors
+
+\begin{align*}
+\big| \bigcap_{i = 1}^t \bar{A_i} \big| &= \sum_{I \subseteq [t]} (-1)^{|I|}|A_I| \\
+&= \underbrace{n}_{I = \emptyset} - \big(\frac{n}{p_1} + \frac{n}{p_2} + \cdots + \frac{n}{p_t} \big) + \big(\frac{n}{p_1p_2} + \frac{n}{p_2p_3} + \cdots \big) - \big( \frac{n}{p_1 p_2 p_3} + \cdots \big) + \cdots \\
+&= n (1 - \sum_{i=1}^{t} \frac{1}{p_i} + \sum_{1 \leq i \leq j \leq t}^{} \frac{1}{p_i p_j} - \sum_{1 \leq i \leq j \leq k}^{} \frac{1}{p_i p_j p_k}) \\
+&= n(1 - \frac{1}{p_1}) (1 - \frac{1}{p_2}) \cdots (1 - \frac{1}{p_t}) \\
+&= n \prod_{i=1}^t (1 - \frac{1}{p_i})
+\end{align*}
+
+&nbsp;
+
+**Example**: How many ways to seat 20 couples in a circular, unlabelled table with 40 seats such that each significant other doesn't sit with each other
+
+Let $A_i$ be the set of seatings where couple $1$ is sitting next to each other. Then we see
+
+\begin{align*}
+\big| \bigcap_{i = 1}^{20} \bar{A_i} \big| &= \sum_{I \subseteq [20]}^{}(-1)^{|I|} |A_I| \\
+&= \sum_{i = 0}^{20} \underbrace{20 \choose i}_{\mathclap{\text{select couples}}}  (-1)^i \underbrace{\frac{(40 - i)!}{40 - i}}_{\text{glue couples}}  \overbrace{2^i}^{\mathclap{{\text{order of couples}}}}
+\end{align*}
+
+# Chapter 2
+
+## Review of Power Series
+
+**Definition - Formal Power Series**: For a sequence $\{a_n\}_{n \geq 0}$, the **Formal Power Series**
+$$F(x) = \sum_{n = 0}^{\infty}a_n x^n$$
+Is the **Ordinary Generating Function** of $\{a_n\}_{n \geq 0}$
+
+&nbsp;
+
+**Example**: Let $\{a_n\}$ be given by
+$$\frac{1}{2!}, \frac{1}{3!}, \ldots$$
+Then the generating function is
+\begin{align*}
+F(x) &= \frac{1}{2!} + \frac{1}{3!}x + \frac{1}{4!}x^2 + \cdots\\
+&= \frac{1}{x^2}( \frac{1}{2!} x^2 + \frac{1}{3!}x^3 + \cdots )\\
+&= \frac{1}{x^2} \sum_{n = 2}^{\infty} \frac{x^n}{n!} \\
+&= \frac{1}{x^2}(e^x - x - 1)
+\end{align*}
+
+&nbsp;
+
+Same principle came be applied to find a sequence $\{a_n\}_{n \geq 0}$ given an OGF $F(x)$
+
+**Example**: Find the sequence $\{a_n\}$ corresponding to
+$$F(x) = \sum_{n = 0}^{\infty}a_n x^n = \frac{-4x + 3}{(1-x)(1 -2x)}$$
+
+Using partial fractions we see
+$$\frac{A}{1-x} + \frac{B}{1-2x} = -4x + 3 = A(1-2x) + B(1-x) \implies A = 1, B = 2$$
+Thus we see that
+\begin{align*}
+F(x) &= \frac{-4x + 3}{(1-x)(1-2x)} \\
+&= \frac{1}{1-x} + \frac{2}{1- 2x}\\
+&= \sum_{n=0}^{\infty}x^n + \underbrace{2\sum_{n=0}^{\infty}(2x)^n}_{\sum_{}^{} 2^{n+1}x^n}\\
+&= \sum_{n=0}^{\infty} (1+2^{n+1})x^n
+\end{align*}
+Thus $\{a_n\}_{n \geq 0} = \{1 + 2^{n+1}\}$
+
+&nbsp;
+
+### OGF's and Recurrences
+
+We can replace $a_n$ with recursions for OGFs $\sum a_n x^n$
+
+**Example**: Consider codes of length $n$ using A, B, C, D
+
+Let $a_n$ be the total codes containing an even number of A's
+
+1. Find a recurrence for $a_n$ in terms of $a_{n-1}$
+
+$$a_n = 3a_{n-1} + 4^{n-1} - a_{n-1}$$
+
+This comes from
+
+- Code doesn't end in A $\implies a_n = 3a_{n-1}$ (there are $3$ possible letters for the last letter)
+- Code ends in A $\implies 4n^{n-1} - a_{n-1}$ (All codes of length $n-1$ minus codes of length $n-1$ with an even number of A)
