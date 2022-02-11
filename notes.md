@@ -725,9 +725,55 @@ Let $a_n$ be the total codes containing an even number of A's
 
 1. Find a recurrence for $a_n$ in terms of $a_{n-1}$
 
-$$a_n = 3a_{n-1} + 4^{n-1} - a_{n-1}$$
+    $a_n = 3a_{n-1} + 4^{n-1} - a_{n-1}$
 
-This comes from
+    This comes from
 
-- Code doesn't end in A $\implies a_n = 3a_{n-1}$ (there are $3$ possible letters for the last letter)
-- Code ends in A $\implies 4n^{n-1} - a_{n-1}$ (All codes of length $n-1$ minus codes of length $n-1$ with an even number of A)
+    - Code doesn't end in A $\implies a_n = 3a_{n-1}$ (there are $3$ possible letters for the last letter)
+    - Code ends in A $\implies 4n^{n-1} - a_{n-1}$ (All codes of length $n-1$ minus codes of length $n-1$ with an even number of A)
+
+2. Find the OGF for $\{a_n\}$
+
+\begin{align*}
+f(x) &= \sum_{n=0}^{\infty}a_n x^n = \underbrace{1}_{a_0} + \sum_{n=1}^{\infty}a_n x^n \\
+&= 1 + \sum_{n=1}^{\infty}(2a_{n-1} + 4^{n-1})x^n \\
+&= 1 + \sum_{n=1}^{\infty}2a_{n-1} x^n + \sum_{n=1}^{\infty}4^{n-1}x^n \\
+&= 1 + 2x \underbrace{\sum_{n=1}^{\infty} a_{n-1} x^{n-1}}_{f(x)} + x\underbrace{\sum_{n=1}^{\infty}(4x)^{n-1}}_{\text{geometric sum}}\\
+&= 1 + 2x(f(x) + x(\frac{1}{1-4x}))\\
+\end{align*}
+
+&nbsp; &nbsp; &nbsp; &nbsp; Thus $\displaystyle f(x) = \frac{1}{1-2x} + \frac{x}{(1-2x)(1-4x)}$
+
+3. Find the closed form of $a_n$
+
+    By partial fractions, we have
+
+\begin{align*}
+f(x) &= \frac{1}{1-2x} + \frac{-1}{2(1-2x)} + \frac{1}{2(1-4x)}\\
+&= \frac{1}{2}(\sum_{n = 0}^{\infty} (2x)^n) + \frac{1}{2} \sum_{n=0}^{\infty} (4x)^n\\
+&= \sum_{n=0}^{\infty}\underbrace{(\frac{2^n}{2} + \frac{4^n}{2})}_{a_n}x^n
+\end{align*}
+
+&nbsp; &nbsp; &nbsp; &nbsp; Thus we have $\{a_n\} = \displaystyle \{2^{n-1} + \frac{4^n}{2}\}$
+
+## OGFs and Counting
+
+Using $\displaystyle \frac{1}{1-x} = \sum_{n=0}^{\infty} x^n$, we can differentiate to get
+
+\begin{align*}
+\frac{1}{(1-x)^2} &= \sum_{n=1}^{\infty}n x^{n-1}  = 1 + 2x + \cdots = \sum_{n= 0}^{\infty}(n+1)x^n \\
+\frac{2}{(1-x)^3} &= \sum_{n=2}^{\infty}n(n-1) x^{n-2}  = 1 + 2x + \cdots = \sum_{n= 0}^{\infty}(n+2)(n+1)x^n \\
+&\cdots \\
+\frac{m!}{(1-x)^{m+1}} &= \sum_{n=0}^{\infty} \underbrace{(n+m)(n+m-1) \cdots (n+1)}_{(n+m)_m} x^n = \sum_{n=0}^{\infty} \frac{n+m)!}{n!}x^n\\
+\end{align*}
+
+Thus we have
+$$\frac{1}{(1-x)^{m+1}} = \sum_{n=0}^{\infty} \frac{(n+m)!}{n!m!}x^n = \sum_{n= 0}^{\infty} \displaystyle {n+m \choose m}x^n$$
+
+For a fixed $m$, we have
+$$\frac{1}{(1-x)^{m+1}} \iff \{a_n\} \quad \quad a_n = \displaystyle {n+m \choose m}$$
+Which is the OGF for weak compositions. However, we can now interpret
+$$\frac{1}{(1-x)^k} = \underbrace{(\frac{1}{1-x})(\frac{1}{1-x}) \cdots}_{\text{apply geometric series k times}} = (1 + x + x^2 + \cdots + \cdots) (1 + x + x^2 + \cdots + \cdots) \cdots$$
+Consider the question of getting coefficients of $x^7$. This corresponds to the weak compositions of $7$ unlabelled balls into $k$ bins
+
+However, now the chosen exponents correspond to the bin sizes
