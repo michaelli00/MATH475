@@ -764,7 +764,7 @@ Using $\displaystyle \frac{1}{1-x} = \sum_{n=0}^{\infty} x^n$, we can differenti
 \frac{1}{(1-x)^2} &= \sum_{n=1}^{\infty}n x^{n-1}  = 1 + 2x + \cdots = \sum_{n= 0}^{\infty}(n+1)x^n \\
 \frac{2}{(1-x)^3} &= \sum_{n=2}^{\infty}n(n-1) x^{n-2}  = 1 + 2x + \cdots = \sum_{n= 0}^{\infty}(n+2)(n+1)x^n \\
 &\cdots \\
-\frac{m!}{(1-x)^{m+1}} &= \sum_{n=0}^{\infty} \underbrace{(n+m)(n+m-1) \cdots (n+1)}_{(n+m)_m} x^n = \sum_{n=0}^{\infty} \frac{n+m)!}{n!}x^n\\
+\frac{m!}{(1-x)^{m+1}} &= \sum_{n=0}^{\infty} \underbrace{(n+m)(n+m-1) \cdots (n+1)}_{(n+m)_m} x^n = \sum_{n=0}^{\infty} \frac{(n+m)!}{n!}x^n\\
 \end{align*}
 
 Thus we have
@@ -772,8 +772,89 @@ $$\frac{1}{(1-x)^{m+1}} = \sum_{n=0}^{\infty} \frac{(n+m)!}{n!m!}x^n = \sum_{n= 
 
 For a fixed $m$, we have
 $$\frac{1}{(1-x)^{m+1}} \iff \{a_n\} \quad \quad a_n = \displaystyle {n+m \choose m}$$
-Which is the OGF for weak compositions. However, we can now interpret
+Which is the OGF for weak compositions into $m+1$ bins. However, we can now interpret
 $$\frac{1}{(1-x)^k} = \underbrace{(\frac{1}{1-x})(\frac{1}{1-x}) \cdots}_{\text{apply geometric series k times}} = (1 + x + x^2 + \cdots + \cdots) (1 + x + x^2 + \cdots + \cdots) \cdots$$
 Consider the question of getting coefficients of $x^7$. This corresponds to the weak compositions of $7$ unlabelled balls into $k$ bins
 
-However, now the chosen exponents correspond to the bin sizes
+However, now the chosen exponents correspond to the bin sizes. Thus we see that the OGF for weak compositions is
+$$F(x) = \frac{1}{(1-x)^k} = \sum_{n=0}^{\infty}a_n x^n = \sum_{n=0}^{\infty}\displaystyle {n+k-1 \choose k-1}x^n$$
+To obtain coefficients of $a_n$, contributions come from $x^{n_1}$ from group 1, $x^{n_2}$ from group 2, etc. such that
+$$x^{n_1} x^{n_2} \cdots x^{n_k} = x^n \implies n_1 + n_2 + \cdots + n_k = n \quad \quad n_i \geq 0$$
+
+&nbsp;
+
+**Example**: 5 apple, 4 pear, and 6 orange lollipops. Find the OGF that would yield the total ways to get 5 lollipops. State the term that we want
+$$F(x) = \underbrace{(1 + x + \cdots+ x^5)}_{\text{apples}}\underbrace{(1 + x + x^4)}_{\text{pears}} \underbrace{(1 + x + \cdots + x^6)}_{\text{oranges}}$$
+
+We want coefficients of $x^5$ in $F(x)$. Here the OGF is
+$$\frac{1}{(1-x)^k} \longleftrightarrow \{\displaystyle {n+k-1 \choose k-1}\}$$
+
+&nbsp;
+
+**Theorem**: Let $k$ be a fixed positive integer. Then the OGF for Stirling Numbers $S(n, k)$ is
+$$F_k(x) = \sum_{n=0}^{\infty}a_nx^n = \frac{x^k}{(1-x)(1-2x) \cdots (1-kx)}$$
+
+*Proof*: Note that
+$$S(0, 0) = 1 \quad \quad S(n, 0) = 0 \quad \quad S(0, k) = 0$$
+Also recall the recurrence
+$$S(n, k) = S(n-1, k-1) + kS(n -1, k)$$
+Then we see that
+\begin{align*}
+F_k(x) = \sum_{n=0}^{\infty}S(n, k)x^n &= 0 + \sum_{n=1}^{\infty}\Big(S(n-1, k-1) + kS(n-1, k)\Big)x^n \\
+&= \Big(x\sum_{n=1}^{\infty}S(n-1, k-1)x^{n-1}\Big) + \Big( kx \sum_{n=1}^{\infty}S(n-1, k) x^{n-1}\Big) \\
+&= xF_{k-1}(x) + kxF_k(x)
+\end{align*}
+Thus $\displaystyle F_k(x) = \frac{xF_{k-1}(x)}{(1-kx)}$
+Finally, applying the above equation recursively, we see that
+\begin{align*}
+F_k(x) = \frac{x}{1-kx} \frac{x}{1-(k-1)x} F_{k-2} &= \cdots \\
+&= \frac{x^k}{(1-x)(1-2x) \cdots (1-kx)}
+\end{align*}
+
+Thus the OGF is
+$$\prod_{t=1}^k \frac{x}{(1-tx)} \longleftrightarrow \{S(n, k)\}$$
+
+&nbsp;
+
+**Theorem**: Let $p(n)$ denote the total partitions of an integer $n$. Then the OGF for $p(n)$ is
+$$F(x) = \sum_{n=0}^{\infty}p(n)x^n = \frac{1}{(1-x)(1-x^2) \cdots} = \prod_{k=1}^\infty \frac{1}{1-x^k}$$
+*Proof*:
+\begin{align*}
+F(x) &= \frac{1}{1-x} \frac{1}{1-x^2}\frac{1}{1-x^3} \cdots \\ \\
+&= \underbrace{(1 + x + x^2 + x^3 + \cdots)}_{\text{how many 1's}} \underbrace{(1 + x^2 + x^4 + x^6 + \cdots)}_{\text{how many 2's}}\underbrace{(1 + x^3 + x^6 + x^9 + \cdots)}_{\text{how many 3's}} \cdots\\ \\
+&= \prod_{k=1}^\infty (1 + x^k + x^{2k} + \cdots)
+\end{align*}
+
+&nbsp;
+
+Consider the question: how many combinations of $x^n$?
+
+For $x^{m(k) * k}$, $m(k)$ is the total number of k's in the partition. For example, $m(1)$ is the total 1's in the partition
+
+All possible contributions of $x^n$ is exactly the total partitions of integer $n$
+
+&nbsp;
+
+**Example**: Given an unlimited number of pennies, nickels, dimes, quarters, and half dollars, find the OGF that would count the total ways to make $\$1$. What is the coefficient?
+
+We want coefficients of $x^{100}$ where
+\begin{align*}
+F(x) = \underbrace{(1 + x + \cdots + x^{100})}_{\text{number of pennies}} \underbrace{(1 + x^5 + \cdots + x^{100})}_{\text{number of nickels}}\underbrace{(1 + x^{10} + \cdots + x^{100})}_{\text{number of dimes}}\underbrace{(1 + x^{25} + \cdots + x^{100})}_{\text{number of quarters}}\underbrace{(1 + x^{50} + x^{100})}_{\text{number of half dollars}} \\
+\end{align*}
+
+Expanding (done on computer) yields $292x^{100} \implies 292$ ways
+
+&nbsp;
+
+**Theorem**: Total ways to partition $n$ into distinct parts equals the total ways to partition $n$ into odd sized parts
+
+*Prof*: Distinct parts OGF is
+\begin{align*}
+F(x) &= (1 + x) (1 + x^2) + \cdots \quad \quad \text{this comes from each number only appears once}\\
+&= (\frac{1 - x^2}{1 - x})(\frac{1 - x^4}{1 - x^2}) \cdots \\
+&= (\frac{1}{1-x})(\frac{1}{1-x^3})(\frac{1}{1-x^5}) \cdots \\
+&= (1 + x + x^2 + \cdots) (1 + x^3 + x^6 + \cdots)
+\end{align*}
+From above, we see that the even terms get cancelled and we are only left with the odd terms
+
+Thus number of ways to partition $n$ into distinct parts equals the total number of ways to partition $n$ into odd sized parts
