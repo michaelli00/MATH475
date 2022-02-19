@@ -858,3 +858,126 @@ F(x) &= (1 + x) (1 + x^2) + \cdots \quad \quad \text{this comes from each number
 From above, we see that the even terms get cancelled and we are only left with the odd terms
 
 Thus number of ways to partition $n$ into distinct parts equals the total number of ways to partition $n$ into odd sized parts
+
+&nbsp;
+
+**Theorem**: OGF for $p_k(n)$, the total number of partitions into exactly $k$ parts is
+$$F(x) = \sum_{n=0}^{\infty}p_k(n)x^n = \frac{x^k}{(1-x) (1-x^2) \cdots (1-x^k)} = (1 + x + x^2 + \cdots) (1 + x^2 + x^4 + \cdots) \cdots (x^k + x^{2k} + \cdots)$$
+
+*Proof*: Consider the OGF
+$$F(x) = \frac{1}{(1-x) (1-x^2) \cdots (1-x^k)} = (1 + x + x^2 + \cdots) (1 + x^2 + x^4 + \cdots) \cdots (1 + x^k + x^{2k} + \cdots)$$
+
+This counts the number of partitions of $n$ where each part has size at most $k$
+
+Looking at the Ferrer Diagram of this, we see that each row can have at most $k$ dots
+
+Thus the conjugate will have columns of size at most $k$, which establishes a bijection between counting the total partitions of $n$ with at most $k$ part
+
+To manipulate this into an OGF for $p_k(n)$, we need a exactly $k$ rows in the conjugate, and thus need a part of exactly size $k$ in the original diagram
+
+Thus we can create a new OGF that enforces an $x^k$ term
+$$F(x) = \frac{x^k}{(1-x)(1-x^2) \cdots (1-x^k)}= (1 + x + x^2 + \cdots)(1 + x^2 + x^4 + \cdots) \cdots (x^k + x^{2k} + \cdots)$$
+
+## Exponential Generating Functions
+
+**Definition - EGF**: Function for a sequence $\{a_n\}$
+$$G(x) = \sum_{n=0}^{\infty}a_n \frac{x^n}{n!}$$
+
+Recall that for OGFs $A(x) = \sum_{}^{}a_n x^n$ and $B(x) = \sum_{}^{} b_n x^n$, we have that
+$$A(x)B(x) = \sum_{n=0}^{\infty}c_nx^n \quad \quad c_n = \sum_{i=0}^{n}a_i - b_{n-i} \implies \sum_{n=0}^{\infty}c_n x^n = (a_0 + b_0) + (a_0b_1 + a_1 b_0)x + (a_0b_2 a_1b_1 + a_2 b_0)x^2 + \cdots$$
+
+&nbsp;
+
+**Lemma**: For OGFs $\displaystyle F(x) = \sum_{}^{}\bar{a_n}\frac{x^n}{n!}$ and $\displaystyle G(x) = \sum_{}^{}\bar{b_n} \frac{x^n}{n!}$, we have that
+$$F(x)G(x) = \sum_{n=0}^{\infty}\bar{c_n} \frac{x^n}{n!} \quad \quad \bar{c_n} = \sum_{i=0}^{n} \displaystyle {n \choose i} \bar{a_i} \bar{b_{n-i}}$$
+
+*Proof*: let $\displaystyle a_n = \frac{\bar{a_n}}{n!}$ and $\displaystyle b_n = \frac{\bar{b_n}}{n!}$. Then we have
+$$F(x)G(x) = \sum_{n=0}^{\infty}c_n x^n \quad \quad c_n = \sum_{i=0}^{n}a_i - b_{n-i} = \frac{1}{n!} \sum_{i=0}^{n} \displaystyle {n \choose i} \bar{a_i} \bar{b_{n-1}}$$
+This last part is apparent from
+\begin{align*}
+c_n &= \sum_{i=0}^{n} \frac{\bar{a_i}}{i!} \frac{\bar{b_{n-i}}}{(n-i)!n} \\
+&= \frac{1}{n!} \sum_{i=0}^{n} \frac{n!}{i!(n-i)!}\bar{a_i} \bar{b_{n-i}} \\
+&= \frac{1}{n!} \sum_{i=0}^{n} \displaystyle {n \choose i} \bar{a_i} \bar{b_{n-i}}
+\end{align*}
+
+&nbsp;
+
+**Example**: For a fixed $m$, let $\{a_n\} = \{\displaystyle {m \choose n}\}$. Find the EGF for this
+
+We know that the OGF for $\{a_n\}$ is
+$$(1+ x)^m = \sum_{n=0}^{\infty}\displaystyle {m \choose n} x^n = \sum_{n=0}^{\infty} \frac{m!}{n!(m-n)!}x^n$$
+
+Thus this gives
+$$\sum_{n=0}^{\infty}\frac{m!}{(m-n)!} \frac{x^n}{n!} = \sum_{n=0}^{\infty} P(m, n) \frac{x^n}{n!}$$
+
+Thus the EGF is $\{P(m, n)\}$
+
+&nbsp;
+
+**Example**: For a fixed $k$ the EGF for $\{k^n\}$ is
+$$\sum_{n=0}^{\infty}k^n \frac{x^n}{n!} = \sum_{n=0}^{\infty}\frac{(kx)^n}{n!} = e^{kx}$$
+
+&nbsp;
+
+**Theorem**: For a fixed $k$, the EGF for Stirling Numbers $S(n, k)$ is
+$$G(x) = \sum_{n=0}^{\infty} S(n, k) \frac{x^n}{n!} = \frac{(e^x - 1)^k}{k!}$$
+
+&nbsp;
+
+**Corollary**: $B(n) = \sum_{k=0}^{n}S(n, k)$. Then the EGF is
+$$G(x) = \sum_{n=0}^{\infty}B(n) \frac{x^n}{n!} = e^(e^x - 1)$$
+
+*Proof*: We know that
+$$G(x) = \sum_{n=0}^{\infty}\Big(\sum_{k=0}^{\infty}S(n, k)\Big) \frac{x^n}{n!}$$
+
+- **Note**: If $n < k$, then $S(n, k) = 0$
+
+Applying the previous theorem, we see that
+
+\begin{align*}
+G(x) &= \sum_{n=0}^{\infty}\Big(\sum_{k=0}^{\infty}S(n, k)\Big) \frac{x^n}{n!} \\
+&= \sum_{k=0}^{\infty} \frac{1}{k!}(e^x - 1)^k\\
+&= e^{(e^x - 1)} \quad \quad \quad \text{Note}: e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}
+\end{align*}
+
+&nbsp;
+
+**Consider** the EGF of permutations with repetitions of $S_1, S_2, S_3$
+$$\Big(\sum_{\substack{S_1 + S_2 + S_3 = n \\ S_1, S_2, S_3 \geq 0}}^{}\frac{n!}{S_1! S_2! S_3!} \Big)\frac{x^n}{n!}$$
+
+What is the coefficient of all possible permutations of length $n$ using A, B, C?
+
+Combinatorically, we know that this is $3^n$. Thus we see that the EGF is
+$$G(x) = \sum_{n=0}^{\infty}3^n \frac{x^n}{n!} = e^{3x}$$
+
+&nbsp;
+
+**Example**: Find the EGF that counts the total number of permutations of length $n$ containing an odd number of As, even number of Bs, and any number of Cs. Then find a closed form for the value
+
+\begin{align*}
+&\underbrace{(x + \frac{x^3}{3!} + \frac{x^5}{5!} + \cdots)}_{\text{A}} \underbrace{(1 + \frac{x^2}{2!} + \cdots)}_{\text{B}} \underbrace{(1 + x + \frac{x^2}{2!} + \cdots)}_{\text{C}} \\
+&= \Big((1 + x + \frac{x^2}{2!} + \cdots) - (1 - x + \frac{(-x)^2}{2!} + \frac{(-x)^3}{3!} + \cdots)\Big) / 2 \\
+& \quad \quad + \Big((1 + x + \frac{x^2}{2!} + \cdots) - (1 - x + \frac{(-x)^2}{2!} + \frac{(-x)^3}{3!} + \cdots)\Big) / 2 \\
+& \quad \quad + \Big(1 + x + \frac{x^2}{2!} + \cdots \Big) / 2 \\
+&= \Big(\frac{e^x - e^{-x}}{2}\Big)\Big(\frac{e^x + e^{-x}}{2}\Big)\Big(e^x\Big) \\
+&= \frac{e^{3x} - e^{-x}}{4} \\
+&= \frac{1}{4} \Big(\sum_{n=0}^{\infty} \frac{(3x)^n}{n!} - \sum_{n=0}^{\infty} \frac{(-x)^n}{n!}\Big) \\
+&= \sum_{n=0}^{\infty} \frac{(3^n - (-1)^n)}{4} \frac{x^n}{n!}
+\end{align*}
+
+&nbsp;
+
+**Consider**: What about multiplying other functions besides $e^x$
+
+Recall that if $\displaystyle F(x) = \sum_{n=0}^{\infty}\bar{a_n} \frac{x^n}{n!}, \displaystyle G(x) = \sum_{n=0}^{\infty}\bar{b_n} \frac{x^n}{n!}$, the product had coefficients
+$$\bar{c_n} = \sum_{i = 0}^{n} \displaystyle {n \choose i} \bar{a_i} \bar{b_{n-i}}$$
+
+This can be seen as separating $[n]$ into 2 blocks and assign group 1 to do something in $\bar{a_i}$ ways and $n-i$ to do something in $\bar{b_{n-i}}$ ways
+
+&nbsp;
+
+**Example**: Find EGF and closed form $a_n$ that counts total permutations of length $n$ using A, B, C, D where the total number of A, B used is odd
+
+EGF using odd numbers A, B in total is
+$$G(x) = 2 \frac{x}{1!} + 2^3 \frac{x^3}{3!} + \cdots = \sum_{k=0}^{\infty}\frac{(2x)^{2k+1}}{(2k+1)!}$$
+
