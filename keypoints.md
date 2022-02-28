@@ -8,8 +8,6 @@ header-includes:
 output: pdf_document
 ---
 
-# The Basics - Permutations, Combinations, and General Counting
-
 **$\mathbf{k}$-Permutation**: arrangement of $k$ elments from a set of $n$ elements $\quad \quad P(n, k) = \displaystyle \frac{n!}{(n-k)!}$
 
 **Permutation With Repetition**: Can permute each object type $a_i !$ times $\quad \quad \displaystyle {n \choose a_1, a_2, \ldots, a_k} = \frac{n!}{a_1! \cdots a_k!}$
@@ -22,10 +20,7 @@ output: pdf_document
 
 **Multinomial Theorem**: $\displaystyle (x_1 + \cdots + x_k)^n = \sum_{\substack{a_1 + \cdots + a_k = n \\ a_1, \ldots, a_k \geq 0}}^{}{n \choose a_1, a_2, \ldots, a_k} x_1^{a_1} \cdots x_k^{a_k}$
 
-**Pigeon Hole Principle**: If $n$ pigeons are placed into $k$ holes, then at least one hole has
-
-- At most $\displaystyle \lfloor \frac{n-1}{k} \rfloor$ (round down)
-- At least $\displaystyle \lceil \frac{n}{k} \rceil$ (round up)
+**Pigeon Hole Principle**: If $n$ pigeons are placed into $k$ holes, then at least one hole has at least $\displaystyle \lceil \frac{n}{k} \rceil$ (round up)
 
 **Weak Composition**: Ordered $k$-tuple $(a_1, \ldots, a_k)$ such that $a_i \geq 0$ and $\displaystyle \sum_{i=1}^{k}a_i = n \quad \quad \displaystyle {n+k-1 \choose k-1}$
 
@@ -39,3 +34,16 @@ output: pdf_document
 
 - Represented using **Ferrers Diagram**: partial rectangular grid with $k$ rows, each with $a_i$ squares (conjugate is also valid)
 
+**Twelvefold Way Counting**
+
+- $n$ labelled balls into $k$ labelled bins: $\quad k^n \quad \quad k!S(n, k) \quad \quad P(n, k)$
+
+- $n$ unlabelled balls into $k$ labelled bins: $\displaystyle {n + k -1 \choose k - 1} \quad \quad \displaystyle {n-1 \choose k-1} \quad \quad \displaystyle {k \choose n}$
+
+- $n$ labelled balls into $k$ unlabelled bins: $\sum_{i = 1}^k S(n, i) \quad \quad S(n, k) \quad \quad 1$
+
+- $n$ unlabelled balls into $k$ unlabelled bins: $\sum_{i = 1}^k p_i(n) \quad \quad p_k(n) \quad \quad 1$
+
+**Inclusion-Exclusion Principle**: $\big| \bigcup_{i=1}^n A_i \big| = |X| - \displaystyle \sum_{I \subseteq [n]}^{} (-1)^{|I|} |A_I| = \displaystyle \big| \bigcap_{i = 1}^n \bar{A_i} \big| = |X| - \sum_{I \subseteq [n]}^{}(-1)^{|I|}|A_I|$
+
+**OGF**: $F(x) = \sum_{n=0}^{\infty} a_n x^n \quad \quad \sum_{n=0}^\infty x^n = \frac{1}{1-x} \quad \quad \sum_{n=0}^{\infty} \frac{x^n}{n!} = e^x$

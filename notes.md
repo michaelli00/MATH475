@@ -957,8 +957,8 @@ $$G(x) = \sum_{n=0}^{\infty}3^n \frac{x^n}{n!} = e^{3x}$$
 \begin{align*}
 &\underbrace{(x + \frac{x^3}{3!} + \frac{x^5}{5!} + \cdots)}_{\text{A}} \underbrace{(1 + \frac{x^2}{2!} + \cdots)}_{\text{B}} \underbrace{(1 + x + \frac{x^2}{2!} + \cdots)}_{\text{C}} \\
 &= \Big((1 + x + \frac{x^2}{2!} + \cdots) - (1 - x + \frac{(-x)^2}{2!} + \frac{(-x)^3}{3!} + \cdots)\Big) / 2 \\
-& \quad \quad + \Big((1 + x + \frac{x^2}{2!} + \cdots) - (1 - x + \frac{(-x)^2}{2!} + \frac{(-x)^3}{3!} + \cdots)\Big) / 2 \\
-& \quad \quad + \Big(1 + x + \frac{x^2}{2!} + \cdots \Big) / 2 \\
+& \quad \quad * \Big((1 + x + \frac{x^2}{2!} + \cdots) - (1 - x + \frac{(-x)^2}{2!} + \frac{(-x)^3}{3!} + \cdots)\Big) / 2 \\
+& \quad \quad * \Big(1 + x + \frac{x^2}{2!} + \cdots \Big) / 2 \\
 &= \Big(\frac{e^x - e^{-x}}{2}\Big)\Big(\frac{e^x + e^{-x}}{2}\Big)\Big(e^x\Big) \\
 &= \frac{e^{3x} - e^{-x}}{4} \\
 &= \frac{1}{4} \Big(\sum_{n=0}^{\infty} \frac{(3x)^n}{n!} - \sum_{n=0}^{\infty} \frac{(-x)^n}{n!}\Big) \\
@@ -979,5 +979,68 @@ This can be seen as separating $[n]$ into 2 blocks and assign group 1 to do some
 **Example**: Find EGF and closed form $a_n$ that counts total permutations of length $n$ using A, B, C, D where the total number of A, B used is odd
 
 EGF using odd numbers A, B in total is
-$$G(x) = 2 \frac{x}{1!} + 2^3 \frac{x^3}{3!} + \cdots = \sum_{k=0}^{\infty}\frac{(2x)^{2k+1}}{(2k+1)!}$$
+$$G(x) = 2 \frac{x}{1!} + 2^3 \frac{x^3}{3!} + \cdots = \sum_{k=0}^{\infty}\frac{(2x)^{2k+1}}{(2k+1)!} = \frac{e^{2x} - e^{-2x}}{2}$$
 
+EGF for permutations of C, D (with no restriction)
+
+$$H(x) = (1 + 1 \frac{x}{1} + 1 \frac{x^2}{2!})(1 + 1 \frac{x}{1} + 1 \frac{x^2}{2!}) = e^x e^x$$
+
+Thus closed from EGF for total permutations is $\displaystyle \frac{e^{2x} - e^{-2x}}{2} e^x e^x = \frac{e^{4x} - 1}{2}$
+
+To find a closed for total ways $a_n$, we have
+\begin{align*}
+\frac{1}{2} (e^{4x} - 1) &= \frac{1}{2}\sum_{n=1}^{\infty} \frac{(4x)^n}{n!} \\
+&= \sum_{n=1}^{\infty} \frac{1}{2}4^n \frac{x^n}{n!}
+\end{align*}
+
+Thus $a_n = \frac{1}{2}4^n$
+
+For a counting argument, for each good permutation, we can swap A, C to get a bad permutation or swap B, D to get a bad permutation. Thus exactly half of the permutations are good
+
+&nbsp;
+
+**Example**: Place $n$ distinct books into $3$ bookshelves. What is the total number of ways to arrange the books such that each shelf has $\geq$ book?
+
+Counting argument: Look at all $n!$ permutations of books then split them into $3$ bins $\implies n! \displaystyle {n-1 \choose 3-1}$
+
+EGF argument: Let $a_i$ be the total number of ways to place $i$ books into shelf 1. Here $a_i = i!$
+
+Thus for a single shelf, the EGF is $\displaystyle \sum_{i=1}^{\infty} a_i \frac{x^i}{i!} = \sum_{i=1}^{\infty}x^i$
+
+To answer the original problem, we want coefficients of $\frac{x^n}{n!}$ in
+\begin{align*}
+(\sum_{i=1}^{\infty}x^i)^3 &= (\frac{1}{1-x} - 1)^3 \\
+&= (\frac{x}{1-x})^3 \\
+&= x^3 \sum_{j=0}^{\infty}\underbrace{\displaystyle {j+3-1 \choose 3-1}}_{\mathclap{\text{weak comp into 3 parts OGF}}}x^j \\
+&= \sum_{j=0}^{\infty}\displaystyle {j + 3 - 1 \choose 3 - 1}x^{j+3} \\
+&= \sum_{n=3}^{\infty}\displaystyle {n-1 \choose 3-1}x^n \\
+&= \sum_{n=3}^{\infty}n! \displaystyle {n-1 \choose 2} \frac{x^n}{n!}
+\end{align*}
+
+Thus the coefficients for the EGF is $n! \displaystyle {n-1 \choose 2}$
+
+&nbsp;
+
+**Example**: EGF of $D_n$ Derangements of $f: [n] \rightarrow [n]$
+
+Let $D(x)$ be the EGF for $D_n$
+$$D(x) = \sum_{n=0}^{\infty} D_n \frac{x^n}{n!}$$
+
+Consider the EGF for all bijections where $f(i) = i$: $\displaystyle \sum_{n=0}^\infty 1 \frac{x^n}{n!} = e^x$ (only one way)
+
+Now consider $D(x)e^x = (D_0 + D_1 x + D_2 \frac{x^2}{2!} + \cdots ) (1 + x + \frac{x^2}{2!} + \cdots)$
+
+- The coefficients of $\frac{x^n}{n!}$ is $\displaystyle \sum_{n=0}^{n} \displaystyle {n \choose i} D_i b_{n-i}$ (choose $i$ to derange and $n-i$ to fix)
+
+- This counts all possible bijections
+
+Thus EGF of all bijections is
+$$F(x) = \sum_{n=0}^{\infty}n! \frac{x^n}{n!} = \sum_{n=0}^{\infty}x^n = \frac{1}{1-x}$$
+
+Thus $\frac{1}{1-x} = D(x)e^x \implies D(x) = e^{-x} \frac{1}{1-x}$
+
+To get the sequence $a_n$ we have
+\begin{align*}
+D(x) &= e^{-x}\frac{1}{1-x} \\
+&= (\sum_{j=0}^{\infty}(-1)^j \frac{x^j}{j!}) (\sum_{i=0}^{\infty} x^i)
+\end{align*}
