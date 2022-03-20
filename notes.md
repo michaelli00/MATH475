@@ -1310,19 +1310,20 @@ $$\sum_{k=1}^{n}C_{k-1}C_{n-k} = \sum_{n=0}^{n}C_k C_{n-k-1} = C_n$$
 
 **Example**
 
-\begin{center}
-  \begin{tikzpicture}[node/.style={circle}]
-    \node (a1) at (3,5)  {B};
-    \node (a2) at (3,6)  {??};
-    \node (a3) at (4,7)  {A};
-    \node (a4) at (5,6)  {B};
-    \node (a5) at (5,5)  {A};
+&nbsp;
 
-    \draw (a1) -- (a2);
-    \draw (a2) -- (a3);
-    \draw (a3) -- (a4);
-    \draw (a4) -- (a5);
-    \draw (a5) -- (a1);
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {A};
+  \node[main] (2) [below left of=1] {??};
+  \node[main] (3) [below right of=1] {B};
+  \node[main] (4) [below of=3] {A};
+  \node[main] (5) [below of=2] {B};
+  \draw (1) -- (2);
+  \draw (1) -- (3);
+  \draw (3) -- (4);
+  \draw (2) -- (5);
+  \draw (4) -- (5);
   \end{tikzpicture}
 \end{center}
 
@@ -1338,9 +1339,11 @@ Above graph cannot be bipartite since the neighbors of ?? lie in A and B
 
 Then we have $v_1 \in A, v_2 \in B \ldots, v_{2k-1} \in A, v_1 \in A$. Thus $G$ is not bipartite
 
-$\impliedby$ Let $u \in V(G)$ and assume $G$ has no odd cycles
+$\impliedby$ WLOG, let $G$ be connected (if it isn't take any connected component in $G$)
 
-Define $A = \{w \mid d(u, w) \text{ is even}\}$ and $B = \{w \mid d(u, w) \text{ is odd}\}$
+Let $u \in V(G)$ and assume $G$ has no odd cycles (all cycles are even)
+
+Define $A = \{w \mid d(u, w) \text{ is even}\}$ and $B = \{w \mid d(u, w) \text{ is odd}\}$ (these are our partites)
 
 BWOC, let $w_1, w_2 \in B$ such that $w_1 \sim w_2$ (similar idea can be shown for A)
 
@@ -1348,17 +1351,36 @@ Consider the paths $u = v_0, v_1, \ldots, v_{2s+1} = w_1$ and $u = u_0, u_1, \ld
 
 Let $x$ be the last vertex shared by the 2 paths
 
-Necessarily, we must have that $x = v_i = u_i$. Otherwise a shorter path exists
+&nbsp;
 
-But then we have $\underbrace{x = v_i, v_{i+1}, \ldots, v_{2s + 1} = w_1}_{2s + 1 - i \text{ steps}} \underbrace{\sim w_2}_{1 \text{ step}}$
-
-Which yields a cycle of length $2(s + t - -i + 1) + 1$, which is an odd cycle. Contradiction
-
-**TODO LOOK AT PROOF AGAIN**
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {$u$};
+  \node[main] (2) [right of=1] {$x$};
+  \node[main] (3) [above right of=2] {$w_1$};
+  \node[main] (4) [below right of=2] {$w_2$};
+  \draw (1) -- (2);
+  \draw (2) -- (3);
+  \draw (2) -- (4);
+  \draw (3) -- (4) [dashed];
+  \end{tikzpicture}
+\end{center}
 
 &nbsp;
 
-**Definition - Complete Bipartite Graph** with partites $A, B$ of size $a, b$ is denoted $K_{a, b}$ where every vertex in $A$ is adjacent toe very vertex in $B$
+Necessarily, we must have that $x = v_i = u_i$. Otherwise a shorter path exists
+
+But then the cycle containing $x, \ldots, w_1, w_2, \ldots, x$ is of odd length (since the paths $x w_1$ and $x w_2$ have the same parity)
+
+Thus it is impossible for an edge to connect two nodes in $B$
+
+Similarly, an edge cannot connect two nodes in $A$
+
+Thus any edge must connect between a node in $A$ and a node in $B$, which are our partites, and thus $G$ is bipartite
+
+&nbsp;
+
+**Definition - Complete Bipartite Graph** with partites $A, B$ of size $a, b$ is denoted $K_{a, b}$ where every vertex in $A$ is adjacent to every vertex in $B$
 
 ## Vertex Degree
 
@@ -1387,6 +1409,8 @@ Which yields a cycle of length $2(s + t - -i + 1) + 1$, which is an odd cycle. C
 &nbsp;
 
 **Definition - d-regular**: Graph $G$ where every vertex has degree $d$
+
+&nbsp;
 
 **Example**: $K_4$ is 3-regular with 4 vertices
 
@@ -1418,13 +1442,13 @@ Which yields a cycle of length $2(s + t - -i + 1) + 1$, which is an odd cycle. C
 
 &nbsp;
 
-**Non-Example**: A 3-regular graph with 5 vertices doesn't exist by the Corollary above
+**Non-Example**: A 3-regular graph with 5 vertices doesn't exist by the Corollary above (there must be an even number of vertices with odd degree)
 
 &nbsp;
 
-**Theorem**: There exists a d-regular graph on $v$ vertices if and only if at least one of $d$, n$ is even
+**Theorem**: There exists a d-regular graph on $v$ vertices if and only if at least one of $d, n$ is even
 
-*Proof*: $\implies$ By Contraposition. If $d, n$ are both odd, then a d-regular graph doesn't exist by the corollary
+*Proof*: $\implies$ By Contraposition. If $d, n$ are both odd, then a d-regular graph doesn't exist by the Corollary above
 
 $\impliedby$ If $d=2k$, arrange the vertices in a cycle. Then $v_i$ joins to $k$ preceding and $k$ succeeding vertices
 
@@ -1432,13 +1456,84 @@ Otherwise assume $d$ is odd and $n$ is even. We join edges as before, along with
 
 &nbsp;
 
-**Example**: **TODO DRAW EXAMPLE OF INDUCING A NON-REGULAR GRAPH INSIDE A REGULAR GRAPH**
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {$v_1$};
+  \node[main] (2) [below right of=1] {$v_2$};
+  \node[main] (3) [below right of=2] {$v_3$};
+  \node[main] (4) [below of=3] {$v_4$};
+  \node[main] (5) [below left of=4] {$v_5$};
+  \node[main] (6) [below left of=5] {$v_6$};
+  \node[main] (7) [above left of=6] {$v_7$};
+  \node[main] (8) [above left of=7] {$v_8$};
+  \node[main] (9) [above of=8] {$v_{9}$};
+  \node[main] (10) [above right of=9] {$v_{10}$};
+  \node[main] (11) [above of=10] {$v_{11}$};
+
+  \draw[] (1) -- (2);
+  \draw[] (1) -- (3);
+  \draw[] (1) -- (4);
+  \draw[] (1) -- (5);
+  \draw[] (1) -- (6);
+  \draw[] (1) -- (7);
+  \draw[] (1) -- (8);
+  \draw[] (1) -- (9);
+  \draw[] (1) -- (10);
+  \draw[] (1) -- (11);
+  \end{tikzpicture}
+\end{center}
 
 &nbsp;
 
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {$v_1$};
+  \node[main] (2) [below right of=1] {$v_2$};
+  \node[main] (3) [below right of=2] {$v_3$};
+  \node[main] (4) [below of=3] {$v_4$};
+  \node[main] (5) [below left of=4] {$v_5$};
+  \node[main] (6) [below left of=5] {$v_6$};
+  \node[main] (7) [left of=6] {$v_7$};
+  \node[main] (8) [above left of=7] {$v_8$};
+  \node[main] (9) [above left of=8] {$v_9$};
+  \node[main] (10) [above of=9] {$v_{10}$};
+  \node[main] (11) [above right of=10] {$v_{11}$};
+  \node[main] (12) [above right of=11] {$v_{12}$};
+
+  \draw[] (1) -- (2);
+  \draw[] (1) -- (3);
+  \draw[] (1) -- (4);
+  \draw[] (1) -- (5);
+  \draw[] (1) -- (6);
+  \draw[red] (1) -- (7);
+  \draw[] (1) -- (8);
+  \draw[] (1) -- (9);
+  \draw[] (1) -- (10);
+  \draw[] (1) -- (11);
+  \draw[] (1) -- (12);
+  \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+
 **Theorem**: For a given graph $G$, there exists a d-regular graph $H$ such that $G$ is an induced subgraph of $H$
 
-*Proof*: Shown in the example above
+*Proof*: If $G$ is $d$-regular, then $H = G$ and we are done
+
+Otherwise, create a copy of $G$, call it $G'$
+
+Now construct $G_1$ be adding $v_i \in G \sim v_i' \in G'$ for vertices of $G$ with $\deg(v) < d$
+
+Thus $\delta(G_1) = \delta(G) + 1$. If $G_1$ is $d$-regular, then we are done
+
+Otherwise, apply the procedure recursively on $G_1$
+
+&nbsp;
+
+**Example**:
+
+![Non-regular Graph Induced in a Regular Graph](./assets/induced-regular-graph.png){ height=200px}
 
 &nbsp;
 
@@ -1446,21 +1541,723 @@ Otherwise assume $d$ is odd and $n$ is even. We join edges as before, along with
 
 &nbsp;
 
-**Theorem**: Let $d_1, \ldots, d_n$ be a non-increasing sequence. There exists a graphical graph $G$ with these degrees if and only if the sequence
-$$d_2 -1, d_3 - 1, \ldots, d_{d_1 + 1} - 1, \underbrace{d_{d_1 + 2}, \ldots, d_n}_{\text{no minus term}}$$
+**Theorem**: Let $d = d_1, \ldots, d_n$ be a non-increasing sequence. There exists a graphical graph $G$ with these degrees if and only if the sequence
+
+$$s_1 = d_2 -1, d_3 - 1, \ldots, d_{d_1 + 1} - 1, \underbrace{d_{d_1 + 2}, \ldots, d_n}_{\text{no minus term}}$$
+
 is graphical. That is, delete $d_1$ then delete 1 edge from the next $d_1$ terms (may require reordering the sequence)
 
 *Proof*: $\impliedby$ Given $d_2 - 1, \ldots, d_n$ is graphical, we can add a new vertex $v_1$ and join $v_1$ to the first $d_1$ vertices in the sequence
 
-$\implies$ BWOC assume there is no $v_1$ with $\deg(v_1) = d_1$ that is adjacent to all vertices of the next highest degrees $d_2, d_3, \ldots, d_{d_1+1}$
+$\implies$ Suppose that there is a graph $H$ with the degree sequence $s$ and a vertex $u$ of degree $d_1$ that is adjacent with vertices of degree $d_2, d_3, \ldots, d_{d_1+1}$. Then clearly $s_1$ is the sequence of $H \setminus u$ and is graphical
 
-Among all graphs with the degree sequence $d_1, \ldots, d_n$, take the one where the sum degree of vertices adjacent to $v_1$ is maximized
+Now we show that such a graph $H$ has to exist
 
-Necessarily, there is a vertex $v_s, s \notin \{2, 3, \ldots, d_1 + 1\}$ adjacent to $v_1$ such that $\deg(v_s) < \deg(v_r)$ for $r \in \{2, 3, \ldots, d_1 + 1\}$
+BWOC, suppose no graph $H$ exists such that $v_1$ is adjacent to vertices of degree $d_2, d_3, \ldots, d_{d_1 + 1}$
 
-But then some $v_r$ must be adjacent to a vertex $v_t$ that is NOT adjacent to $v_1$
+Among all graphs with degree sequence $s$, let $G$ be the graph with the largest sum of degree of neighbors of $v_1$
 
+Since $v_1$ is not adjacent to vertices with degree $d_2, \ldots, d_{d_1 + 1}$, $v_1$ is NOT adjacent to the next $d_1$ vertices with the highest degrees
+
+Thus $v_1 \sim v_s$, where $\deg(v_s) < \deg(v_r)$ for some $v_r \in V(G)$ that is NOT adjacent to $v_1$
+
+Since $\deg(v_r) > \deg(v_s)$ there is some $v_t \in V(G)$ such that $v_t \sim v_r$ but NOT adjacent to $v_s$
+
+Now consider the graph $G'$ where we remove $v_1 \sim v_s$ and $v_r \sim v_t$ and replace with $v_1 \sim v_r$ and $v_s \sim v_t$
+
+![Degree Sequence Proof Diagram](./assets/degree-seq-proof.png){ height=150px}
+
+Clearly the $G, G'$ have the same vertex set and satisfy the degree sequence $s$
+
+However, now the sum of the degrees of vertices adjacent to $v_1$ is larger than our proposed maximal. Contradiction
+
+Thus such a graph $H$ must exist and the sequence $s_1$ is graphical
 
 &nbsp;
 
-**Example**: $(3, 3, 2, 1) \leftrightarrow (2, 2, 1, 1) \leftrightarrow (1, 0, 1) = (1, 1, 0)$
+**Example**: $s = (5, 4, 3, 3, 2, 2, 2, 1, 1, 1)$
+
+$s_1 = (3, 2, 2, 1, 1, 2, 1, 1, 1) \leftrightarrow (3, 2, 2, 2, 1, 1, 1, 1, 1)$
+
+$s_2 = (1, 1, 1, 1, 1, 1, 1, 1)$
+
+- **Note**: When going from $s_1$ to $s$, we need to add edges to the ORIGINAL sequence
+
+![Degree Sequence Example 1](./assets/degree-seq-example-1.png){ height=100px}
+
+&nbsp;
+
+**Non-Example**: $s = 7, 7, 4, 3, 3, 3, 2, 1$
+
+$s_1 = (6, 3, 2, 2, 2, 1, 0)$
+
+$s_2 = (2, 1, 1, 1, 0, -1) \quad \quad$ impossible to have a vertex of negative degree
+
+Thus $s$ is NOT graphical
+
+- **Note**: As another argument, $G$ has order $8$ and $s$ has 2 vertices with degree $7$, thus each vertex must have at least degree $2$. Thus $s$ is NOT graphical
+
+## Properties of Trees
+
+**Definition - Acyclic**: A graph is **acyclic** If it contains no cycles
+
+&nbsp;
+
+**Definition - Tree**: A **tree** is an acyclic, connected graph
+
+&nbsp;
+
+**Definition - Leaf**: A **leaf** is a vertex with degree $1$
+
+&nbsp;
+
+**Definition - Forest**: A **forest** is an acyclic graph (union of trees)
+
+**Notation $\mathbf{G \setminus v}$**: Denotes the graph created by deleting vertex $v$ and all adjacent edges to it
+
+&nbsp;
+
+**Example**: Consider $K_4$ and removing the bottom-right corner vertex
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node/.style={circle}]
+    \node[circle, draw=black, fill=black, name=0, inner sep=0pt,minimum size=4pt] at (0,0) (0) {};
+    \node[xshift=-2mm] at (0.west) {};
+
+    \node[circle, draw=black, fill=black, name=1, inner sep=0pt,minimum size=4pt] at (0,1) (1) {};
+    \node[xshift=-2mm] at (1.west) {};
+
+    \node[circle, draw=black, fill=black, name=3, inner sep=0pt,minimum size=4pt] at (1,0) (2) {};
+    \node[xshift=2mm] at (3.east) {};
+
+    \node[circle, draw=black, fill=black, name=2, inner sep=0pt,minimum size=4pt] at (1,1) (3) {};
+    \node[xshift=2mm] at (2.east) {};
+
+    \node[circle, draw=black, fill=black, name=0, inner sep=0pt,minimum size=4pt] at (4,0) (4) {};
+    \node[xshift=-2mm] at (4.west) {};
+
+    \node[circle, draw=black, fill=black, name=1, inner sep=0pt,minimum size=4pt] at (4,1) (5) {};
+    \node[xshift=-2mm] at (5.west) {};
+
+    \node[circle, draw=black, fill=black, name=2, inner sep=0pt,minimum size=4pt] at (5,1) (7) {};
+    \node[xshift=2mm] at (7.east) {};
+
+
+    \draw[] (0) -- (2);
+    \draw[] (0) -- (3);
+    \draw[] (0) -- (1);
+    \draw[] (1) -- (2);
+    \draw[] (1) -- (3);
+    \draw[] (2) -- (3);
+
+    \draw[] (4) -- (7);
+    \draw[] (4) -- (5);
+    \draw[] (5) -- (7);
+  \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+**Theorem**: Every tree on $2$ or more vertices has at least $2$ leaves
+
+*Proof*: Since a tree is acyclic, take a path of longest length with endpoints $u, v$
+
+Neither $u$ nor $v$ can have $\deg \geq 2$ since otherwise a longer path would exist
+
+Thus $\deg(u) = \deg(v) = 1$
+
+&nbsp;
+
+**Theorem**: Let $G$ be on $\geq 1$ vertices. The following are equivalent
+
+1. $G$ is a tree (connected and acyclic)
+
+2. $G$ is connected with $n-1$ edges
+
+3. $G$ is acyclic with $n-1$ edges
+
+4. There exists a unique path for any $2$ distinct vertices $u, v \in V(G)$
+
+*Proof $\mathit{1 \rightarrow 2, 3}$*: By Induction on $n$
+
+Base case: $n =1$. Here $G$ is an isolated vertex with $1-1 = 0$ edges
+
+IH: Suppose that for a $G$ on $i \leq n$ vertices, $G$ is connected and acyclic with $i - 1$ edges
+
+IS: Let $G$ be on $n+1$ vertices. Necessarily, $G$ must have a leaf $v$, so let $G' = G \setminus v$
+
+Here $G'$ is on $n$ vertices, and by IH must be connected with $n-1$ edges
+
+Adding back $v$ and its incident edge, we get that $G$ has $n + 1 -1 = n$ edges
+
+Furthermore, since a leaf has degree $1$, $G$ must be connected and acyclic
+
+&nbsp;
+
+*Proof $\mathit{2 \rightarrow 3}$*: Let $G$ be a connected graph with $n-1$ edges.
+
+BWOC, assume that $G$ has cycles
+
+We can delete edges so that there are no cycles but $G$ remains connected
+
+This is possible since this only removes $1$ of $2$ paths between vertices
+
+Thus this new graph call it $G'$, is acyclic and connected $\implies$ it's a tree
+
+However, $G'$ has $< n-1$ edges which contradicts the previous proof.
+
+Thus $G$ must be acyclic with $n-1$ edges
+
+&nbsp;
+
+*Proof $\mathit{3 \rightarrow 1}$*: Let $G$ be an acyclic graph with $n-1$ edges. We show that $G$ is connected
+
+Let $C_1, \ldots, C_k$ be the components of $G$ and assume that $C_i$ has $n_i$ vertices
+
+Then by the previous proof, each $C_i$ is connected and acyclic and is thus a tree
+
+From the first proof, each $C_i$ has $n_i - 1$ edges. By assumption, we also have that $G$ has $n-1$ total edges. Thus we have
+
+$$n - 1 = \sum_{i=1}^{k}n_i - 1 = n - k \implies k = 1$$
+
+Thus $G$ is connected
+
+&nbsp;
+
+*Proof $\mathit{1 \rightarrow 4}$*: Let $G$ be a tree. BWOC, suppose that there exists $2$ $uv$-paths
+
+Let $w$ be the first vertex shared such that the next one is not shared
+
+Let $z$ be the vertex after $w$ that is shared by both paths
+
+This creates a cycle, contradicting that $G$ is a tree
+
+Thus there exists a unique path for any 2 distinct vertices $u, v$
+
+&nbsp;
+
+*Proof $\mathit{4 \rightarrow 1}$*: Consider a unique $uv$-path between any $2$ arbitrary vertices $u, v$
+
+By assumption, $G$ is connected since any path can be formed
+
+BWOC, suppose that $G$ has a cycle. Then there are some vertices that have $2$ possible paths between each other
+
+Contradiction. Thus $G$ must be acyclic and thus a tree
+
+&nbsp;
+
+**Theorem**: The minimum number of edges in a connected graph on $n$ vertices is $n-1$
+
+*Proof*: The statement clearly holds for $n = 1, 2, 3$. Thus we look at $n \geq 4$
+
+BWOC, suppose that $G$ be a graph of smallest order that is connected on $m \leq n-2$ edges
+
+First we show that $G$ has a leaf. BWOC, suppose $G$ has no leaves.
+
+Since $\displaystyle \sum_{v \in V(G)} \deg(v) = 2m$, if there were no leaves, then $2m \geq \underbrace{2n}_{\deg(v) \geq 2} \implies m \geq n$, contradicting that $m \leq n - 2$
+
+Thus $G$ has a leaf, call it $v$
+
+Looking at $G' = G \setminus v$, we see that $G'$ is connected on $n-1$ vertices with $n-3$ or fewer edges
+
+This contradicts the minimality of $n$ since we claimed that $G$ is the graph of smallest order that is connected on $m \leq n-2$ edges
+
+Thus the minimum number of edges in a connected graph on $n$ vertices is $n-1$
+
+&nbsp;
+
+**Example**: Suppose that $G$ is a tree on $13$ vertices with degrees $1, 2, 5$. If $G$ has $3$ vertices of degree $2$, how many leaves does it have?
+
+Let $x$ be the total number of leaves. Then we have $13 - 3 - x = 10 - x$ vertices of degree $5$
+
+Moreover, we see that
+
+$$\sum_{v \in V} \deg(v) = (3)2 + (x)1 + (10-x)5 = 2(13-1) = 24 \implies x= 8$$
+
+&nbsp;
+
+**Definition - Bridge**: An edge $e$ is a **bridge** of a connected graph if removing it ($G \setminus e)$ disconnects the graph
+
+&nbsp;
+
+**Theorem**: An edge $e$ is a bridge if and only if $e$ isn't in any cycles
+
+## Spanning Trees
+
+**Definition - Spanning Tree**: Tree $T$ such that $V(T) = V(G)$ and $E(T) \subseteq E(G)$
+
+&nbsp;
+
+Consider the total number of trees on $n$ vertices
+
+- If the vertices are unlabelled, there is no easy formula
+
+- If the vertices, are labelled, we can look at the problem: How many labelled spanning trees are in $K_n$
+
+
+**Definition - Prüfer Code**: A sequence of length $n-2$ where each entry can take on $1$ to $n$, which corresponds to a labelled tree
+
+&nbsp;
+
+**Converting a Spanning Tree to a Prüfer Code**:
+
+1. Delete the leaf with the lowest index and write down the vertex adjacent to the leaf
+
+2. Repeat until only an edge remains
+
+&nbsp;
+
+**Example**: Consider the tree
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {$1$};
+  \node[main] (2) [right of=1] {$2$};
+  \node[main] (3) [below of=2] {$3$};
+  \node[main] (4) [below of=3] {$4$};
+  \node[main] (6) [right of=2] {$6$};
+  \node[main] (5) [right of=6] {$5$};
+
+  \draw[] (1) -- (2);
+  \draw[] (2) -- (3);
+  \draw[] (3) -- (4);
+  \draw[] (2) -- (6);
+  \draw[] (5) -- (6);
+  \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+The Prufer code is $2, 3, 2, 6$. This comes from
+
+- Removing $1 \implies$ write down $2$
+
+- Removing $4 \implies$ write down $3$
+
+- Removing $3 \implies$ write down $2$
+
+- Removing $2 \implies$ write down $6$
+
+- Stop on the edge $6 \sim 5$
+
+&nbsp;
+
+**Prufer Code to Spanning Tree**:
+
+1. Given $(a_1, a_2, \ldots, a_{n-2})$, let $b_1$ be the smallest index not used
+
+2. Create $a_1 \sim b_1$
+
+3. Delete $a_1$ and append $b_1$ to the end of the sequence
+
+4. Let $b_2$ be the lowest index showing up in the new sequence
+
+5. Create the edge $b_2 \sim a_2$
+
+6. Delete $a_2$ and append $b_2$ to the end of the sequence
+
+7. Repeat until the sequence is $b_1, \ldots, b_{n-2}$
+
+8. There will be $2$ indices $i, j$ NOT in the sequence. Create an edge $i \sim j$ to form a tree
+
+&nbsp;
+
+**Example**: Consider the sequence $(2, 2, 6, 4)$
+
+- $b_1 = 1 \implies (2, 6, 4, 1)$
+
+- $b_2 = 3 \implies (6, 4, 1, 3)$
+
+- $b_3 = 2 \implies (4, 1, 3, 2)$
+
+- $b_4 = 5 \implies (1, 3, 2, 5)$
+
+- Stop. $4, 6$ aren't in the graph, so connect them
+
+The corresponding tree is
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {$1$};
+  \node[main] (2) [right of=1] {$2$};
+  \node[main] (3) [right of=2] {$3$};
+  \node[main] (6) [below of=2] {$6$};
+  \node[main] (4) [below left of=6] {$4$};
+  \node[main] (5) [right of=4] {$5$};
+
+
+  \draw[red] (1) -- (2);
+  \draw[orange] (3) -- (2);
+  \draw[green] (2) -- (6);
+  \draw[blue] (4) -- (5);
+  \draw[brown] (4) -- (6);
+  \end{tikzpicture}
+\end{center}
+
+Where the order of edge insertion is red, orange, green, blue, brown
+
+&nbsp;
+
+**Theorem**: Each Prufer code corresponds to a unique tree. Hence the total number of labelled spanning trees of $K_n$ is $n^{n-2}$
+
+- This comes from having ending the algorithm with a sequence $b_1, \ldots, b_{n-2}$ where each $b_i$ can take on any $n$ value
+
+*Proof*: Given a tree, using our algorithm, we have a sequence
+
+Now we show that every sequence corresponds to a unique by induction on the number of vertices $n$
+
+Base Case: Easily verifiable for $n = 3$
+
+IH: Assume that the claim is true up to some $n$
+
+IS: Given $(a_1, \ldots, a_{n-1})$ (so the tree has $n+1$ vertices), show that the sequence comes from exactly 1 tree
+
+Let $x$ be the smallest index not in the sequence. Then in our construction of the tree, $x$ will be a leaf and $x \sim a_1$
+
+Now consider the subtree excluding $x$ and the edge incident on it. By IH, this tree must be unique
+
+But then the sequence $(a_1, \ldots, a_{n-1})$ must correspond to a unique tree with $x \sim a_1$. Otherwise $a_1 would not be the first value of the sequence
+
+&nbsp;
+
+**Consider**: Given a vertex $i$ with degree $d_i$, how many times will the value show up in the code?
+
+Every time we delete a leaf adjacent to $i$, it will appear in the sequence until $i$ is a leaf
+
+Thus $i$ shows up $d_i - 1$ times
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {};
+  \node[main] (2) [right of=1] {$i$};
+  \node[main] (3) [above of=2] {};
+  \node[main] (4) [above right of=2] {};
+  \node[main] (5) [right of=2] {};
+  \node[main] (6) [below right of=2] {};
+  \node[main] (7) [below of=2] {};
+
+  \node[main] (8) [right of=5] {};
+  \node[main] (9) [right of=8] {$i$};
+
+
+
+
+  \draw[] (1) -- (2);
+  \draw[] (2) -- (3);
+  \draw[] (2) -- (4);
+  \draw[] (2) -- (5);
+  \draw[] (2) -- (6);
+  \draw[] (2) -- (7);
+
+  \draw[] (8) -- (9);
+  \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+**Corollary**: The total trees (labelled) such that vertex $i$ has degree $d_i$ is
+
+$$\displaystyle {n-2 \choose d_1 - 1, d_2 - 1, \ldots} \quad \quad \text{Permutation with repetition}$$
+
+&nbsp;
+
+**Example**: Let $n = 6$ and consider $d_1 = d_2 = 3$ and $d_3 = d_4 = d_5 = d_6 = 1$
+
+By the formula, we have $\displaystyle {6-2 \choose 2, 2} = 6$ trees
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {$1$};
+  \node[main] (2) [right of=1] {$2$};
+  \node[main] (3) [above left of=1] {};
+  \node[main] (4) [below left of=1] {};
+  \node[main] (5) [above right of=2] {};
+  \node[main] (6) [below right of=2] {};
+
+  \draw[] (1) -- (2);
+  \draw[] (1) -- (3);
+  \draw[] (1) -- (4);
+  \draw[] (2) -- (5);
+  \draw[] (2) -- (6);
+  \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+Note that the tree is determined by picking $2$ of the leaf indices $\implies \displaystyle {4 \choose 2} = 6$ ways to create labelled trees with thus Prufer code
+
+This follows from swapping labels on either ends of the tree correspond to the same tree. That is
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+  \node[main] (1) {$1$};
+  \node[main] (2) [above left of=1] {$5$};
+  \node[main] (3) [below left of=1] {$6$};
+
+  \node[main] (4) [right = 2cm of 1] {$1$};
+  \node[main] (5) [above left of=4] {$6$};
+  \node[main] (6) [below left of=4] {$5$};
+
+  \draw[] (1) -- (2);
+  \draw[] (1) -- (3);
+
+  \draw[] (4) -- (5);
+  \draw[] (4) -- (6);
+  \end{tikzpicture}
+\end{center}
+
+Correspond to the same tree (by rotation argument)
+
+### Rooted Plane Trees
+
+**Definition - Rooted Plane Tree**: Trees that have a starting root vertex and the children of the tree have a left, right ordering
+
+- **Note**: Vertices are NOT labelled
+
+&nbsp;
+
+**Example**: Consider $n = 4$. There are $5$ rooted plane trees
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={8mm}, main/.style = {draw, circle}]
+  \node[main] (1) {};
+  \node[main] (2) [below of=1] {};
+  \node[main] (3) [below of=2] {};
+  \node[main] (4) [below of=3] {};
+
+  \node[main] (5) [right = 3cm of 1] {};
+  \node[main] (6) [below of=5] {};
+  \node[main] (7) [below left of=6] {};
+  \node[main] (8) [below right of=6] {};
+
+  \node[main] (9) [right = 3cm of 5] {};
+  \node[main] (10) [below left of=9] {};
+  \node[main] (11) [below right of=9] {};
+  \node[main] (12) [below of=10] {};
+
+  \node[main] (13) [right = 3cm of 9] {};
+  \node[main] (14) [below left of=13] {};
+  \node[main] (15) [below right of=13] {};
+  \node[main] (16) [below of=15] {};
+
+  \node[main] (17) [right = 3cm of 13] {};
+  \node[main] (18) [below left of=17] {};
+  \node[main] (19) [below right of=17] {};
+  \node[main] (20) [below of=17] {};
+
+  \draw[] (1) -- (2);
+  \draw[] (2) -- (3);
+  \draw[] (3) -- (4);
+
+  \draw[] (5) -- (6);
+  \draw[] (6) -- (7);
+  \draw[] (6) -- (8);
+
+  \draw[] (9) -- (10);
+  \draw[] (9) -- (11);
+  \draw[] (10) -- (12);
+
+  \draw[] (13) -- (14);
+  \draw[] (13) -- (15);
+  \draw[] (15) -- (16);
+
+  \draw[] (17) -- (18);
+  \draw[] (17) -- (19);
+  \draw[] (17) -- (20);
+  \end{tikzpicture}
+\end{center}
+
+- **Note**: The 3rd and 4th trees differ because of left, right ordering
+
+&nbsp;
+
+On rooted plane trees, we can do a clockwise walk on the border of the tree starting at the root
+
+In this traversal, each edge is covered twice
+
+In particular, as we move down, we can never go up more than we have gone down (similar to Catalan Numbers)
+
+Thus the number of rooted plane trees on $n+1$ vertices (because of the root) equals the Catalan Numbers
+
+$$C_n = \frac{\displaystyle {2n \choose n}}{n+1}$$
+
+### Rooted Forest
+
+**Definition - Rooted Forest**: A forest where each tree (component) has a distinguishable vertex as the root
+
+&nbsp;
+
+**Consider**: What is the total number of labelled rooted forests?
+
+&nbsp;
+
+**Example**: $n = 3$
+
+&nbsp;
+
+\begin{center}
+  \begin{tabular}{cp{8cm}}
+    \begin{tikzpicture}[node distance={8mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$2$};
+    \node[main] (3) [right of=2] {$3$};
+    \end{tikzpicture}
+  &
+    $\implies 1$ way
+  \\ \\
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$2$};
+    \node[main] (3) [right of=2] {$3$};
+
+    \draw[] (1) -- (2);
+    \end{tikzpicture}
+  &
+    $\implies 2$ ways (need to choose a root)
+  \\ \\
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$3$};
+    \node[main] (3) [right of=2] {$2$};
+
+    \draw[] (1) -- (2);
+    \end{tikzpicture}
+  &
+    $\implies 2$ ways (need to choose a root)
+  \\ \\
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$2$};
+    \node[main] (2) [right of=1] {$3$};
+    \node[main] (3) [right of=2] {$1$};
+
+    \draw[] (1) -- (2);
+    \end{tikzpicture}
+  &
+    $\implies 2$ ways (need to choose a root)
+  \\ \\
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$2$};
+    \node[main] (3) [right of=2] {$3$};
+
+    \draw[] (1) -- (2);
+    \draw[] (2) -- (3);
+    \end{tikzpicture}
+  &
+    $\implies 3$ ways (choose root and order vertices)
+  \\ \\
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$3$};
+    \node[main] (2) [right of=1] {$1$};
+    \node[main] (3) [right of=2] {$2$};
+
+    \draw[] (1) -- (2);
+    \draw[] (2) -- (3);
+    \end{tikzpicture}
+  &
+    $\implies 3$ ways (choose root and order vertices)
+  \\ \\
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$3$};
+    \node[main] (3) [right of=2] {$2$};
+
+    \draw[] (1) -- (2);
+    \draw[] (2) -- (3);
+    \end{tikzpicture}
+  &
+    $\implies 3$ ways (choose root and order vertices)
+  \end{tabular}
+\end{center}
+
+&nbsp;
+
+In particular, given a rooted forest, we can add a vertex ($n+1$) that joins the roots to create a labelled tree on $n+1$ vertices
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main, red] (3) [above right of=1] {$3$};
+    \node[main, blue] (6) [above right of=3] {$6$};
+    \node[main] (2) [below right of=6] {$2$};
+    \node[main] (4) [right of=2] {$4$};
+    \node[main, red] (5) [right of=4] {$5$};
+
+    \draw[] (1) -- (3);
+    \draw[] (3) -- (6);
+    \draw[] (6) -- (5);
+    \draw[] (2) -- (4);
+    \draw[] (4) -- (5);
+    \end{tikzpicture}
+\end{center}
+
+Here the red vertices were the roots of the rooted forest and the blue vertex is the added vertex $n+ 1$
+
+&nbsp;
+
+Conversely, we can also reverse the process (take a labelled tree and convert it to a rooted forest) by deleting vertex $n + 1$
+
+The vertices adjacent to the vertex $n+1$ will now become the roots of the rooted forest
+
+&nbsp;
+
+This creates a bijection between rooted labelled forests and labelled trees on $n+1$ vertices
+
+&nbsp;
+
+**Theorem**: The number of labelled rooted forests on $n$ vertices is
+
+$$(n+1)^{n-1}$$
+
+*Proof*: The formula comes from labelled trees on $n+1$ vertices
+
+### Car Parking Problem
+
+Suppose $n$ cars go down a 1-way street. There are $n$ parking spots and each car has a favorite spot
+
+Each car drives to its favorite spot
+
+- If it available, the car will park at the spot
+- Otherwise the car will drive to the next open spot
+
+&nbsp;
+
+**Example**: The following set up works
+
+| Car      | Favorite |
+| ----------- | ----------- |
+| 1      | 1       |
+| 2   | 1        |
+| 3   | 2        |
+| 4   | 2        |
+
+&nbsp;
+
+**Non-Example**: The following set up does NOT work since car $4$ can't park
+
+| Car      | Favorite |
+| ----------- | ----------- |
+| 1      | 2       |
+| 2   | 2        |
+| 3   | 2        |
+| 4   | 2        |
+
+&nbsp;
+
+**Consider**: How many preferences are there such that all cars can park?
