@@ -5,9 +5,12 @@ geometry: "left=1cm,right=1cm,top=1cm,bottom=2cm"
 header-includes:
     - \usepackage{amsmath}
     - \usepackage{mathrsfs}
+    - \usepackage{tikz}
+    - \usetikzlibrary{automata,positioning,arrows}
     - \usepackage{youngtab}
     - \usepackage{mathtools}
     - \DeclareMathOperator{\lcm}{lcm}
+    - \DeclareMathOperator{\diam}{diam}
 output: pdf_document
 ---
 
@@ -1042,5 +1045,422 @@ Thus $\frac{1}{1-x} = D(x)e^x \implies D(x) = e^{-x} \frac{1}{1-x}$
 To get the sequence $a_n$ we have
 \begin{align*}
 D(x) &= e^{-x}\frac{1}{1-x} \\
-&= (\sum_{j=0}^{\infty}(-1)^j \frac{x^j}{j!}) (\sum_{i=0}^{\infty} x^i)
+&= (\sum_{j=0}^{\infty}(-1)^j \frac{x^j}{j!}) (\sum_{i=0}^{\infty} x^i) \\
+&= \sum_{n=0}^{\infty} \Big(\sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\Big)x^n \\
+&= \sum_{n=0}^{\infty} n! \sum_{k=0}^{n} \frac{(-1)^k}{k!} = D_n
 \end{align*}
+
+**TODO LOOK AT THIS AGAIN**
+
+&nbsp;
+
+**Example**: How many ways can $\geq 1$ people be split into any number of non-empty groups such that each group sits at an unlabelled circular table
+
+EGF for $1$ table with $n$ people is
+\begin{align*}
+G(x) &= \sum_{n=1}^{\infty} a_n \frac{x^n}{n!} \\
+&= \sum_{n=1}^{\infty}(n-1)! \frac{x^n}{n!} \\
+&= \sum_{x^n}^{n} \\
+&= \sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1} \\
+&= \int \sum_{x=0}^{\infty}x^n \\
+&= \int \frac{1}{1-x} \, dx \\
+&= \ln(\frac{1}{1-x})
+\end{align*}
+
+Thus EGF for $k$ tables is
+
+$\frac{\ln(\frac{1}{1-x})\ln(\frac{1}{1-x}) \cdots \ln(\frac{1}{1-x})}{k!}$ (need to consider overcounting since tables are unlabelled)
+
+For any number of tables, we need to sum over $k$ and want the coefficient of $\frac{x^n}{n!}$
+
+$$\sum_{k=0}^{\infty} \frac{(\ln(\frac{1}{1-x}))^k}{k!} e^{\ln(\frac{1}{1-x})} = \frac{1}{1-x}$$
+
+Thus we see that
+$$\sum_{n=0}^{\infty}x^n = \sum_{n=0}^{\infty}n! \frac{x^n}{n!}$$
+Thus there are $n!$ ways to split $n$ people into any number of tables
+
+**TODO LOOK AT THIS AGAIN**
+
+&nbsp;
+
+### Compositions of EGF
+
+We want to partition $[n]$ into nonempty blocks and do task $1$ to each block, then task $2$ to the set of blocks
+
+If $F(x)$ and $G(x)$ are the EGFs for each respective task, provided $\displaystyle F(x) = \sum_{n=1}^{\infty} a_n \frac{x^n}{n!}$, the total number of ways to partition $[n]$ into any number of blocks with task 1 on each block and task 2 on the set of blocks is
+$$H(x) = G(F(x)) = \sum_{n=0}^{\infty}h_n \frac{x^n}{n!}$$
+
+&nbsp;
+
+**Example** What if $F(x), G(x)$ are trivial, i.e. total ways to partition $[n]$ such that each block is represented in 1 way and the set of blocks i seen in 1 way
+
+$F(x) = \sum_{n=1}^{\infty} \frac{x^n}{n!} = e^x - 1$
+
+$G(x) = \sum_{k=0}^{\infty} \frac{x^k}{k!} = e^x$
+
+$H(x) = e^{e^x - 1}$
+
+&nbsp;
+
+**Example**: Given $n$ people, count the ways to seat them at any number of tables where each table is served red or white wine
+
+To seat $i$ people at a table, the EGF was
+$$F(x) = \sum_{n=1}^{\infty} (i-1) \frac{x^i}{i!} = \ln(\frac{1}{1-x})$$
+
+Now given $k$ tables, EGF for ways to serve red or white wine is
+$$G(x) = \sum_{k=0}^{\infty}2^k \frac{x^k}{k!} = e^{2x}$$
+Thus we see that
+$$H(x) = G(F(x)) = e^{2\ln(\frac{1}{1-x})} = \frac{1}{(1-x)^2} = \frac{d}{dx}(\frac{1}{1-x}) = \frac{d}{dx}(\sum_{n=0}^{\infty}x^n) = \sum_{n=0}^{\infty}(n+1)n! \frac{x^n}{n!}$$
+
+Thus there are $(n+1)!$ total ways
+
+## Catalan Numbers
+
+Given a $m \times n$ lattice, how many UP, RIGHT paths from $(0, 0)$ to $(m, n)$ are there?
+
+- This requires $m + n$ total steps $\implies \displaystyle {n+m \choose m} = \displaystyle {n+m \choose n}$
+
+&nbsp;
+
+Now consider $n \times n$ case that don't cross the diagonal
+
+Let $C_n$ be the total number of paths that don't cross the diagonal
+
+Partition these into classes where the last time the diagonal is touched is $(i, i)$ for $0 \leq i \leq n - 1$
+
+Once we hit $(i, i)$, we have $C_{n-i-1}$ paths left. Thus the total paths is
+$$c_n = \sum_{i=0}^{n-1} C_i C_{n-i-1} \quad \quad c_0 = 1$$
+
+&nbsp;
+
+**Theorem**: If $C_n$ denotes the total UP/RIGHT paths from $(0, 0)$ to $(n, n)$ that don't go over the diagonal is
+$$C_n = \sum_{n=0}^{\infty}C_i C_{n-i-1}$$
+Moreover, the OGF is
+$$F(x) = \frac{1-\sqrt{1 - 4x}}{2x} = \sum_{n=0}^{\infty}C_n x^n \quad \quad C_n = \frac{\displaystyle {2n \choose n}}{n+1}$$
+
+*Proof*:
+
+\begin{align*}
+F(x) &= 1 + \sum_{n=1}^{\infty}C_n x^n = 1 + \sum_{n=1}^{\infty} \Big(\sum_{i=0}^{n-1}C_i C_{n-i-1} \Big) x^n \\
+&= 1 + x \sum_{n=1}^{\infty} \Big( \sum_{i=0}^{n-1}C_i C_{n-i-1}\Big)x^{n-1} \\
+&= 1 + x(F(x))^2 \\
+&= \frac{1 \pm \sqrt{1 - 4x}}{2x}
+\end{align*}
+For the algebra above, recall that for $\displaystyle f = \sum a_nx^n$ and $\displaystyle g = \sum b_nx^n$, we have
+$$fg = \sum d_n x^n \quad \quad d_n = \sum a_i b_{n-i}$$
+Thus we see that
+$$fg = \sum_{n=1}^{\infty}d_{n-1} x^{n-1} \implies \sum_{i=0}^{n-1} C_i C_{n-i-1} = F(x)^2$$
+
+Additional algebra shows that
+$$F(x) = \sum_{n=0}^{\infty} \frac{\displaystyle {2n \choose n}}{n+1}x^n$$
+
+&nbsp;
+
+### Combinatoric Proof of Catalan Numbers
+
+We know that the total number of UP/RIGHT paths to $(n, n)$ is $\displaystyle {2n \choose n}$. We now remove the bad paths
+
+Observe that the first time we touch a bad diagonal (diagonal above main diagonal) is after $i$ RIGHTS and $i+1$ UPS
+
+- This results in $n-i$ RIGHTs and $n-(i+1)$ UPs to reach $(n, n)$
+
+We alter the remaining path after touching the bad diagonal by reflecting it over the bad diagonal (so all RIGHTs are now UPs)
+
+Now beyond the diagonal, we go $n-i-1$ RIGHTs and $n-i$ UPs
+
+Thus total RIGHTs is $i + (n- i - 1) = n - 1$ and total UPs is $i + 1 + (n - i) = n + 1$
+
+Consider which paths to $(n-1, n+1)$ will touch the bad diagonal? All of them
+
+Thus any bad path to $(n, n)$ that goes over the main diagonal corresponds to a path reaching $(n-1, n+1)$, establishing a bijection
+$$\displaystyle {(n-1)+ n + 1 \choose n-1} = \displaystyle {2n \choose n-1}$$
+
+Thus the total paths $(n, n)$ that don't go over the main diagonal is
+$$\displaystyle {2n \choose n} - \displaystyle {2n \choose n-1} = \frac{\displaystyle {2n \choose n}}{n+1}$$
+
+&nbsp;
+
+**Example**: Total ways to correctly group $n$ pairs of parentheses
+
+Treat $($ as RIGHT and $)$ as UP. Then we have the Catalan number $C_n$
+
+&nbsp;
+
+**Example**: Total number of binary trees with $n$ interval nodes and $n+1$ leaves is
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}
+  \node[state, minimum size=1cm]            (root)                                        {root};
+  \node[state, minimum size=2cm]            (left)                  [below left=of root]  {$C_i$};
+  \node[state, minimum size=2cm]            (right)                 [below right=of root] {$C_{n-i-1}$};
+  \draw (root) -- (left);
+  \draw (root) -- (right);
+  \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+The root is ignored and we recurse over the subcases. Thus there are
+$$C_i = \sum_{i=0}^{n-1}C_i C_{n-i-1}$$
+total trees
+
+&nbsp;
+
+**Example**: Total ways to triangulate a regular (labelled) polygon with $n+2$ sides i.e. total ways to draw $n-1$ lines connecting 2 vertices such that no lines cross
+
+To triangulate a polygon with $n+2$ sides, we create a triangle using the line joining vertex $n+1$ and $n+2$ as the base
+
+Assume that these vertices join with a vertex $k$ for $1 \leq k \leq n$. This creates 2 sub-polygons
+
+- Polygon formed by $n+2, 1, 2, \ldots, k \implies k+1$ vertices $\implies C_{k-1}$
+- Polygon formed by $k, k+1, \ldots, n+1 \implies n-k+2$ vertices $\implies C_{n-k}$
+
+Thus total number of triangulations is
+$$\sum_{k=1}^{n}C_{k-1}C_{n-k} = \sum_{n=0}^{n}C_k C_{n-k-1} = C_n$$
+
+# Graph Theory
+
+## Introduction to Graph Theory
+
+**Definition - (Simple) Graph $\mathbf{G}$**: ordered pair $(V, E)$ where $V = V(G)$ is a set of **vertices** and $E= E(G)$ is a set of **edges** (2-size subsets of $V$)
+
+&nbsp;
+
+**Definition - Adjacent**: Two vertices $v_1, v_2 \in V$ are **adjacent** if $\{v_1, v_2\} \in E$, denoted as $v_1 \sim v_2$
+
+&nbsp;
+
+**Definition - Incident**: An edge $e = \{v_1, v_2\}$ is **incident** to a vertex $v$ if $v$ is one of the endpoints of $e$
+
+&nbsp;
+
+**Definition - Subgraph**: Graph $H$ with $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$
+
+- **Spanning Subgraph** if $V(H) = V(G)$
+- **Vertex Induced Subgraph** if whenever $u, v \in V(H)$ and $u \sim v \in E(G)$, then $u \sim v  \in E(H)$
+- **Subgraph Induced by $\mathbf{S}$** if $S = V(H) \subseteq V(G)$, denoted $G[S]$
+
+&nbsp;
+
+**Definition - Walk**: Sequence of vertices beginning at $u$ and ending at $v$ such that consecutive vertices are adjacent
+
+- **Closed** if $u = v$
+- **Length**: total edges traversed
+
+&nbsp;
+
+**Definition - Trail**: Walk with no edge traversed more than once
+
+&nbsp;
+
+**Definition - Path**: Walk with no vertex traversed more than once
+
+- **Note**: path $\implies$ trail $\implies$ walk
+
+&nbsp;
+
+**Definition - Circuit**: Closed trail of length 3 or more
+
+- **Cycle**: Circuit with only the first and last vertex repeated
+
+  - **Even Cycle** if total edges traversed is even
+  - **Odd Cycle** if total edges traversed is odd
+
+&nbsp;
+
+**Definition - Connected Graph**: Graph $G$ such that for any distinct vertices $u, v$ there is a path $uv$
+
+&nbsp;
+
+**Definition - Distance**: Minimum length of a path $uv$, denoted $d(u, v)$
+
+&nbsp;
+
+**Definition - Diameter**: Distance of the farthest apart vertices, denoted $\diam(G) = \max_{u, v \in V(G)} \{d(u, v)\}$
+
+&nbsp;
+
+**Definition - Path Graph**: Graph on $n$ vertices, denoted $P_n$, with edge set $E(P_n) = \{\{v_1, v_2\}, \{v_2, v_3\}, \ldots, \{v_{n-1}, v_n\}\}$
+
+- **Note**: $P_n$ will have $n-1$ edges
+
+&nbsp;
+
+**Definition - Cycle Graph**: Graph on $n$ vertices, denoted $C_n$, with edge set $E(C_n) = \{\{v_1, v_2\}, \{v_2, v_3\}, \ldots, \{v_{n-1}, v_1\}, \{v_n, v_1\}\}$
+
+- **Note**: $C_n$ will have $n$ edges
+
+&nbsp;
+
+**Definition - Complete Graph**: Graph on $n$ vertices, denoted $K_n$ with edge set $E(K_n) = \{\{v_i, v_j\} \mid 1 \leq i \neq j \leq n\}$
+
+- **Note**: $E(K_n)$ has size $\displaystyle {n \choose 2}$
+
+&nbsp;
+
+**Definition - Complement**: The **complement** of graph $G$, denoted $\overline{G}$, has vertex set $V(\overline{G}) = V(G)$ and edge set $E(\overline{G}) = \{v_i, v_j \mid v_i, v_j \notin E_(G)\}$
+
+&nbsp;
+
+**Definition - Bipartite**: $G$ is **bipartite** if its vertex set can be partitioned into $2$ subsets $A, B$, called **partite sets**: such that every edge of $G$ has one endpoint in $A$ and the other in $B$
+
+\newpage
+
+**Example**
+
+\begin{center}
+  \begin{tikzpicture}[node/.style={circle}]
+    \node (a1) at (3,5)  {B};
+    \node (a2) at (3,6)  {??};
+    \node (a3) at (4,7)  {A};
+    \node (a4) at (5,6)  {B};
+    \node (a5) at (5,5)  {A};
+
+    \draw (a1) -- (a2);
+    \draw (a2) -- (a3);
+    \draw (a3) -- (a4);
+    \draw (a4) -- (a5);
+    \draw (a5) -- (a1);
+  \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+Above graph cannot be bipartite since the neighbors of ?? lie in A and B
+
+&nbsp;
+
+**Theorem**: $G$ is bipartite if and only if $G$ contains no odd cycles
+
+*Proof*: $\implies$ By contraposition, assume $G$ has an odd cycle $v_1, v_2, \ldots, v_{2k-1}, v_1$
+
+Then we have $v_1 \in A, v_2 \in B \ldots, v_{2k-1} \in A, v_1 \in A$. Thus $G$ is not bipartite
+
+$\impliedby$ Let $u \in V(G)$ and assume $G$ has no odd cycles
+
+Define $A = \{w \mid d(u, w) \text{ is even}\}$ and $B = \{w \mid d(u, w) \text{ is odd}\}$
+
+BWOC, let $w_1, w_2 \in B$ such that $w_1 \sim w_2$ (similar idea can be shown for A)
+
+Consider the paths $u = v_0, v_1, \ldots, v_{2s+1} = w_1$ and $u = u_0, u_1, \ldots, u_{2t + 1} = w_2$
+
+Let $x$ be the last vertex shared by the 2 paths
+
+Necessarily, we must have that $x = v_i = u_i$. Otherwise a shorter path exists
+
+But then we have $\underbrace{x = v_i, v_{i+1}, \ldots, v_{2s + 1} = w_1}_{2s + 1 - i \text{ steps}} \underbrace{\sim w_2}_{1 \text{ step}}$
+
+Which yields a cycle of length $2(s + t - -i + 1) + 1$, which is an odd cycle. Contradiction
+
+**TODO LOOK AT PROOF AGAIN**
+
+&nbsp;
+
+**Definition - Complete Bipartite Graph** with partites $A, B$ of size $a, b$ is denoted $K_{a, b}$ where every vertex in $A$ is adjacent toe very vertex in $B$
+
+## Vertex Degree
+
+**Definition - Vertex Degree**: Total edges incident to $v$, denoted $\deg(v)$
+
+&nbsp;
+
+**Definition - Neighborhood**: Set of vertices adjacent to $v$, denoted $N(v)$
+
+&nbsp;
+
+**Definition - Min [Max] Degree**: Lowested [highest] degree of $G$, denoted $\delta(G) [\Delta(G)]$
+
+- **Note**: An isolated vertex has degree $0$
+
+&nbsp;
+
+**Theorem**: A Graph $G$ with size $m$ ($m$ edges) has $\displaystyle \sum_{v \in V(G)}^{} \deg(v) = 2m$
+
+*Proof*: Summing over all vertices, every edge gets counted twice by the 2 endpoints
+
+&nbsp;
+
+**Corollary**: Graph $G$ must have an even number of vertices with odd degree
+
+&nbsp;
+
+**Definition - d-regular**: Graph $G$ where every vertex has degree $d$
+
+**Example**: $K_4$ is 3-regular with 4 vertices
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node/.style={circle}]
+    \node[circle, draw=black, fill=black, name=0, inner sep=0pt,minimum size=4pt] at (0,0) {};
+    \node[xshift=-2mm] at (0.west) {};
+
+    \node[circle, draw=black, fill=black, name=1, inner sep=0pt,minimum size=4pt] at (0,1) {};
+    \node[xshift=-2mm] at (1.west) {};
+
+    \node[circle, draw=black, fill=black, name=3, inner sep=0pt,minimum size=4pt] at (1,0) {};
+    \node[xshift=2mm] at (3.east) {};
+
+    \node[circle, draw=black, fill=black, name=2, inner sep=0pt,minimum size=4pt] at (1,1) {};
+    \node[xshift=2mm] at (2.east) {};
+
+
+    \draw[] (0) -- (2);
+    \draw[] (0) -- (3);
+    \draw[] (0) -- (1);
+    \draw[] (1) -- (2);
+    \draw[] (1) -- (3);
+    \draw[] (2) -- (3);
+  \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+**Non-Example**: A 3-regular graph with 5 vertices doesn't exist by the Corollary above
+
+&nbsp;
+
+**Theorem**: There exists a d-regular graph on $v$ vertices if and only if at least one of $d$, n$ is even
+
+*Proof*: $\implies$ By Contraposition. If $d, n$ are both odd, then a d-regular graph doesn't exist by the corollary
+
+$\impliedby$ If $d=2k$, arrange the vertices in a cycle. Then $v_i$ joins to $k$ preceding and $k$ succeeding vertices
+
+Otherwise assume $d$ is odd and $n$ is even. We join edges as before, along with $v_i$ joining to $v_{i+t \pmod{n}}$ where $n = 2t$ (the opposite vertex)
+
+&nbsp;
+
+**Example**: **TODO DRAW EXAMPLE OF INDUCING A NON-REGULAR GRAPH INSIDE A REGULAR GRAPH**
+
+&nbsp;
+
+**Theorem**: For a given graph $G$, there exists a d-regular graph $H$ such that $G$ is an induced subgraph of $H$
+
+*Proof*: Shown in the example above
+
+&nbsp;
+
+**Definition - Degree Sequence**: Given a graph $G$ with $n$ vertices, its **degree sequence** is a non-increasing sequence of length $n$ whose $i$th term is the degree of vertex $i$
+
+&nbsp;
+
+**Theorem**: Let $d_1, \ldots, d_n$ be a non-increasing sequence. There exists a graphical graph $G$ with these degrees if and only if the sequence
+$$d_2 -1, d_3 - 1, \ldots, d_{d_1 + 1} - 1, \underbrace{d_{d_1 + 2}, \ldots, d_n}_{\text{no minus term}}$$
+is graphical. That is, delete $d_1$ then delete 1 edge from the next $d_1$ terms (may require reordering the sequence)
+
+*Proof*: $\impliedby$ Given $d_2 - 1, \ldots, d_n$ is graphical, we can add a new vertex $v_1$ and join $v_1$ to the first $d_1$ vertices in the sequence
+
+$\implies$ BWOC assume there is no $v_1$ with $\deg(v_1) = d_1$ that is adjacent to all vertices of the next highest degrees $d_2, d_3, \ldots, d_{d_1+1}$
+
+Among all graphs with the degree sequence $d_1, \ldots, d_n$, take the one where the sum degree of vertices adjacent to $v_1$ is maximized
+
+Necessarily, there is a vertex $v_s, s \notin \{2, 3, \ldots, d_1 + 1\}$ adjacent to $v_1$ such that $\deg(v_s) < \deg(v_r)$ for $r \in \{2, 3, \ldots, d_1 + 1\}$
+
+But then some $v_r$ must be adjacent to a vertex $v_t$ that is NOT adjacent to $v_1$
+
+
+&nbsp;
+
+**Example**: $(3, 3, 2, 1) \leftrightarrow (2, 2, 1, 1) \leftrightarrow (1, 0, 1) = (1, 1, 0)$
