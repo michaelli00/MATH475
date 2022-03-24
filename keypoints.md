@@ -47,3 +47,9 @@ output: pdf_document
 **Inclusion-Exclusion Principle**: $\big| \bigcup_{i=1}^n A_i \big| = |X| - \displaystyle \sum_{I \subseteq [n]}^{} (-1)^{|I|} |A_I| = \displaystyle \big| \bigcap_{i = 1}^n \bar{A_i} \big| = |X| - \sum_{I \subseteq [n]}^{}(-1)^{|I|}|A_I|$
 
 **OGF**: $F(x) = \sum_{n=0}^{\infty} a_n x^n \quad \quad \sum_{n=0}^\infty x^n = \frac{1}{1-x} \quad \quad \sum_{n=0}^{\infty} \frac{x^n}{n!} = e^x$
+
+\newpage
+
+**Power Series Formulas**: $\displaystyle \sum_{n=0}^{\infty} x^n = \frac{1}{1-x} \quad \quad (1+x)^a = \sum_{n=0}^{\infty} \displaystyle {a \choose n}x^n \quad \quad \sum_{n=1}^{\infty}n x^{n-1} = \Big( \sum_{n=0}^{\infty} x^n\Big)^{'} = \frac{1}{(1-x)^2}$
+
+**OGF**: $\sum_{n=0}^{\infty} a_n x^n \quad \quad (AB)(x) = \displaystyle \sum_{n=0}^{\infty} \Big(\sum_{i=0}^{n} a_i b_{n-i}\Big) x^n \quad \quad$ **EGF**: $\displaystyle \sum_{n=0}^{\infty}a_n \frac{x^n}{n!} \quad \quad (AB)(x) = \displaystyle \sum_{n=0}^{\infty}\Big(\sum_{i=0}^{n} \displaystyle {n \choose i} a_i b_{n-i}\Big) \frac{x^n}{n!}$

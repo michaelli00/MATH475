@@ -683,14 +683,19 @@ Let $A_i$ be the set of seatings where couple $1$ is sitting next to each other.
 ## Review of Power Series
 
 **Definition - Formal Power Series**: For a sequence $\{a_n\}_{n \geq 0}$, the **Formal Power Series**
+
 $$F(x) = \sum_{n = 0}^{\infty}a_n x^n$$
-Is the **Ordinary Generating Function** of $\{a_n\}_{n \geq 0}$
+
+is the **Ordinary Generating Function** of $\{a_n\}_{n \geq 0}$
 
 &nbsp;
 
 **Example**: Let $\{a_n\}$ be given by
+
 $$\frac{1}{2!}, \frac{1}{3!}, \ldots$$
+
 Then the generating function is
+
 \begin{align*}
 F(x) &= \frac{1}{2!} + \frac{1}{3!}x + \frac{1}{4!}x^2 + \cdots\\
 &= \frac{1}{x^2}( \frac{1}{2!} x^2 + \frac{1}{3!}x^3 + \cdots )\\
@@ -703,17 +708,22 @@ F(x) &= \frac{1}{2!} + \frac{1}{3!}x + \frac{1}{4!}x^2 + \cdots\\
 Same principle came be applied to find a sequence $\{a_n\}_{n \geq 0}$ given an OGF $F(x)$
 
 **Example**: Find the sequence $\{a_n\}$ corresponding to
+
 $$F(x) = \sum_{n = 0}^{\infty}a_n x^n = \frac{-4x + 3}{(1-x)(1 -2x)}$$
 
 Using partial fractions we see
+
 $$\frac{A}{1-x} + \frac{B}{1-2x} = -4x + 3 = A(1-2x) + B(1-x) \implies A = 1, B = 2$$
+
 Thus we see that
+
 \begin{align*}
 F(x) &= \frac{-4x + 3}{(1-x)(1-2x)} \\
 &= \frac{1}{1-x} + \frac{2}{1- 2x}\\
 &= \sum_{n=0}^{\infty}x^n + \underbrace{2\sum_{n=0}^{\infty}(2x)^n}_{\sum_{}^{} 2^{n+1}x^n}\\
 &= \sum_{n=0}^{\infty} (1+2^{n+1})x^n
 \end{align*}
+
 Thus $\{a_n\}_{n \geq 0} = \{1 + 2^{n+1}\}$
 
 &nbsp;
@@ -771,57 +781,80 @@ Using $\displaystyle \frac{1}{1-x} = \sum_{n=0}^{\infty} x^n$, we can differenti
 \end{align*}
 
 Thus we have
+
 $$\frac{1}{(1-x)^{m+1}} = \sum_{n=0}^{\infty} \frac{(n+m)!}{n!m!}x^n = \sum_{n= 0}^{\infty} \displaystyle {n+m \choose m}x^n$$
 
 For a fixed $m$, we have
+
 $$\frac{1}{(1-x)^{m+1}} \iff \{a_n\} \quad \quad a_n = \displaystyle {n+m \choose m}$$
-Which is the OGF for weak compositions into $m+1$ bins. However, we can now interpret
+
+Which is the OGF for weak compositions into $m+1$ bins.
+
+However, we can now interpret
+
 $$\frac{1}{(1-x)^k} = \underbrace{(\frac{1}{1-x})(\frac{1}{1-x}) \cdots}_{\text{apply geometric series k times}} = (1 + x + x^2 + \cdots + \cdots) (1 + x + x^2 + \cdots + \cdots) \cdots$$
+
 Consider the question of getting coefficients of $x^7$. This corresponds to the weak compositions of $7$ unlabelled balls into $k$ bins
 
 However, now the chosen exponents correspond to the bin sizes. Thus we see that the OGF for weak compositions is
+
 $$F(x) = \frac{1}{(1-x)^k} = \sum_{n=0}^{\infty}a_n x^n = \sum_{n=0}^{\infty}\displaystyle {n+k-1 \choose k-1}x^n$$
-To obtain coefficients of $a_n$, contributions come from $x^{n_1}$ from group 1, $x^{n_2}$ from group 2, etc. such that
+
+To obtain coefficients of $x^n$, contributions come from $x^{n_1}$ from group 1, $x^{n_2}$ from group 2, etc. such that
+
 $$x^{n_1} x^{n_2} \cdots x^{n_k} = x^n \implies n_1 + n_2 + \cdots + n_k = n \quad \quad n_i \geq 0$$
 
 &nbsp;
 
 **Example**: 5 apple, 4 pear, and 6 orange lollipops. Find the OGF that would yield the total ways to get 5 lollipops. State the term that we want
+
 $$F(x) = \underbrace{(1 + x + \cdots+ x^5)}_{\text{apples}}\underbrace{(1 + x + x^4)}_{\text{pears}} \underbrace{(1 + x + \cdots + x^6)}_{\text{oranges}}$$
 
-We want coefficients of $x^5$ in $F(x)$. Here the OGF is
-$$\frac{1}{(1-x)^k} \longleftrightarrow \{\displaystyle {n+k-1 \choose k-1}\}$$
+We want coefficients of $x^5$ in $F(x)$.
 
 &nbsp;
 
 **Theorem**: Let $k$ be a fixed positive integer. Then the OGF for Stirling Numbers $S(n, k)$ is
+
 $$F_k(x) = \sum_{n=0}^{\infty}a_nx^n = \frac{x^k}{(1-x)(1-2x) \cdots (1-kx)}$$
 
 *Proof*: Note that
+
 $$S(0, 0) = 1 \quad \quad S(n, 0) = 0 \quad \quad S(0, k) = 0$$
+
 Also recall the recurrence
+
 $$S(n, k) = S(n-1, k-1) + kS(n -1, k)$$
+
 Then we see that
+
 \begin{align*}
 F_k(x) = \sum_{n=0}^{\infty}S(n, k)x^n &= 0 + \sum_{n=1}^{\infty}\Big(S(n-1, k-1) + kS(n-1, k)\Big)x^n \\
 &= \Big(x\sum_{n=1}^{\infty}S(n-1, k-1)x^{n-1}\Big) + \Big( kx \sum_{n=1}^{\infty}S(n-1, k) x^{n-1}\Big) \\
 &= xF_{k-1}(x) + kxF_k(x)
 \end{align*}
-Thus $\displaystyle F_k(x) = \frac{xF_{k-1}(x)}{(1-kx)}$
+
+Thus $\displaystyle F_k(x) = \frac{x}{(1-kx)}F_{k-1}(x)$
+
 Finally, applying the above equation recursively, we see that
+
 \begin{align*}
 F_k(x) = \frac{x}{1-kx} \frac{x}{1-(k-1)x} F_{k-2} &= \cdots \\
 &= \frac{x^k}{(1-x)(1-2x) \cdots (1-kx)}
 \end{align*}
 
 Thus the OGF is
-$$\prod_{t=1}^k \frac{x}{(1-tx)} \longleftrightarrow \{S(n, k)\}$$
+
+$$\prod_{t=1}^k \frac{x}{(1-tx)} \quad \longleftrightarrow \quad \{S(n, k)\}$$
 
 &nbsp;
 
 **Theorem**: Let $p(n)$ denote the total partitions of an integer $n$. Then the OGF for $p(n)$ is
+
 $$F(x) = \sum_{n=0}^{\infty}p(n)x^n = \frac{1}{(1-x)(1-x^2) \cdots} = \prod_{k=1}^\infty \frac{1}{1-x^k}$$
+
 *Proof*:
+
 \begin{align*}
 F(x) &= \frac{1}{1-x} \frac{1}{1-x^2}\frac{1}{1-x^3} \cdots \\ \\
 &= \underbrace{(1 + x + x^2 + x^3 + \cdots)}_{\text{how many 1's}} \underbrace{(1 + x^2 + x^4 + x^6 + \cdots)}_{\text{how many 2's}}\underbrace{(1 + x^3 + x^6 + x^9 + \cdots)}_{\text{how many 3's}} \cdots\\ \\
@@ -830,7 +863,7 @@ F(x) &= \frac{1}{1-x} \frac{1}{1-x^2}\frac{1}{1-x^3} \cdots \\ \\
 
 &nbsp;
 
-Consider the question: how many combinations of $x^n$?
+**Consider**: How many combinations of $x^n$ are there?
 
 For $x^{m(k) * k}$, $m(k)$ is the total number of k's in the partition. For example, $m(1)$ is the total 1's in the partition
 
@@ -841,6 +874,7 @@ All possible contributions of $x^n$ is exactly the total partitions of integer $
 **Example**: Given an unlimited number of pennies, nickels, dimes, quarters, and half dollars, find the OGF that would count the total ways to make $\$1$. What is the coefficient?
 
 We want coefficients of $x^{100}$ where
+
 \begin{align*}
 F(x) = \underbrace{(1 + x + \cdots + x^{100})}_{\text{number of pennies}} \underbrace{(1 + x^5 + \cdots + x^{100})}_{\text{number of nickels}}\underbrace{(1 + x^{10} + \cdots + x^{100})}_{\text{number of dimes}}\underbrace{(1 + x^{25} + \cdots + x^{100})}_{\text{number of quarters}}\underbrace{(1 + x^{50} + x^{100})}_{\text{number of half dollars}} \\
 \end{align*}
@@ -852,12 +886,14 @@ Expanding (done on computer) yields $292x^{100} \implies 292$ ways
 **Theorem**: Total ways to partition $n$ into distinct parts equals the total ways to partition $n$ into odd sized parts
 
 *Prof*: Distinct parts OGF is
+
 \begin{align*}
 F(x) &= (1 + x) (1 + x^2) + \cdots \quad \quad \text{this comes from each number only appears once}\\
 &= (\frac{1 - x^2}{1 - x})(\frac{1 - x^4}{1 - x^2}) \cdots \\
 &= (\frac{1}{1-x})(\frac{1}{1-x^3})(\frac{1}{1-x^5}) \cdots \\
 &= (1 + x + x^2 + \cdots) (1 + x^3 + x^6 + \cdots)
 \end{align*}
+
 From above, we see that the even terms get cancelled and we are only left with the odd terms
 
 Thus number of ways to partition $n$ into distinct parts equals the total number of ways to partition $n$ into odd sized parts
@@ -865,9 +901,11 @@ Thus number of ways to partition $n$ into distinct parts equals the total number
 &nbsp;
 
 **Theorem**: OGF for $p_k(n)$, the total number of partitions into exactly $k$ parts is
+
 $$F(x) = \sum_{n=0}^{\infty}p_k(n)x^n = \frac{x^k}{(1-x) (1-x^2) \cdots (1-x^k)} = (1 + x + x^2 + \cdots) (1 + x^2 + x^4 + \cdots) \cdots (x^k + x^{2k} + \cdots)$$
 
 *Proof*: Consider the OGF
+
 $$F(x) = \frac{1}{(1-x) (1-x^2) \cdots (1-x^k)} = (1 + x + x^2 + \cdots) (1 + x^2 + x^4 + \cdots) \cdots (1 + x^k + x^{2k} + \cdots)$$
 
 This counts the number of partitions of $n$ where each part has size at most $k$
@@ -879,41 +917,50 @@ Thus the conjugate will have columns of size at most $k$, which establishes a bi
 To manipulate this into an OGF for $p_k(n)$, we need a exactly $k$ rows in the conjugate, and thus need a part of exactly size $k$ in the original diagram
 
 Thus we can create a new OGF that enforces an $x^k$ term
+
 $$F(x) = \frac{x^k}{(1-x)(1-x^2) \cdots (1-x^k)}= (1 + x + x^2 + \cdots)(1 + x^2 + x^4 + \cdots) \cdots (x^k + x^{2k} + \cdots)$$
 
 ## Exponential Generating Functions
 
 **Definition - EGF**: Function for a sequence $\{a_n\}$
+
 $$G(x) = \sum_{n=0}^{\infty}a_n \frac{x^n}{n!}$$
 
 Recall that for OGFs $A(x) = \sum_{}^{}a_n x^n$ and $B(x) = \sum_{}^{} b_n x^n$, we have that
-$$A(x)B(x) = \sum_{n=0}^{\infty}c_nx^n \quad \quad c_n = \sum_{i=0}^{n}a_i - b_{n-i} \implies \sum_{n=0}^{\infty}c_n x^n = (a_0 + b_0) + (a_0b_1 + a_1 b_0)x + (a_0b_2 a_1b_1 + a_2 b_0)x^2 + \cdots$$
+
+$$A(x)B(x) = \sum_{n=0}^{\infty}c_nx^n \quad \quad c_n = \sum_{i=0}^{n}a_ib_{n-i} \implies \sum_{n=0}^{\infty}c_n x^n = (a_0b_0) + (a_0b_1 + a_1 b_0)x + (a_0b_2 + a_1b_1 + a_2 b_0)x^2 + \cdots$$
 
 &nbsp;
 
-**Lemma**: For OGFs $\displaystyle F(x) = \sum_{}^{}\bar{a_n}\frac{x^n}{n!}$ and $\displaystyle G(x) = \sum_{}^{}\bar{b_n} \frac{x^n}{n!}$, we have that
-$$F(x)G(x) = \sum_{n=0}^{\infty}\bar{c_n} \frac{x^n}{n!} \quad \quad \bar{c_n} = \sum_{i=0}^{n} \displaystyle {n \choose i} \bar{a_i} \bar{b_{n-i}}$$
+**Lemma**: For OGFs $\displaystyle F(x) = \sum_{}^{}\overline{a_n}\frac{x^n}{n!}$ and $\displaystyle G(x) = \sum_{}^{}\overline{b_n} \frac{x^n}{n!}$, we have that
 
-*Proof*: let $\displaystyle a_n = \frac{\bar{a_n}}{n!}$ and $\displaystyle b_n = \frac{\bar{b_n}}{n!}$. Then we have
-$$F(x)G(x) = \sum_{n=0}^{\infty}c_n x^n \quad \quad c_n = \sum_{i=0}^{n}a_i - b_{n-i} = \frac{1}{n!} \sum_{i=0}^{n} \displaystyle {n \choose i} \bar{a_i} \bar{b_{n-1}}$$
+$$F(x)G(x) = \sum_{n=0}^{\infty}\overline{c_n} \frac{x^n}{n!} \quad \quad \overline{c_n} = \sum_{i=0}^{n} \displaystyle {n \choose i} \overline{a_i} \overline{b_{n-i}}$$
+
+*Proof*: let $\displaystyle a_n = \frac{\overline{a_n}}{n!}$ and $\displaystyle b_n = \frac{\overline{b_n}}{n!}$. Then we have
+
+$$F(x)G(x) = \sum_{n=0}^{\infty}c_n x^n \quad \quad c_n = \sum_{i=0}^{n}a_i b_{n-i} = \frac{1}{n!} \sum_{i=0}^{n} \displaystyle {n \choose i} \overline{a_i} \overline{b_{n-1}}$$
+
 This last part is apparent from
+
 \begin{align*}
-c_n &= \sum_{i=0}^{n} \frac{\bar{a_i}}{i!} \frac{\bar{b_{n-i}}}{(n-i)!n} \\
-&= \frac{1}{n!} \sum_{i=0}^{n} \frac{n!}{i!(n-i)!}\bar{a_i} \bar{b_{n-i}} \\
-&= \frac{1}{n!} \sum_{i=0}^{n} \displaystyle {n \choose i} \bar{a_i} \bar{b_{n-i}}
+c_n &= \sum_{i=0}^{n} \frac{\overline{a_i}}{i!} \frac{\overline{b_{n-i}}}{(n-i)!} \\
+&= \frac{1}{n!} \sum_{i=0}^{n} \frac{n!}{i!(n-i)!}\overline{a_i} \overline{b_{n-i}} \\
+&= \frac{1}{n!} \sum_{i=0}^{n} \displaystyle {n \choose i} \overline{a_i} \overline{b_{n-i}}
 \end{align*}
 
 &nbsp;
 
-**Example**: For a fixed $m$, let $\{a_n\} = \{\displaystyle {m \choose n}\}$. Find the EGF for this
+**Example**: Find the EGF of $\{P(n, k)\}$
 
-We know that the OGF for $\{a_n\}$ is
+For a fixed $m$ and using the Binomial Theorem, recall that the OGF for $(1 + x)^m$ is
+
 $$(1+ x)^m = \sum_{n=0}^{\infty}\displaystyle {m \choose n} x^n = \sum_{n=0}^{\infty} \frac{m!}{n!(m-n)!}x^n$$
 
 Thus this gives
+
 $$\sum_{n=0}^{\infty}\frac{m!}{(m-n)!} \frac{x^n}{n!} = \sum_{n=0}^{\infty} P(m, n) \frac{x^n}{n!}$$
 
-Thus the EGF is $\{P(m, n)\}$
+Thus the EGF of $\{P(m, n)\}$ is $(1 + x)^m$
 
 &nbsp;
 
@@ -927,8 +974,9 @@ $$G(x) = \sum_{n=0}^{\infty} S(n, k) \frac{x^n}{n!} = \frac{(e^x - 1)^k}{k!}$$
 
 &nbsp;
 
-**Corollary**: $B(n) = \sum_{k=0}^{n}S(n, k)$. Then the EGF is
-$$G(x) = \sum_{n=0}^{\infty}B(n) \frac{x^n}{n!} = e^(e^x - 1)$$
+**Corollary**: Recall that $\displaystyle B(n) = \sum_{k=0}^{n}S(n, k)$. Then the EGF of $B(n)$ is
+
+$$G(x) = \sum_{n=0}^{\infty}B(n) \frac{x^n}{n!} = e^{(e^x - 1)}$$
 
 *Proof*: We know that
 $$G(x) = \sum_{n=0}^{\infty}\Big(\sum_{k=0}^{\infty}S(n, k)\Big) \frac{x^n}{n!}$$
@@ -945,12 +993,14 @@ G(x) &= \sum_{n=0}^{\infty}\Big(\sum_{k=0}^{\infty}S(n, k)\Big) \frac{x^n}{n!} \
 
 &nbsp;
 
-**Consider** the EGF of permutations with repetitions of $S_1, S_2, S_3$
+**Consider**: The EGF of permutations with repetitions of $S_1, S_2, S_3$
+
 $$\Big(\sum_{\substack{S_1 + S_2 + S_3 = n \\ S_1, S_2, S_3 \geq 0}}^{}\frac{n!}{S_1! S_2! S_3!} \Big)\frac{x^n}{n!}$$
 
 What is the coefficient of all possible permutations of length $n$ using A, B, C?
 
 Combinatorically, we know that this is $3^n$. Thus we see that the EGF is
+
 $$G(x) = \sum_{n=0}^{\infty}3^n \frac{x^n}{n!} = e^{3x}$$
 
 &nbsp;
@@ -972,16 +1022,18 @@ $$G(x) = \sum_{n=0}^{\infty}3^n \frac{x^n}{n!} = e^{3x}$$
 
 **Consider**: What about multiplying other functions besides $e^x$
 
-Recall that if $\displaystyle F(x) = \sum_{n=0}^{\infty}\bar{a_n} \frac{x^n}{n!}, \displaystyle G(x) = \sum_{n=0}^{\infty}\bar{b_n} \frac{x^n}{n!}$, the product had coefficients
-$$\bar{c_n} = \sum_{i = 0}^{n} \displaystyle {n \choose i} \bar{a_i} \bar{b_{n-i}}$$
+Recall that if $\displaystyle F(x) = \sum_{n=0}^{\infty}\overline{a_n} \frac{x^n}{n!}, \displaystyle G(x) = \sum_{n=0}^{\infty}\overline{b_n} \frac{x^n}{n!}$, the product had coefficients
 
-This can be seen as separating $[n]$ into 2 blocks and assign group 1 to do something in $\bar{a_i}$ ways and $n-i$ to do something in $\bar{b_{n-i}}$ ways
+$$\overline{c_n} = \sum_{i = 0}^{n} \displaystyle {n \choose i} \overline{a_i} \overline{b_{n-i}}$$
+
+This can be seen as separating $[n]$ into 2 blocks and assigning group 1 to do something in $\overline{a_i}$ ways and the other $n-i$ people to do something in $\overline{b_{n-i}}$ ways
 
 &nbsp;
 
 **Example**: Find EGF and closed form $a_n$ that counts total permutations of length $n$ using A, B, C, D where the total number of A, B used is odd
 
 EGF using odd numbers A, B in total is
+
 $$G(x) = 2 \frac{x}{1!} + 2^3 \frac{x^3}{3!} + \cdots = \sum_{k=0}^{\infty}\frac{(2x)^{2k+1}}{(2k+1)!} = \frac{e^{2x} - e^{-2x}}{2}$$
 
 EGF for permutations of C, D (with no restriction)
@@ -991,6 +1043,7 @@ $$H(x) = (1 + 1 \frac{x}{1} + 1 \frac{x^2}{2!})(1 + 1 \frac{x}{1} + 1 \frac{x^2}
 Thus closed from EGF for total permutations is $\displaystyle \frac{e^{2x} - e^{-2x}}{2} e^x e^x = \frac{e^{4x} - 1}{2}$
 
 To find a closed for total ways $a_n$, we have
+
 \begin{align*}
 \frac{1}{2} (e^{4x} - 1) &= \frac{1}{2}\sum_{n=1}^{\infty} \frac{(4x)^n}{n!} \\
 &= \sum_{n=1}^{\infty} \frac{1}{2}4^n \frac{x^n}{n!}
@@ -1002,7 +1055,7 @@ For a counting argument, for each good permutation, we can swap A, C to get a ba
 
 &nbsp;
 
-**Example**: Place $n$ distinct books into $3$ bookshelves. What is the total number of ways to arrange the books such that each shelf has $\geq$ book?
+**Example**: Place $n$ distinct books into $3$ bookshelves. What is the total number of ways to arrange the books such that each shelf has $\geq 1$ book?
 
 Counting argument: Look at all $n!$ permutations of books then split them into $3$ bins $\implies n! \displaystyle {n-1 \choose 3-1}$
 
@@ -1011,6 +1064,7 @@ EGF argument: Let $a_i$ be the total number of ways to place $i$ books into shel
 Thus for a single shelf, the EGF is $\displaystyle \sum_{i=1}^{\infty} a_i \frac{x^i}{i!} = \sum_{i=1}^{\infty}x^i$
 
 To answer the original problem, we want coefficients of $\frac{x^n}{n!}$ in
+
 \begin{align*}
 (\sum_{i=1}^{\infty}x^i)^3 &= (\frac{1}{1-x} - 1)^3 \\
 &= (\frac{x}{1-x})^3 \\
@@ -1027,6 +1081,7 @@ Thus the coefficients for the EGF is $n! \displaystyle {n-1 \choose 2}$
 **Example**: EGF of $D_n$ Derangements of $f: [n] \rightarrow [n]$
 
 Let $D(x)$ be the EGF for $D_n$
+
 $$D(x) = \sum_{n=0}^{\infty} D_n \frac{x^n}{n!}$$
 
 Consider the EGF for all bijections where $f(i) = i$: $\displaystyle \sum_{n=0}^\infty 1 \frac{x^n}{n!} = e^x$ (only one way)
@@ -1038,19 +1093,21 @@ Now consider $D(x)e^x = (D_0 + D_1 x + D_2 \frac{x^2}{2!} + \cdots ) (1 + x + \f
 - This counts all possible bijections
 
 Thus EGF of all bijections is
+
 $$F(x) = \sum_{n=0}^{\infty}n! \frac{x^n}{n!} = \sum_{n=0}^{\infty}x^n = \frac{1}{1-x}$$
 
-Thus $\frac{1}{1-x} = D(x)e^x \implies D(x) = e^{-x} \frac{1}{1-x}$
+Thus $\displaystyle \frac{1}{1-x} = D(x)e^x \implies D(x) = e^{-x} \frac{1}{1-x}$
 
 To get the sequence $a_n$ we have
+
 \begin{align*}
 D(x) &= e^{-x}\frac{1}{1-x} \\
 &= (\sum_{j=0}^{\infty}(-1)^j \frac{x^j}{j!}) (\sum_{i=0}^{\infty} x^i) \\
 &= \sum_{n=0}^{\infty} \Big(\sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\Big)x^n \\
-&= \sum_{n=0}^{\infty} n! \sum_{k=0}^{n} \frac{(-1)^k}{k!} = D_n
+&= \sum_{n=0}^{\infty} \Big(n! \sum_{k=0}^{n} \frac{(-1)^k}{k!} \Big) \frac{x^n}{n!}
 \end{align*}
 
-**TODO LOOK AT THIS AGAIN**
+Thus the EGF is $\displaystyle n! \sum_{k=0}^{n}\frac{(-1)^k}{k!} = D_n$
 
 &nbsp;
 
@@ -1060,7 +1117,7 @@ EGF for $1$ table with $n$ people is
 \begin{align*}
 G(x) &= \sum_{n=1}^{\infty} a_n \frac{x^n}{n!} \\
 &= \sum_{n=1}^{\infty}(n-1)! \frac{x^n}{n!} \\
-&= \sum_{x^n}^{n} \\
+&= \sum_{n=1}^{n} \frac{x^n}{n}\\
 &= \sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1} \\
 &= \int \sum_{x=0}^{\infty}x^n \\
 &= \int \frac{1}{1-x} \, dx \\
@@ -1069,17 +1126,19 @@ G(x) &= \sum_{n=1}^{\infty} a_n \frac{x^n}{n!} \\
 
 Thus EGF for $k$ tables is
 
-$\frac{\ln(\frac{1}{1-x})\ln(\frac{1}{1-x}) \cdots \ln(\frac{1}{1-x})}{k!}$ (need to consider overcounting since tables are unlabelled)
+&nbsp;
 
-For any number of tables, we need to sum over $k$ and want the coefficient of $\frac{x^n}{n!}$
+$\displaystyle \frac{\ln(\frac{1}{1-x})\ln(\frac{1}{1-x}) \cdots \ln(\frac{1}{1-x})}{k!}$ (need to consider overcounting since tables are unlabelled)
 
-$$\sum_{k=0}^{\infty} \frac{(\ln(\frac{1}{1-x}))^k}{k!} e^{\ln(\frac{1}{1-x})} = \frac{1}{1-x}$$
+For any number of tables, we need to sum over $k$ and want the coefficient of $\displaystyle \frac{x^n}{n!}$
+
+$$\sum_{k=0}^{\infty} \frac{(\ln(\frac{1}{1-x}))^k}{k!} = e^{\ln(\frac{1}{1-x})} = \frac{1}{1-x} = \sum_{n=0}^{\infty} x^n$$
 
 Thus we see that
-$$\sum_{n=0}^{\infty}x^n = \sum_{n=0}^{\infty}n! \frac{x^n}{n!}$$
-Thus there are $n!$ ways to split $n$ people into any number of tables
 
-**TODO LOOK AT THIS AGAIN**
+$$\sum_{n=0}^{\infty}x^n = \sum_{n=0}^{\infty}n! \frac{x^n}{n!}$$
+
+Thus there are $n!$ ways to split $n$ people into any number of tables
 
 &nbsp;
 
@@ -1088,29 +1147,37 @@ Thus there are $n!$ ways to split $n$ people into any number of tables
 We want to partition $[n]$ into nonempty blocks and do task $1$ to each block, then task $2$ to the set of blocks
 
 If $F(x)$ and $G(x)$ are the EGFs for each respective task, provided $\displaystyle F(x) = \sum_{n=1}^{\infty} a_n \frac{x^n}{n!}$, the total number of ways to partition $[n]$ into any number of blocks with task 1 on each block and task 2 on the set of blocks is
+
 $$H(x) = G(F(x)) = \sum_{n=0}^{\infty}h_n \frac{x^n}{n!}$$
 
 &nbsp;
 
-**Example** What if $F(x), G(x)$ are trivial, i.e. total ways to partition $[n]$ such that each block is represented in 1 way and the set of blocks i seen in 1 way
+**Example**: What if $F(x), G(x)$ are trivial, i.e. total ways to partition $[n]$ such that each block is represented in 1 way and the set of blocks i seen in 1 way
 
-$F(x) = \sum_{n=1}^{\infty} \frac{x^n}{n!} = e^x - 1$
+\begin{align*}
+F(x) &= \sum_{n=1}^{\infty} \frac{x^n}{n!} = e^x - 1 \\
+G(x) &= \sum_{k=0}^{\infty} \frac{x^k}{k!} = e^x
+\end{align*}
 
-$G(x) = \sum_{k=0}^{\infty} \frac{x^k}{k!} = e^x$
+Thus we see that
 
-$H(x) = e^{e^x - 1}$
+$$H(x) = e^{e^x - 1}$$
 
 &nbsp;
 
 **Example**: Given $n$ people, count the ways to seat them at any number of tables where each table is served red or white wine
 
 To seat $i$ people at a table, the EGF was
+
 $$F(x) = \sum_{n=1}^{\infty} (i-1) \frac{x^i}{i!} = \ln(\frac{1}{1-x})$$
 
 Now given $k$ tables, EGF for ways to serve red or white wine is
+
 $$G(x) = \sum_{k=0}^{\infty}2^k \frac{x^k}{k!} = e^{2x}$$
+
 Thus we see that
-$$H(x) = G(F(x)) = e^{2\ln(\frac{1}{1-x})} = \frac{1}{(1-x)^2} = \frac{d}{dx}(\frac{1}{1-x}) = \frac{d}{dx}(\sum_{n=0}^{\infty}x^n) = \sum_{n=0}^{\infty}(n+1)n! \frac{x^n}{n!}$$
+
+$$H(x) = G(F(x)) = e^{2\ln(\frac{1}{1-x})} = \frac{1}{(1-x)^2} = \frac{d}{dx}(\frac{1}{1-x}) = \frac{d}{dx}(\sum_{n=0}^{\infty}x^n) = \sum_{n=0}^{\infty} (n+1) x^n = \sum_{n=0}^{\infty}n!(n+1) \frac{x^n}{n!}$$
 
 Thus there are $(n+1)!$ total ways
 
@@ -1129,30 +1196,38 @@ Let $C_n$ be the total number of paths that don't cross the diagonal
 Partition these into classes where the last time the diagonal is touched is $(i, i)$ for $0 \leq i \leq n - 1$
 
 Once we hit $(i, i)$, we have $C_{n-i-1}$ paths left. Thus the total paths is
-$$c_n = \sum_{i=0}^{n-1} C_i C_{n-i-1} \quad \quad c_0 = 1$$
+
+$$C_n = \sum_{i=0}^{n-1} C_i C_{n-i-1} \quad \quad c_0 = 1$$
+
+Where $C_n$ is called the **Catalan Number**
 
 &nbsp;
 
-**Theorem**: If $C_n$ denotes the total UP/RIGHT paths from $(0, 0)$ to $(n, n)$ that don't go over the diagonal is
-$$C_n = \sum_{n=0}^{\infty}C_i C_{n-i-1}$$
-Moreover, the OGF is
+**Theorem**: The OGF for $C_n$ is
+
 $$F(x) = \frac{1-\sqrt{1 - 4x}}{2x} = \sum_{n=0}^{\infty}C_n x^n \quad \quad C_n = \frac{\displaystyle {2n \choose n}}{n+1}$$
 
 *Proof*:
 
 \begin{align*}
-F(x) &= 1 + \sum_{n=1}^{\infty}C_n x^n = 1 + \sum_{n=1}^{\infty} \Big(\sum_{i=0}^{n-1}C_i C_{n-i-1} \Big) x^n \\
+F(x) &= \sum_{n=0}^{\infty}C_n x^n \\
+&= 1 + \sum_{n=1}^{\infty}C_n x^n = 1 + \sum_{n=1}^{\infty} \Big(\sum_{i=0}^{n-1}C_i C_{n-i-1} \Big) x^n \\
 &= 1 + x \sum_{n=1}^{\infty} \Big( \sum_{i=0}^{n-1}C_i C_{n-i-1}\Big)x^{n-1} \\
 &= 1 + x(F(x))^2 \\
 &= \frac{1 \pm \sqrt{1 - 4x}}{2x}
 \end{align*}
-For the algebra above, recall that for $\displaystyle f = \sum a_nx^n$ and $\displaystyle g = \sum b_nx^n$, we have
-$$fg = \sum d_n x^n \quad \quad d_n = \sum a_i b_{n-i}$$
+
+For the algebra above, recall that for $\displaystyle f = \sum_{n=0}^\infty a_nx^n$ and $\displaystyle g = \sum_{n=0}^\infty b_nx^n$, we have
+
+$$fg = \sum_{n=0}^\infty d_n x^n \quad \quad d_n = \sum_{i=0}^n a_i b_{n-i}$$
+
 Thus we see that
+
 $$fg = \sum_{n=1}^{\infty}d_{n-1} x^{n-1} \implies \sum_{i=0}^{n-1} C_i C_{n-i-1} = F(x)^2$$
 
 Additional algebra shows that
-$$F(x) = \sum_{n=0}^{\infty} \frac{\displaystyle {2n \choose n}}{n+1}x^n$$
+
+$$F(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x} = \sum_{n=0}^{\infty} \frac{\displaystyle {2n \choose n}}{n+1}x^n$$
 
 &nbsp;
 
@@ -1173,9 +1248,11 @@ Thus total RIGHTs is $i + (n- i - 1) = n - 1$ and total UPs is $i + 1 + (n - i) 
 Consider which paths to $(n-1, n+1)$ will touch the bad diagonal? All of them
 
 Thus any bad path to $(n, n)$ that goes over the main diagonal corresponds to a path reaching $(n-1, n+1)$, establishing a bijection
+
 $$\displaystyle {(n-1)+ n + 1 \choose n-1} = \displaystyle {2n \choose n-1}$$
 
 Thus the total paths $(n, n)$ that don't go over the main diagonal is
+
 $$\displaystyle {2n \choose n} - \displaystyle {2n \choose n-1} = \frac{\displaystyle {2n \choose n}}{n+1}$$
 
 &nbsp;
@@ -1203,7 +1280,9 @@ Treat $($ as RIGHT and $)$ as UP. Then we have the Catalan number $C_n$
 &nbsp;
 
 The root is ignored and we recurse over the subcases. Thus there are
+
 $$C_i = \sum_{i=0}^{n-1}C_i C_{n-i-1}$$
+
 total trees
 
 &nbsp;
@@ -1218,6 +1297,7 @@ Assume that these vertices join with a vertex $k$ for $1 \leq k \leq n$. This cr
 - Polygon formed by $k, k+1, \ldots, n+1 \implies n-k+2$ vertices $\implies C_{n-k}$
 
 Thus total number of triangulations is
+
 $$\sum_{k=1}^{n}C_{k-1}C_{n-k} = \sum_{n=0}^{n}C_k C_{n-k-1} = C_n$$
 
 # Graph Theory
