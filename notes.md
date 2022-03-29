@@ -1526,7 +1526,7 @@ Thus any edge must connect between a node in $A$ and a node in $B$, which are ou
 
 &nbsp;
 
-**Theorem**: There exists a d-regular graph on $v$ vertices if and only if at least one of $d, n$ is even
+**Theorem**: There exists a d-regular graph on $n$ vertices if and only if at least one of $d, n$ is even
 
 *Proof*: $\implies$ By Contraposition. If $d, n$ are both odd, then a d-regular graph doesn't exist by the Corollary above
 
@@ -1621,7 +1621,7 @@ Otherwise, apply the procedure recursively on $G_1$
 
 &nbsp;
 
-**Theorem**: Let $d = d_1, \ldots, d_n$ be a non-increasing sequence. There exists a graphical graph $G$ with these degrees if and only if the sequence
+**Theorem**: Let $s = d_1, \ldots, d_n$ be a non-increasing sequence. There exists a graphical graph $G$ with these degrees if and only if the sequence
 
 $$s_1 = d_2 -1, d_3 - 1, \ldots, d_{d_1 + 1} - 1, \underbrace{d_{d_1 + 2}, \ldots, d_n}_{\text{no minus term}}$$
 
@@ -1692,6 +1692,8 @@ Thus $s$ is NOT graphical
 &nbsp;
 
 **Definition - Forest**: A **forest** is an acyclic graph (union of trees)
+
+&nbsp;
 
 **Notation $\mathbf{G \setminus v}$**: Denotes the graph created by deleting vertex $v$ and all adjacent edges to it
 
@@ -2002,7 +2004,7 @@ Let $x$ be the smallest index not in the sequence. Then in our construction of t
 
 Now consider the subtree excluding $x$ and the edge incident on it. By IH, this tree must be unique
 
-But then the sequence $(a_1, \ldots, a_{n-1})$ must correspond to a unique tree with $x \sim a_1$. Otherwise $a_1 would not be the first value of the sequence
+But then the sequence $(a_1, \ldots, a_{n-1})$ must correspond to a unique tree with $x \sim a_1$. Otherwise $a_1$ would not be the first value of the sequence
 
 &nbsp;
 
@@ -2341,3 +2343,121 @@ Each car drives to its favorite spot
 &nbsp;
 
 **Consider**: How many preferences are there such that all cars can park?
+
+To solve this, we first transform the problem.
+
+First, create a circular parking lot with $n + 1$ spots, still with $n$ cars
+
+Now there are $(n+1)^n$ preferences
+
+Note that the circular parking lot ensures that there will always be a valid parking preference sequence, always with $1$ spot not used
+
+A successful parking job occurs if the spot $n+1$ is open
+
+Suppose $(a_1, \ldots, a_n)$ leaves spot $i$ open. What happens to the preference
+
+$$(a_1 + 1, a_2 + 1, \ldots, a_n + 1) ? (n+1 \sim 1)$$
+
+Here spot $i + 1$ is open
+
+Thus every spot has an equal chance to be open, so only
+
+$$\frac{1}{n+1} (n + 1)^n = (n+1)^{n-1}$$
+
+sequences will have an open spot at $n + 1$
+
+&nbsp;
+
+**Theorem**: If $P(n)$ denotes the number of successful parking functions with $n$ cars and $n$ spots, then
+
+$$P(n) = (n+1)^{n-1}$$
+
+&nbsp;
+
+**Consider**: How does relate to rooted forests
+
+Note that the number of rooted forests on $n+1$ vertices is
+
+$$P(n+1) = \sum_{i=}^{n} \displaystyle {n \choose i} (i+1) P(i) P(n-i)$$
+
+*Proof*:
+
+1. Pick $i$ other indices $\displaystyle {n \choose i}$ ways to create a component
+
+2. There are $P(i)$ rooted forests with $i$ vertices (connected with some selected root)
+
+3. There are $i+1$ ways to select this root
+
+4. For the remaining vertices, there are $P(n-i)$ rooted forests that can be created
+
+## Matchings
+
+**Definition - Matching**: Set of edges with no shared endpoints
+
+&nbsp;
+
+**Definition - Saturated**: Vertices incident to the edges of a matching are **saturated**. Otherwise they are **unsaturated**
+
+&nbsp;
+
+**Definition - Perfect Matching**: If every vertex is saturated in a graph, then the matching is a **perfect matching**
+
+&nbsp;
+
+**Example**:
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$2$};
+    \node[main] (3) [below of=1] {$3$};
+    \node[main] (4) [right of=3] {$4$};
+    \node[main] (5) [below right of=2] {$5$};
+
+    \draw[red] (1) -- (2);
+    \draw[] (1) -- (3);
+    \draw[red] (3) -- (4);
+    \draw[] (2) -- (4);
+    \draw[] (2) -- (5);
+    \end{tikzpicture}
+\end{center}
+
+Above, the edges $1 ~ 2$ and $3 ~4$ form a matching.
+
+- **Note**: No perfect matching is possible since there is an odd number of vertices
+
+&nbsp;
+
+**Example**:
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$2$};
+    \node[main] (3) [right of=2] {$3$};
+    \node[main] (4) [right of=3] {$4$};
+
+    \draw[red] (1) -- (2);
+    \draw[] (2) -- (3);
+    \draw[red] (3) -- (4);
+    \end{tikzpicture}
+\end{center}
+
+The above is a **perfect matching**
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$2$};
+    \node[main] (3) [right of=2] {$3$};
+    \node[main] (4) [right of=3] {$4$};
+
+    \draw[] (1) -- (2);
+    \draw[red] (2) -- (3);
+    \draw[] (3) -- (4);
+    \end{tikzpicture}
+\end{center}
+
+The above is a **maximal matching**

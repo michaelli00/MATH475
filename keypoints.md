@@ -50,6 +50,68 @@ output: pdf_document
 
 \newpage
 
-**Power Series Formulas**: $\displaystyle \sum_{n=0}^{\infty} x^n = \frac{1}{1-x} \quad \quad (1+x)^a = \sum_{n=0}^{\infty} \displaystyle {a \choose n}x^n \quad \quad \sum_{n=1}^{\infty}n x^{n-1} = \Big( \sum_{n=0}^{\infty} x^n\Big)^{'} = \frac{1}{(1-x)^2}$
+**Power Series Formulas**: $\displaystyle \sum_{n=0}^{\infty} x^n = \frac{1}{1-x} \quad \quad \sum_{n=0}^{\infty}\frac{x^n}{n!} = e^x \quad \quad (1+x)^a = \sum_{n=0}^{\infty} \displaystyle {a \choose n}x^n \quad \quad \sum_{n=1}^{\infty}n x^{n-1} = \Big( \sum_{n=0}^{\infty} x^n\Big)^{'} = \frac{1}{(1-x)^2}$
 
 **OGF**: $\sum_{n=0}^{\infty} a_n x^n \quad \quad (AB)(x) = \displaystyle \sum_{n=0}^{\infty} \Big(\sum_{i=0}^{n} a_i b_{n-i}\Big) x^n \quad \quad$ **EGF**: $\displaystyle \sum_{n=0}^{\infty}a_n \frac{x^n}{n!} \quad \quad (AB)(x) = \displaystyle \sum_{n=0}^{\infty}\Big(\sum_{i=0}^{n} \displaystyle {n \choose i} a_i b_{n-i}\Big) \frac{x^n}{n!}$
+
+- **Even Permutation EGF**: $\displaystyle \frac{e^x + e^{-x}}{2} = \sum_{n=0}^{\infty} \frac{x^{(2n)}}{(2n)!} \quad \quad$ **Odd Permutation EGF**: $\displaystyle \frac{e^x - e^{-x}}{2} = \sum_{n=0}^{\infty} \frac{x^{(2n + 1)}}{(2n + 1)!} \quad \quad$
+
+**Weak Compositions OGF**: $\displaystyle \frac{1}{(1-x)^k} = (1+x + \cdots) (1 + x + \cdots) \cdots = \sum_{n=0}^{\infty} \displaystyle {n+k-1 \choose k-1}x^n$
+
+**Stirling Number OGF**: $\displaystyle \frac{x^k}{(1-x)(1-2x) \cdots (1-kx)} = \sum_{n=0}^{\infty} S(n, k) x^n \quad \quad$
+
+**Partitions OGF**: $\displaystyle \frac{1}{(1-x)(1-x^2) \cdots} = \sum_{n=0}^{\infty} p(n) x^n \quad \quad \frac{x^k}{(1-x)(1 - x^2) \cdots} = \sum_{n=0}^{\infty} p_k(n) x^n$
+
+**Permutations EGF**: $\displaystyle (1 + x)^m = \sum_{n=0}^{\infty} P(m, n) \frac{x^n}{n!}$
+
+**Stirling Number EGF**: $\displaystyle \frac{(e^x-1)^k}{k!} = \sum_{n=0}^{\infty}S(n, k) \frac{x^n}{n!} \quad \quad$ **Bell Number EGF**: $\displaystyle e^{(e^x - 1)} = \sum_{n=0}^{\infty}B(n) \frac{x^n}{n!}$
+
+**Catalan Numbers**: $\displaystyle C_n = \sum_{i=0}^{n-1}C_i C_{n-i-1} \quad \quad$ **OGF Catalan Numbers**: $C_n = \frac{\displaystyle {2n \choose n}}{n+1} \quad \quad C_0 = 0$
+
+**Vertex Induced Subgraph**: When $u, v \in V(H)$ and $u \sim v \in E(G)$, then $u \sim v \in E(H)$
+
+**Path Graph**: $P_n$ has $E(P_n) = \{\{v_1, v_2,\}, \{v_2, v_3\}, \ldots, \{v_{n-1}, v_n\}\}$ has $n-1$ edges
+
+**Cycle Graph**: $C_n$ has $E(C_n) = \{\{v_1, v_2,\}, \{v_2, v_3\}, \ldots, \{v_{n-1}, v_n\}, \{v_n, v_1\}\}$ has $n$ edges
+
+**Complete Graph**: $K_n$ has $E(K_n) = \{\{v_i, v_j\} \mid 1 \leq i \neq j \leq n\}$ has $\displaystyle {n \choose 2}$ edges
+
+**Complete Bipartite Graph**: $K_{a, b}$ where partites $A, B$ have sizes $a, b$ and every vertex in $A$ is adjacent to a vertex in $B$
+
+**Theorem**: $G$ is bipartite if and only if $G$ has no odd cycles
+
+**Theorem**: $G$ with size $m$ has $\displaystyle \sum_{v \in V(G)}^{} \deg(v) = 2m \quad \quad$ **Corollary**: $G$ must have an even number of odd degree vertices
+
+**d-Regular Graph**: Every vertex in $G$ has degree $d$
+
+**Theorem**: There exists a $d$-regular graph on $n$ vertices if and only if at least one of $d, n$ is even
+
+**Theorem**: For any graph $G$, there exists a $d$-regular graph $G$ such that $G$ is an induced subgraph of $H$
+
+**Degree Sequence**: Non-increasing sequence of length $n$ whose $i$th term is the degree of vertex $i$
+
+**Theorem**: $G$ with degrees $d = d_1, \ldots, d_n$ exists if and only if $s_1 = d_2 - 1, d_3 - 1, \ldots, d_{d_1 + 1} - 1, d_{d_1+2}, \ldots, d_n$ is graphical
+
+**Theorem**: Every tree on $2$ or more vertices has at least $2$ leaves
+
+**Theorem**: $G$ is a tree $\iff G$ is connected, acyclic with $n-1$ edges $\iff$ there is a unique path for $u, v \in V(G)$
+
+**Theorem**: An edge $e$ is a bridge if and only if $e$ isn't in any cycles
+
+**Spanning Tree**: Tree $T$ such that $V(T) = V(G)$ and $E(T) \subseteq E(G)$
+
+**Spanning Tree to Code**: Delete lowest index leaf and write down vertex adjacent to it. Repeat until only an edge remains
+
+**Code to Spanning Tree**: Find smallest index $b_1$ not used and create $a_1 \sim b_1$. Delete $a_1$ and append $b_1$. Repeat until $b_1, \ldots, b_{n-2}$ then connect missing $2$ indices
+
+**Theorem**: Each Prufer code corresponds to a unique tree. Thus number of spanning trees of $K_n$ is $n^{n-2}$
+
+**Corollary**: Total trees such that vertex $i$ has degree $d_i$ is $\displaystyle {n-2 \choose d_1 - 1, d_2 - 1, \ldots}$
+
+**Rooted Plane Tree**: Tree with a rot vertex, left/right ordering, but vertices are NOT labelled
+
+- Clockwise walk around border of the tree reveals that the number of rooted plane trees on $n+1$ vertices is $\displaystyle C_n = \frac{\displaystyle {2n \choose n}}{n+1}$
+
+**Rooted Forest**: Forest where each tree component has a distinguishable root vertex
+
+**Theorem**: Number of labelled rooted forests on $n$ vertices is $$(n+10^{n-1})$
