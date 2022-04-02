@@ -70,10 +70,6 @@ output: pdf_document
 
 **Vertex Induced Subgraph**: When $u, v \in V(H)$ and $u \sim v \in E(G)$, then $u \sim v \in E(H)$
 
-**Path Graph**: $P_n$ has $E(P_n) = \{\{v_1, v_2,\}, \{v_2, v_3\}, \ldots, \{v_{n-1}, v_n\}\}$ has $n-1$ edges
-
-**Cycle Graph**: $C_n$ has $E(C_n) = \{\{v_1, v_2,\}, \{v_2, v_3\}, \ldots, \{v_{n-1}, v_n\}, \{v_n, v_1\}\}$ has $n$ edges
-
 **Complete Graph**: $K_n$ has $E(K_n) = \{\{v_i, v_j\} \mid 1 \leq i \neq j \leq n\}$ has $\displaystyle {n \choose 2}$ edges
 
 **Complete Bipartite Graph**: $K_{a, b}$ where partites $A, B$ have sizes $a, b$ and every vertex in $A$ is adjacent to a vertex in $B$
@@ -81,8 +77,6 @@ output: pdf_document
 **Theorem**: $G$ is bipartite if and only if $G$ has no odd cycles
 
 **Theorem**: $G$ with size $m$ has $\displaystyle \sum_{v \in V(G)}^{} \deg(v) = 2m \quad \quad$ **Corollary**: $G$ must have an even number of odd degree vertices
-
-**d-Regular Graph**: Every vertex in $G$ has degree $d$
 
 **Theorem**: There exists a $d$-regular graph on $n$ vertices if and only if at least one of $d, n$ is even
 
@@ -95,6 +89,8 @@ output: pdf_document
 **Theorem**: Every tree on $2$ or more vertices has at least $2$ leaves
 
 **Theorem**: $G$ is a tree $\iff G$ is connected, acyclic with $n-1$ edges $\iff$ there is a unique path for $u, v \in V(G)$
+
+**Theorem**: A graph of order $n$ has at least $n-1$ edges
 
 **Theorem**: An edge $e$ is a bridge if and only if $e$ isn't in any cycles
 

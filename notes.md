@@ -1386,7 +1386,7 @@ $$\sum_{k=1}^{n}C_{k-1}C_{n-k} = \sum_{n=0}^{n}C_k C_{n-k-1} = C_n$$
 
 **Definition - Bipartite**: $G$ is **bipartite** if its vertex set can be partitioned into $2$ subsets $A, B$, called **partite sets**: such that every edge of $G$ has one endpoint in $A$ and the other in $B$
 
-\newpage
+&nbsp;
 
 **Example**
 
@@ -1411,7 +1411,7 @@ $$\sum_{k=1}^{n}C_{k-1}C_{n-k} = \sum_{n=0}^{n}C_k C_{n-k-1} = C_n$$
 
 Above graph cannot be bipartite since the neighbors of ?? lie in A and B
 
-&nbsp;
+\newpage
 
 **Theorem**: $G$ is bipartite if and only if $G$ contains no odd cycles
 
@@ -1478,7 +1478,7 @@ Thus any edge must connect between a node in $A$ and a node in $B$, which are ou
 
 &nbsp;
 
-**Theorem**: A Graph $G$ with size $m$ ($m$ edges) has $\displaystyle \sum_{v \in V(G)}^{} \deg(v) = 2m$
+**Theorem**: A graph $G$ with size $m$ ($m$ edges) has $\displaystyle \sum_{v \in V(G)}^{} \deg(v) = 2m$
 
 *Proof*: Summing over all vertices, every edge gets counted twice by the 2 endpoints
 
@@ -1522,7 +1522,7 @@ Thus any edge must connect between a node in $A$ and a node in $B$, which are ou
 
 &nbsp;
 
-**Non-Example**: A 3-regular graph with 5 vertices doesn't exist by the Corollary above (there must be an even number of vertices with odd degree)
+**Non-Example**: A 3-regular graph with 5 vertices doesn't exist (need an even number of vertices with odd degree)
 
 &nbsp;
 
@@ -1532,7 +1532,7 @@ Thus any edge must connect between a node in $A$ and a node in $B$, which are ou
 
 $\impliedby$ If $d=2k$, arrange the vertices in a cycle. Then $v_i$ joins to $k$ preceding and $k$ succeeding vertices
 
-Otherwise assume $d$ is odd and $n$ is even. We join edges as before, along with $v_i$ joining to $v_{i+t \pmod{n}}$ where $n = 2t$ (the opposite vertex)
+Otherwise $d$ is odd and $n$ is even. Join edges as before, along with $v_i$ joining to $v_{i+t \pmod{n}}$ where $n = 2t$ (the opposite vertex)
 
 &nbsp;
 
@@ -1621,11 +1621,11 @@ Otherwise, apply the procedure recursively on $G_1$
 
 &nbsp;
 
-**Theorem**: Let $s = d_1, \ldots, d_n$ be a non-increasing sequence. There exists a graphical graph $G$ with these degrees if and only if the sequence
+**Theorem**: Let $s = d_1, \ldots, d_n$ be a non-increasing sequence. There exists a graphical graph $G$ with these degrees if and only if the sequence $s_1$ is graphical
 
 $$s_1 = d_2 -1, d_3 - 1, \ldots, d_{d_1 + 1} - 1, \underbrace{d_{d_1 + 2}, \ldots, d_n}_{\text{no minus term}}$$
 
-is graphical. That is, delete $d_1$ then delete 1 edge from the next $d_1$ terms (may require reordering the sequence)
+That is, delete $d_1$ then delete 1 edge from the next $d_1$ terms (may require reordering the sequence)
 
 *Proof*: $\impliedby$ Given $d_2 - 1, \ldots, d_n$ is graphical, we can add a new vertex $v_1$ and join $v_1$ to the first $d_1$ vertices in the sequence
 
@@ -1679,7 +1679,7 @@ Thus $s$ is NOT graphical
 
 ## Properties of Trees
 
-**Definition - Acyclic**: A graph is **acyclic** If it contains no cycles
+**Definition - Acyclic**: A graph is **acyclic** if it contains no cycles
 
 &nbsp;
 
@@ -1695,9 +1695,9 @@ Thus $s$ is NOT graphical
 
 &nbsp;
 
-**Notation $\mathbf{G \setminus v}$**: Denotes the graph created by deleting vertex $v$ and all adjacent edges to it
+**Notation - $\mathbf{G \setminus v}$**: Denotes the graph created by deleting vertex $v$ and all adjacent edges to it
 
-&nbsp;
+\newpage
 
 **Example**: Consider $K_4$ and removing the bottom-right corner vertex
 
@@ -1740,8 +1740,6 @@ Thus $s$ is NOT graphical
   \end{tikzpicture}
 \end{center}
 
-&nbsp;
-
 **Theorem**: Every tree on $2$ or more vertices has at least $2$ leaves
 
 *Proof*: Since a tree is acyclic, take a path of longest length with endpoints $u, v$
@@ -1761,6 +1759,8 @@ Thus $\deg(u) = \deg(v) = 1$
 3. $G$ is acyclic with $n-1$ edges
 
 4. There exists a unique path for any $2$ distinct vertices $u, v \in V(G)$
+
+&nbsp;
 
 *Proof $\mathit{1 \rightarrow 2, 3}$*: By Induction on $n$
 
@@ -1793,6 +1793,8 @@ However, $G'$ has $< n-1$ edges which contradicts the previous proof.
 Thus $G$ must be acyclic with $n-1$ edges
 
 &nbsp;
+
+\newpage
 
 *Proof $\mathit{3 \rightarrow 1}$*: Let $G$ be an acyclic graph with $n-1$ edges. We show that $G$ is connected
 
@@ -1834,7 +1836,7 @@ Contradiction. Thus $G$ must be acyclic and thus a tree
 
 *Proof*: The statement clearly holds for $n = 1, 2, 3$. Thus we look at $n \geq 4$
 
-BWOC, suppose that $G$ be a graph of smallest order that is connected on $m \leq n-2$ edges
+BWOC, suppose that $G$ is the graph of smallest order $n$ that is connected on $m \leq n-2$ edges
 
 First we show that $G$ has a leaf. BWOC, suppose $G$ has no leaves.
 
@@ -1850,7 +1852,7 @@ Thus the minimum number of edges in a connected graph on $n$ vertices is $n-1$
 
 &nbsp;
 
-**Example**: Suppose that $G$ is a tree on $13$ vertices with degrees $1, 2, 5$. If $G$ has $3$ vertices of degree $2$, how many leaves does it have?
+**Example**: Suppose $G$ is a tree on $13$ vertices with degrees $1, 2, 5$. If $G$ has $3$ vertices of degree $2$, how many leaves does it have?
 
 Let $x$ be the total number of leaves. Then we have $13 - 3 - x = 10 - x$ vertices of degree $5$
 
