@@ -16,7 +16,7 @@ output: pdf_document
 
 \newpage
 
-# Chapter 1
+# Chapter 1 Counting
 
 ## The Basics - Permutations, Combinations, and General Counting
 
@@ -301,7 +301,7 @@ Thus from day $k+1$ to day $j$, the total number of hours worked out is 14
 
 **Definition - Weak Composition**: Take $a_1, \ldots a_k \geq 0$ such that $\displaystyle \sum_{i=1}^{k} a_i = n$. Then the ordered $k$-tuple ($a_1, \ldots, a_k)$ is a **weak composition** of $n$ into $k$ partitions
 
-- **Note**: This can be seen as distributing $n$ unlabelled balls into $k$ labelled boxes
+- **Note**: This can be seen as distributing $n$ unlabeled balls into $k$ labeled boxes
 
 &nbsp;
 
@@ -342,7 +342,7 @@ Thus $\displaystyle {3 + 3 -1 \choose 3 - 1}$
 We can derive this with the formula above but ensuring that each of the $k$ boxes starts with 1 star, and then we distribute the remaining $n-k$ stars in a weak composition fashion. Thus the number of compositions of $n$ into $k$ parts is
 $$\displaystyle {n - k + k - 1 \choose k - 1} = \displaystyle {n - 1 \choose k - 1}$$
 
-**Note**: This problem is placing unlabelled balls into labelled bins
+**Note**: This problem is placing unlabeled balls into labeled bins
 
 &nbsp;
 
@@ -357,7 +357,7 @@ $$\displaystyle {n - k + k - 1 \choose k - 1} = \displaystyle {n - 1 \choose k -
 
 **Example**: $\{\{1, 2, 4\}, \{3, 5\}, \{6\}\}$ is a partition of $[6]$
 
-The first inner set here can be considered placing balls $1, 2, 4$ into its own (unlabelled) bin
+The first inner set here can be considered placing balls $1, 2, 4$ into its own (unlabeled) bin
 
 &nbsp;
 
@@ -527,7 +527,7 @@ RHS:
 
 ## Twelvefold Way
 
-Goal is to distribute $n$ (labelled or unlabelled) balls into $k$ (labelled or unlabelled) bins, depending on if the bins
+Goal is to distribute $n$ (labeled or unlabeled) balls into $k$ (labeled or unlabeled) bins, depending on if the bins
 
 - Have no restriction
 - Have at least 1 ball
@@ -535,7 +535,7 @@ Goal is to distribute $n$ (labelled or unlabelled) balls into $k$ (labelled or u
 
 This results in 12 possible scenarios
 
-1. **$\mathbf{n}$ Labelled Balls into $\mathbf{k}$ Labelled Bins**
+1. **$\mathbf{n}$ labeled Balls into $\mathbf{k}$ labeled Bins**
 
     - No restrictions: For each ball, pick a bin to put it into $\implies k^n$
     - At least 1: Can be viewed as the number of surjective functions $\implies k! S(n, k)$
@@ -543,7 +543,7 @@ This results in 12 possible scenarios
       - If $n > k \implies 0$
       - Otherwise $n \leq k$ and we pick $n$ bins in a specific order $\implies P(k, n)$
 
-2. **$\mathbf{n}$ Unlabelled Balls into $\mathbf{k}$ Labelled Bins**
+2. **$\mathbf{n}$ Unlabeled Balls into $\mathbf{k}$ labeled Bins**
 
     - No restrictions: Weak composition $\implies \displaystyle {n+k-1 \choose k-1}$
     - At least 1: Composition $\implies \displaystyle {n-1 \choose k-1}$
@@ -551,7 +551,7 @@ This results in 12 possible scenarios
       - If $n > k \implies 0$
       - Otherwise $n \leq k$ and we just need to choose $n$ bins to use $\implies \displaystyle {k \choose n}$
 
-3. **$\mathbf{n}$ Labelled Balls into $\mathbf{k}$ Unlabelled Bins**
+3. **$\mathbf{n}$ labeled Balls into $\mathbf{k}$ Unlabeled Bins**
 
     - No restrictions: Need to count all possible partitions with $0$ to $k$ parts $\implies \displaystyle \sum_{i=1}^{k}S(n, i)$
       - **Note**: This is NOT Bell's Number since we might have $k < n$
@@ -560,7 +560,7 @@ This results in 12 possible scenarios
       - If $n > k \implies 0$
       - Otherwise $n \leq k$ and the bins are indistinguishable $\implies 1$ way
 
-4. **$\mathbf{n}$ Unlabelled Balls into $\mathbf{k}$ Unlabelled Bins**
+4. **$\mathbf{n}$ Unlabeled Balls into $\mathbf{k}$ Unlabeled Bins**
 
     - No restrictions: need to count all possible partitions with $0$ to $k$ parts $\implies \displaystyle \sum_{i=1}^{k}p_i(n)$
     - At least 1: Partition $n$ into $k$ parts $\implies p_k(n)$
@@ -582,7 +582,7 @@ Weak compositions for $1, 2, \ldots, 7$ such that the number of balls in each bi
 
 **Example**: How many injective functions $f: [n] \rightarrow [k]$ are there?
 
-$n$ labelled balls into $k$ labelled bins where each big gets at most $1 \implies P(k, n)$
+$n$ labeled balls into $k$ labeled bins where each big gets at most $1 \implies P(k, n)$
 
 &nbsp;
 
@@ -669,7 +669,7 @@ Let $A_i = \{a \in [n] \mid p_1 \mid a\}$. Then we see value of $\phi(n)$ is
 
 &nbsp;
 
-**Example**: How many ways to seat 20 couples in a circular, unlabelled table with 40 seats such that each significant other doesn't sit with each other
+**Example**: How many ways to seat 20 couples in a circular, unlabeled table with 40 seats such that each significant other doesn't sit with each other
 
 Let $A_i$ be the set of seatings where couple $1$ is sitting next to each other. Then we see
 
@@ -678,7 +678,7 @@ Let $A_i$ be the set of seatings where couple $1$ is sitting next to each other.
 &= \sum_{i = 0}^{20} \underbrace{20 \choose i}_{\mathclap{\text{select couples}}}  (-1)^i \underbrace{\frac{(40 - i)!}{40 - i}}_{\text{glue couples}}  \overbrace{2^i}^{\mathclap{{\text{order of couples}}}}
 \end{align*}
 
-# Chapter 2
+# Chapter 2 Generating Functions
 
 ## Review of Power Series
 
@@ -794,7 +794,7 @@ However, we can now interpret
 
 $$\frac{1}{(1-x)^k} = \underbrace{(\frac{1}{1-x})(\frac{1}{1-x}) \cdots}_{\text{apply geometric series k times}} = (1 + x + x^2 + \cdots + \cdots) (1 + x + x^2 + \cdots + \cdots) \cdots$$
 
-Consider the question of getting coefficients of $x^7$. This corresponds to the weak compositions of $7$ unlabelled balls into $k$ bins
+Consider the question of getting coefficients of $x^7$. This corresponds to the weak compositions of $7$ unlabeled balls into $k$ bins
 
 However, now the chosen exponents correspond to the bin sizes. Thus we see that the OGF for weak compositions is
 
@@ -1111,7 +1111,7 @@ Thus the EGF is $\displaystyle n! \sum_{k=0}^{n}\frac{(-1)^k}{k!} = D_n$
 
 &nbsp;
 
-**Example**: How many ways can $\geq 1$ people be split into any number of non-empty groups such that each group sits at an unlabelled circular table
+**Example**: How many ways can $\geq 1$ people be split into any number of non-empty groups such that each group sits at an unlabeled circular table
 
 EGF for $1$ table with $n$ people is
 \begin{align*}
@@ -1128,7 +1128,7 @@ Thus EGF for $k$ tables is
 
 &nbsp;
 
-$\displaystyle \frac{\ln(\frac{1}{1-x})\ln(\frac{1}{1-x}) \cdots \ln(\frac{1}{1-x})}{k!}$ (need to consider overcounting since tables are unlabelled)
+$\displaystyle \frac{\ln(\frac{1}{1-x})\ln(\frac{1}{1-x}) \cdots \ln(\frac{1}{1-x})}{k!}$ (need to consider overcounting since tables are unlabeled)
 
 For any number of tables, we need to sum over $k$ and want the coefficient of $\displaystyle \frac{x^n}{n!}$
 
@@ -1287,7 +1287,7 @@ total trees
 
 &nbsp;
 
-**Example**: Total ways to triangulate a regular (labelled) polygon with $n+2$ sides i.e. total ways to draw $n-1$ lines connecting 2 vertices such that no lines cross
+**Example**: Total ways to triangulate a regular (labeled) polygon with $n+2$ sides i.e. total ways to draw $n-1$ lines connecting 2 vertices such that no lines cross
 
 To triangulate a polygon with $n+2$ sides, we create a triangle using the line joining vertex $n+1$ and $n+2$ as the base
 
@@ -1300,7 +1300,7 @@ Thus total number of triangulations is
 
 $$\sum_{k=1}^{n}C_{k-1}C_{n-k} = \sum_{n=0}^{n}C_k C_{n-k-1} = C_n$$
 
-# Graph Theory
+# Chapter 3 Graph Theory
 
 ## Introduction to Graph Theory
 
@@ -1874,12 +1874,12 @@ $$\sum_{v \in V} \deg(v) = (3)2 + (x)1 + (10-x)5 = 2(13-1) = 24 \implies x= 8$$
 
 Consider the total number of trees on $n$ vertices
 
-- If the vertices are unlabelled, there is no easy formula
+- If the vertices are unlabeled, there is no easy formula
 
-- If the vertices, are labelled, we can look at the problem: How many labelled spanning trees are in $K_n$
+- If the vertices, are labeled, we can look at the problem: How many labeled spanning trees are in $K_n$
 
 
-**Definition - Prüfer Code**: A sequence of length $n-2$ where each entry can take on $1$ to $n$, which corresponds to a labelled tree
+**Definition - Prüfer Code**: A sequence of length $n-2$ where each entry can take on $1$ to $n$, which corresponds to a labeled tree
 
 &nbsp;
 
@@ -1986,7 +1986,7 @@ Where the order of edge insertion is red, orange, green, blue, brown
 
 &nbsp;
 
-**Theorem**: Each Prufer code corresponds to a unique tree. Hence the total number of labelled spanning trees of $K_n$ is $n^{n-2}$
+**Theorem**: Each Prufer code corresponds to a unique tree. Hence the total number of labeled spanning trees of $K_n$ is $n^{n-2}$
 
 - This comes from having ending the algorithm with a sequence $b_1, \ldots, b_{n-2}$ where each $b_i$ can take on any $n$ value
 
@@ -2045,7 +2045,7 @@ Thus $i$ shows up $d_i - 1$ times
 
 &nbsp;
 
-**Corollary**: The total trees (labelled) such that vertex $i$ has degree $d_i$ is
+**Corollary**: The total trees (labeled) such that vertex $i$ has degree $d_i$ is
 
 $$\displaystyle {n-2 \choose d_1 - 1, d_2 - 1, \ldots} \quad \quad \text{Permutation with repetition}$$
 
@@ -2076,7 +2076,7 @@ By the formula, we have $\displaystyle {6-2 \choose 2, 2} = 6$ trees
 
 &nbsp;
 
-Note that the tree is determined by picking $2$ of the leaf indices $\implies \displaystyle {4 \choose 2} = 6$ ways to create labelled trees with thus Prufer code
+Note that the tree is determined by picking $2$ of the leaf indices $\implies \displaystyle {4 \choose 2} = 6$ ways to create labeled trees with thus Prufer code
 
 This follows from swapping labels on either ends of the tree correspond to the same tree. That is
 
@@ -2106,7 +2106,7 @@ Correspond to the same tree (by rotation argument)
 
 **Definition - Rooted Plane Tree**: Trees that have a starting root vertex and the children of the tree have a left, right ordering
 
-- **Note**: Vertices are NOT labelled
+- **Note**: Vertices are NOT labeled
 
 &nbsp;
 
@@ -2183,7 +2183,7 @@ $$C_n = \frac{\displaystyle {2n \choose n}}{n+1}$$
 
 &nbsp;
 
-**Consider**: What is the total number of labelled rooted forests?
+**Consider**: What is the total number of labeled rooted forests?
 
 &nbsp;
 
@@ -2268,7 +2268,7 @@ $$C_n = \frac{\displaystyle {2n \choose n}}{n+1}$$
 
 &nbsp;
 
-In particular, given a rooted forest, we can add a vertex ($n+1$) that joins the roots to create a labelled tree on $n+1$ vertices
+In particular, given a rooted forest, we can add a vertex ($n+1$) that joins the roots to create a labeled tree on $n+1$ vertices
 
 &nbsp;
 
@@ -2293,21 +2293,21 @@ Here the red vertices were the roots of the rooted forest and the blue vertex is
 
 &nbsp;
 
-Conversely, we can also reverse the process (take a labelled tree and convert it to a rooted forest) by deleting vertex $n + 1$
+Conversely, we can also reverse the process (take a labeled tree and convert it to a rooted forest) by deleting vertex $n + 1$
 
 The vertices adjacent to the vertex $n+1$ will now become the roots of the rooted forest
 
 &nbsp;
 
-This creates a bijection between rooted labelled forests and labelled trees on $n+1$ vertices
+This creates a bijection between rooted labeled forests and labeled trees on $n+1$ vertices
 
 &nbsp;
 
-**Theorem**: The number of labelled rooted forests on $n$ vertices is
+**Theorem**: The number of labeled rooted forests on $n$ vertices is
 
 $$(n+1)^{n-1}$$
 
-*Proof*: The formula comes from labelled trees on $n+1$ vertices
+*Proof*: The formula comes from labeled trees on $n+1$ vertices
 
 ### Car Parking Problem
 
@@ -2447,6 +2447,20 @@ The above is a **perfect matching**
 
 &nbsp;
 
+**Definition - Neighborhood**: Let $G$ be a bipartite graph with partite sets $X, Y$, and let $A \subseteq X$ be a non-empty set. The **neighborhood** of $A$, denoted $N(A)$, is the union of all vertices adjacent to at least one vertex in $A$
+
+&nbsp;
+
+**Definition - Size**: The **size** of a matching is the total number of edges in the matching
+
+&nbsp;
+
+**Defintion - Maximal**: A matching is **maximal** if no edges can be added to the matching
+
+&nbsp;
+
+**Definition - Maximum**: A matching is **maximum** if it contains the most number of edges among all matchings
+
 \begin{center}
   \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
     \node[main] (1) {$1$};
@@ -2461,3 +2475,246 @@ The above is a **perfect matching**
 \end{center}
 
 The above is a **maximal matching**
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$2$};
+    \node[main] (3) [right of=2] {$3$};
+    \node[main] (4) [right of=3] {$4$};
+
+    \draw[red] (1) -- (2);
+    \draw[] (2) -- (3);
+    \draw[red] (3) -- (4);
+    \end{tikzpicture}
+\end{center}
+
+The above is a **maximum matching**
+
+&nbsp;
+
+**Hall's Marriage Theorem**: Let $G$ be a birpartite graph and $A, B$, be the partite sets where $|A| = r$ and $|B| = s$. Then $G$ has a matching that saturates $A$ if and only if for all $S \subseteq A, |N(S)| \geq |S|$
+
+- Here $1 \leq r \leq s$ means there are $r$ women and $s$ men.
+
+- Saturating $A$ means that there are $r$ man-woman marriages
+
+- This only occurs if any subset of $k$ women are compatible with at least $k$ men
+
+*Proof*: $\implies$ Given a matching saturates $A$, show that $|N(S)| \geq |S|$
+
+Clearly any $S \subseteq A$, has each vertex in $S$ matching to at least one unique vertex in $B$. Thus $|N(S)| \geq |S|$
+
+$\impliedby$ Given $|N(S)| \geq |S|$, show that $A$ is saturated
+
+By contraposition, assume that no matching saturates $A$, we show the existence of an $S$ such that $|N(S)| < |S|$
+
+Let $M$ be a matching that is maximum and let $u \in A$ be unsaturated
+
+Let $Z$ be the subset of vertices such that there is a path to $u$ with edges alternating in $M$ and not in $M$
+
+We claim that every vertex in $Z \setminus \{u\}$ must be incident to an edge in $M$
+
+Indeed, the path must end in $A$. Otherwise if the path ended in $B$, we form a larger matching by taking the edges not in $M$, contradicting that $M$ is maximum
+
+&nbsp;
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$u$};
+    \node[main] (2) [below of=1] {$a_2$};
+    \node[main] (3) [below of=2] {$a_3$};
+    \node[main] (4) [below of=3] {$a_4$};
+
+    \node[main] (5) [right of=1] {$b_1$};
+    \node[main] (6) [below of=5] {$b_2$};
+    \node[main] (7) [below of=6] {$b_3$};
+    \node[main] (8) [below of=7] {$b_4$};
+
+    \draw[red] (1) -- (5);
+    \draw[blue] (5) -- (2);
+    \draw[red] (2) -- (6);
+    \draw[blue] (6) -- (3);
+    \draw[red] (3) -- (7);
+    \draw[blue] (7) -- (4);
+    \draw[red] (4) -- (8);
+    \end{tikzpicture}
+\end{center}
+
+&nbsp; &nbsp; &nbsp; &nbsp; In the diagram above, the blue edges are in $M$ and red edges are NOT in $M$
+
+&nbsp; &nbsp; &nbsp; &nbsp; The edge $a_4 \sim b_4$ isn't possible since it would contradict that $M$ is maximum (the set of red edges would be larger than $M$)
+
+&nbsp;
+
+Now let $A' \subseteq A$ and $B' \subseteq B$ be vertices in $Z$
+
+From the discussion and diagram above, we see that
+
+$$|A'| = |B'| + 1$$
+
+Now we look at $N(A')$. Take $b \in B'$. Then $b \in N(A') \implies B' \subseteq N(A')$
+
+Now we show that $N(A') \subseteq B'$, which will imply that $N(A') = B'$
+
+Let $c \in N(A')$ and take any alternating path
+
+Clearly if $c$ lies in the alternating path, then $c \in B'$ and we are done
+
+We now show that all $c \in N(A')$ lies in in some alternating path
+
+BWOC, suppose $c \notin B'$. By how we chose $c$, $c \sim a$ for some $a \in A'$
+
+For the alternating path reaching $a$, we know that $a$ is saturated
+
+Thus we can extend the path and join $a \sim c$ (so $a \sim c$ is NOT in the matching)
+
+Thus $c$ lies in the alternating path $\implies c \in B'$
+
+Thus $N(A') = B'$
+
+Finally, $|N(A')| = |B'| = |A'| - 1 < |A'|$. Thus $|N(A')| < |A'|$
+
+&nbsp;
+
+**Definition - k-factor**: A k-factor in a graph is a spanning k-regular subgraph
+
+- **Note**: Spanning means that it uses all vertices in $G$
+
+&nbsp;
+
+**Definition - k-factorable**: A graph is k-factorable if there exists k-factors $F_1, \ldots, F_t$ that decompose the edges of $G$ such that the sets are disjoint
+
+&nbsp;
+
+**Example**: A 1-regular, 1-factorable graph. Note that this results in a perfect matching
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [below of=1] {$2$};
+    \node[main] (3) [right of=1] {$3$};
+    \node[main] (4) [below of=3] {$4$};
+    \node[main] (5) [right of=3] {$5$};
+    \node[main] (6) [below of=5] {$6$};
+
+    \draw[] (1) -- (2);
+    \draw[] (3) -- (4);
+    \draw[] (5) -- (6);
+    \end{tikzpicture}
+\end{center}
+
+- **Upshot**: $G$ has a 1-factor if and only if $G$ has a perfect matching
+
+&nbsp;
+
+**Example**: Consider $K_4$ and the resulting 1-factors
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$1$};
+    \node[main] (2) [right of=1] {$2$};
+    \node[main] (3) [below of=1] {$3$};
+    \node[main] (4) [right of=3] {$4$};
+
+    \node[main] (5) [right =2cm of 2]{$1$};
+    \node[main] (6) [right of=5] {$2$};
+    \node[main] (7) [below of=5] {$3$};
+    \node[main] (8) [right of=7] {$4$};
+
+
+    \node[main] (9) [right of=6]{$1$};
+    \node[main] (10) [right of=9] {$2$};
+    \node[main] (11) [below of=9] {$3$};
+    \node[main] (12) [right of=11] {$4$};
+
+    \node[main] (13) [right of=10]{$1$};
+    \node[main] (14) [right of=13] {$2$};
+    \node[main] (15) [below of=13] {$3$};
+    \node[main] (16) [right of=15] {$4$};
+
+    \draw[] (1) -- (2);
+    \draw[] (1) -- (3);
+    \draw[] (1) -- (4);
+    \draw[] (2) -- (3);
+    \draw[] (2) -- (4);
+    \draw[] (3) -- (4);
+
+    \draw[] (5) -- (6);
+    \draw[] (7) -- (8);
+
+    \draw[] (9) -- (11);
+    \draw[] (10) -- (12);
+
+    \draw[] (13) -- (16);
+    \draw[] (14) -- (15);
+    \end{tikzpicture}
+\end{center}
+
+This results in $3$ perfect matchings
+
+&nbsp;
+
+**Consider**: What about a 2-factor? This is just a union of cycles
+
+&nbsp;
+
+**Example**: Let $G$ be a k-regular bipartite graph with partites $X, Y$
+
+Firstly, the total of number of edges is $k|X| = k|Y| \implies |X| = |Y|$
+
+Now take $S \subseteq X$.
+
+The total number of edges, $m_1$, from $S$ to $N(S)$ is $k|S|$
+
+Now consider how many edges from $N(S)$ to $|S|$
+
+- Some $v \in N(S)$ may be adjacent to a vertex outside of $S$
+
+\begin{align*}
+k|S| = m_1 &\leq k|N(S)| \\
+\implies |S| &\leq |N(S)|
+\end{align*}
+
+Now using Hall's condition, there is a matching that saturates $X$. But $|X| = |Y|$
+
+Thus we have a perfect matching
+
+**Upshot**: Any k-regular bipartite graph has a perfect matching
+
+&nbsp;
+
+**Latin Squares**: An $n \times n$ grid that uses $n$ different symbols such that each symbol occurs once in each row and each column
+
+**Example**:
+
+|    |    |    |
+| -- | -- | -- |
+| A  | B  | C  |
+| B  | C  | A  |
+| C  | A  | B  |
+
+&nbsp;
+
+**Consider**: Given an $m \times n$ Latin rectangle, can the symbols be chosen such that it cannot be extended to a Latin square?
+
+Let $X$ be the set of distinct symbols and $Y$ be the column indices in row $m+1$
+
+We can create a bipartite graph where there is an edge from $x \in X$ to $y \in Y$ if and only if we can put a that symbol in that column
+
+A column has used $m$ symbols. Thus there $n-m$ symbols unused and thus there are $n-m$ edges coming out of each $x \in X$
+
+Moreover, each symbol has been used in $m$ columns. Thus each symbol has $n-m$ possible columns to place in row $m + 1$. Thus every $y \in Y$ has $n-m$ edges coming out
+
+This creates a bipartite graph that is $n-m$ regular. Thus we must have a perfect matching
+
+This is how we can place the symbols in row $m + 1$
+
+Thus any $m \times n$ (where $m < n$) Latin rectangle can be completed to a Latin square
+
+&nbsp;
+
+**Definition - System of Distinct Representations (SDR)**: Let $A_1, \ldots, A_n$ be sets (not necessarily distinct). The collection of sets is an **SDR** if there are $n$ distinct elements $a_1, \ldots, a_n$ such that each $a_i \in A_i$
+

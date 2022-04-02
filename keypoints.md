@@ -36,13 +36,13 @@ output: pdf_document
 
 **Twelvefold Way Counting**
 
-- $n$ labelled balls into $k$ labelled bins: $\quad k^n \quad \quad k!S(n, k) \quad \quad P(n, k)$
+- $n$ labeled balls into $k$ labeled bins: $\quad k^n \quad \quad k!S(n, k) \quad \quad P(n, k)$
 
-- $n$ unlabelled balls into $k$ labelled bins: $\displaystyle {n + k -1 \choose k - 1} \quad \quad \displaystyle {n-1 \choose k-1} \quad \quad \displaystyle {k \choose n}$
+- $n$ unlabeled balls into $k$ labeled bins: $\displaystyle {n + k -1 \choose k - 1} \quad \quad \displaystyle {n-1 \choose k-1} \quad \quad \displaystyle {k \choose n}$
 
-- $n$ labelled balls into $k$ unlabelled bins: $\sum_{i = 1}^k S(n, i) \quad \quad S(n, k) \quad \quad 1$
+- $n$ labeled balls into $k$ unlabeled bins: $\sum_{i = 1}^k S(n, i) \quad \quad S(n, k) \quad \quad 1$
 
-- $n$ unlabelled balls into $k$ unlabelled bins: $\sum_{i = 1}^k p_i(n) \quad \quad p_k(n) \quad \quad 1$
+- $n$ unlabeled balls into $k$ unlabeled bins: $\sum_{i = 1}^k p_i(n) \quad \quad p_k(n) \quad \quad 1$
 
 **Inclusion-Exclusion Principle**: $\big| \bigcup_{i=1}^n A_i \big| = |X| - \displaystyle \sum_{I \subseteq [n]}^{} (-1)^{|I|} |A_I| = \displaystyle \big| \bigcap_{i = 1}^n \bar{A_i} \big| = |X| - \sum_{I \subseteq [n]}^{}(-1)^{|I|}|A_I|$
 
@@ -108,10 +108,10 @@ output: pdf_document
 
 **Corollary**: Total trees such that vertex $i$ has degree $d_i$ is $\displaystyle {n-2 \choose d_1 - 1, d_2 - 1, \ldots}$
 
-**Rooted Plane Tree**: Tree with a rot vertex, left/right ordering, but vertices are NOT labelled
+**Rooted Plane Tree**: Tree with a root vertex, left/right ordering, but vertices are NOT labeled
 
 - Clockwise walk around border of the tree reveals that the number of rooted plane trees on $n+1$ vertices is $\displaystyle C_n = \frac{\displaystyle {2n \choose n}}{n+1}$
 
 **Rooted Forest**: Forest where each tree component has a distinguishable root vertex
 
-**Theorem**: Number of labelled rooted forests on $n$ vertices is $$(n+10^{n-1})$
+**Theorem**: Number of labeled rooted forests on $n$ vertices is $(n+1)^{n-1}$
