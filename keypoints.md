@@ -4,6 +4,7 @@ header-includes:
     - \usepackage{amsmath}
     - \usepackage{mathrsfs}
     - \usepackage{youngtab}
+    - \usepackage{centernot}
     - \DeclareMathOperator{\lcm}{lcm}
 output: pdf_document
 ---
@@ -68,12 +69,6 @@ output: pdf_document
 
 **Catalan Numbers**: $\displaystyle C_n = \sum_{i=0}^{n-1}C_i C_{n-i-1} \quad \quad$ **OGF Catalan Numbers**: $C_n = \frac{\displaystyle {2n \choose n}}{n+1} \quad \quad C_0 = 0$
 
-**Vertex Induced Subgraph**: When $u, v \in V(H)$ and $u \sim v \in E(G)$, then $u \sim v \in E(H)$
-
-**Complete Graph**: $K_n$ has $E(K_n) = \{\{v_i, v_j\} \mid 1 \leq i \neq j \leq n\}$ has $\displaystyle {n \choose 2}$ edges
-
-**Complete Bipartite Graph**: $K_{a, b}$ where partites $A, B$ have sizes $a, b$ and every vertex in $A$ is adjacent to a vertex in $B$
-
 **Theorem**: $G$ is bipartite if and only if $G$ has no odd cycles
 
 **Theorem**: $G$ with size $m$ has $\displaystyle \sum_{v \in V(G)}^{} \deg(v) = 2m \quad \quad$ **Corollary**: $G$ must have an even number of odd degree vertices
@@ -82,27 +77,23 @@ output: pdf_document
 
 **Theorem**: For any graph $G$, there exists a $d$-regular graph $G$ such that $G$ is an induced subgraph of $H$
 
-**Degree Sequence**: Non-increasing sequence of length $n$ whose $i$th term is the degree of vertex $i$
-
 **Theorem**: $G$ with degrees $d = d_1, \ldots, d_n$ exists if and only if $s_1 = d_2 - 1, d_3 - 1, \ldots, d_{d_1 + 1} - 1, d_{d_1+2}, \ldots, d_n$ is graphical
 
 **Theorem**: Every tree on $2$ or more vertices has at least $2$ leaves
 
 **Theorem**: $G$ is a tree $\iff G$ is connected, acyclic with $n-1$ edges $\iff$ there is a unique path for $u, v \in V(G)$
 
-**Theorem**: A graph of order $n$ has at least $n-1$ edges
+**Theorem**: A connected graph of order $n$ has at least $n-1$ edges
 
 **Theorem**: An edge $e$ is a bridge if and only if $e$ isn't in any cycles
-
-**Spanning Tree**: Tree $T$ such that $V(T) = V(G)$ and $E(T) \subseteq E(G)$
 
 **Spanning Tree to Code**: Delete lowest index leaf and write down vertex adjacent to it. Repeat until only an edge remains
 
 **Code to Spanning Tree**: Find smallest index $b_1$ not used and create $a_1 \sim b_1$. Delete $a_1$ and append $b_1$. Repeat until $b_1, \ldots, b_{n-2}$ then connect missing $2$ indices
 
-**Theorem**: Each Prufer code corresponds to a unique tree. Thus number of spanning trees of $K_n$ is $n^{n-2}$
+**Theorem**: Each Prufer code corresponds to a unique spanning tree. Thus number of spanning trees of $K_n$ is $n^{n-2}$
 
-**Corollary**: Total trees such that vertex $i$ has degree $d_i$ is $\displaystyle {n-2 \choose d_1 - 1, d_2 - 1, \ldots}$
+**Corollary**: Total spanning trees such that vertex $i$ has degree $d_i$ is $\displaystyle {n-2 \choose d_1 - 1, d_2 - 1, \ldots}$
 
 **Rooted Plane Tree**: Tree with a root vertex, left/right ordering, but vertices are NOT labeled
 
@@ -111,3 +102,71 @@ output: pdf_document
 **Rooted Forest**: Forest where each tree component has a distinguishable root vertex
 
 **Theorem**: Number of labeled rooted forests on $n$ vertices is $(n+1)^{n-1}$
+
+\newpage
+
+**Parking Function**: $P(n) = (n + 1)^{n-1} \quad \quad P(n+1) = \sum_{i=1}^{n} \displaystyle {n \choose i} (i + 1)P(i)P(n- i)$
+
+**Matching**: Set of edges with no shared endpoints
+
+**Hall's Theorem**: A bipartite graph $G$ has a matching that saturates $A$ if and only if for all $S \subseteq A, |N(S)| \geq |S|$
+
+**k-factor**: Spanning k-regular subgraph $\quad \quad$ **k-factorable**: Exists factors $F_1, \ldots, F_k$ that decompose $E(G)$ into disjoint sets
+
+- **Note**: $G$ is 1-factorable if and only if $G$ has a perfect matching $\quad \quad$ 2-factor is just a union of cycles
+
+- **Note**: Any k-regular bipartite graph has a perfect matching
+
+**SDR**: Given sets $A_1, \ldots, A_n$ (not necessarily distinct), it is an **SDR** if there are $n$ distinct elements such that $a_i \in A_i$
+
+**Eulerian Circuit**: Circuit that traverses all edges exactly once with the same start and end vertices
+
+**Theorem**: Let $G$ be a connected graph. Then $G$ is Eulerian if and only if every vertex has an even degree
+
+**Corollary**: Graph $G$ has a **Eulerian Trail** $\iff 2$ vertices have odd degree, which are the start and end of the trail
+
+**Hamiltonian Cycle**: A cycle (vertices are used only once except the start/end) that contains all vertices of $G$
+
+- **Note**: Hamiltonian Cycle $\implies$ Hamiltonian Path (remove an edge) but HP $\centernot \implies$ HC (consider $P_n$)
+
+**t-tough**: A graph is $t$-tough if $\displaystyle t \leq \frac{|S|}{c(G \setminus S)}$ where $S$ runs through all subsets of vertices that disconnect $G$
+
+**Theorem**: If $G$ is Hamiltonian, then $t(G) = \displaystyle \frac{|S|}{c(G \setminus S)} \geq 1$, i.e. $\forall$ disconnecting set $S$, $|S| \geq c(G \setminus S)$
+
+- **Corollary**: If there exists a subset of vertices where $\displaystyle |S| < c(G \setminus S)$, then the graph is not Hamiltonian
+
+**Theorem (Ore)**: Let $G$ have order $n \geq 3$. If $\deg(u) + \deg(v) \geq n$ for any $2$ non-adjacent vertices, then $G$ is Hamiltonian
+
+- **Note**: This is a sufficient but NOT necessary condition. Consider $C_n$, non-adjacent vertices have degree $\deg(u) + \deg(v) < n$
+
+**Planar Graph**: Graph can be drawn without edges crossing
+
+**Euler's Identity**: If $G$ is a connected, planar graph on $n$ vertices, $m$ edges, and $f$ faces, then $n - m +f = 2$
+
+**Theorem**: For a connected planar graph of order $\geq 3$, we have $m \leq 3n - 6$
+
+- **Corollary**: If $G$ is planar, then there is a vertex of degree $\leq 5$
+
+**Keratowski Theorem**: $G$ is planar if and only if $G$ doesn't contain $K_5$ or $K_{3, 3}$, or a subdivision of either
+
+**Chromatic Number**: Smallest number of colors in any coloring of $G$, denoted $\chi(X)$
+
+- **k-colorable**: Can color vertices of $G$ using $k$ colors $\quad \quad$ **k-chromatic**: $G$ such that $\chi(G) = k$
+
+**Independent Set**: Set $S$ of vertices where no two vertices of $S$ are adjacent
+
+**Independence Number**: Size of largest independet set, denoted $\alpha(G)$
+
+- **Note**: k-chromatic $\implies$ $V(G)$ can be partitioned into $k$ independent sets (color classes)
+
+**Theorem**: $\chi(G) = 2$ if and only if $G$ is non-empty bipartite graph $\quad \quad$ **Corollary**: If $G$ has an odd cycle, then $\chi(G) \geq 3$
+
+**Clique**: Complete subgraph of $G \quad \quad$ **Clique Number**: Size of the largest clique of $G$, denoted $\omega(G)$
+
+**Theorem**: $\chi(G) \geq \omega(G) \quad \quad \chi(G) \geq \frac{n}{\alpha(G)}$
+
+**Theorem**: $\chi(G) \leq \Delta(G) + 1 \quad \quad$ **Brooks' Theorem**: For a connected graph not equal to odd $C_n$ or $K_n$, $\chi(G) \leq \Delta(G)$
+
+**Mycielski Construction**: Maintain $\omega(G) = 2$ while arbitrarily grow $\chi(G)$ by adding $n+1$ vertices ($w, u_1, \ldots, u_n$)
+
+ - Join $w$ to all $u_i$ such that $u_i$'s are not adjacent to each other. Join $u_i$ with $v_j$ where $v_j \sim v_i$

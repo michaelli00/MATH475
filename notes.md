@@ -10,6 +10,7 @@ header-includes:
     - \usepackage{youngtab}
     - \usepackage{mathtools}
     - \DeclareMathOperator{\lcm}{lcm}
+    - \DeclareMathOperator{\Cr}{cr}
     - \DeclareMathOperator{\diam}{diam}
 output: pdf_document
 ---
@@ -752,7 +753,7 @@ f(x) &= \sum_{n=0}^{\infty}a_n x^n = \underbrace{1}_{a_0} + \sum_{n=1}^{\infty}a
 &= 1 + \sum_{n=1}^{\infty}(2a_{n-1} + 4^{n-1})x^n \\
 &= 1 + \sum_{n=1}^{\infty}2a_{n-1} x^n + \sum_{n=1}^{\infty}4^{n-1}x^n \\
 &= 1 + 2x \underbrace{\sum_{n=1}^{\infty} a_{n-1} x^{n-1}}_{f(x)} + x\underbrace{\sum_{n=1}^{\infty}(4x)^{n-1}}_{\text{geometric sum}}\\
-&= 1 + 2x(f(x) + x(\frac{1}{1-4x}))\\
+&= 1 + 2x(f(x)) + x(\frac{1}{1-4x})\\
 \end{align*}
 
 &nbsp; &nbsp; &nbsp; &nbsp; Thus $\displaystyle f(x) = \frac{1}{1-2x} + \frac{x}{(1-2x)(1-4x)}$
@@ -993,7 +994,7 @@ G(x) &= \sum_{n=0}^{\infty}\Big(\sum_{k=0}^{\infty}S(n, k)\Big) \frac{x^n}{n!} \
 
 &nbsp;
 
-**Consider**: The EGF of permutations with repetitions of $S_1, S_2, S_3$
+**Consider**: The EGF of permutations with repetitions of A, B, and C with quantities $S_1, S_2, S_3$
 
 $$\Big(\sum_{\substack{S_1 + S_2 + S_3 = n \\ S_1, S_2, S_3 \geq 0}}^{}\frac{n!}{S_1! S_2! S_3!} \Big)\frac{x^n}{n!}$$
 
@@ -1938,7 +1939,7 @@ The Prufer code is $2, 3, 2, 6$. This comes from
 
 3. Delete $a_1$ and append $b_1$ to the end of the sequence
 
-4. Let $b_2$ be the lowest index showing up in the new sequence
+4. Let $b_2$ be the lowest index NOT showing up in the new sequence
 
 5. Create the edge $b_2 \sim a_2$
 
@@ -1948,7 +1949,7 @@ The Prufer code is $2, 3, 2, 6$. This comes from
 
 8. There will be $2$ indices $i, j$ NOT in the sequence. Create an edge $i \sim j$ to form a tree
 
-&nbsp;
+\newpage
 
 **Example**: Consider the sequence $(2, 2, 6, 4)$
 
@@ -2006,7 +2007,9 @@ Let $x$ be the smallest index not in the sequence. Then in our construction of t
 
 Now consider the subtree excluding $x$ and the edge incident on it. By IH, this tree must be unique
 
-But then the sequence $(a_1, \ldots, a_{n-1})$ must correspond to a unique tree with $x \sim a_1$. Otherwise $a_1$ would not be the first value of the sequence
+But then the sequence $(a_1, \ldots, a_{n-1})$ must correspond to a unique tree with $x \sim a_1$.
+
+Otherwise $a_1$ would not be the first value of the sequence
 
 &nbsp;
 
@@ -2078,9 +2081,9 @@ By the formula, we have $\displaystyle {6-2 \choose 2, 2} = 6$ trees
 
 &nbsp;
 
-Note that the tree is determined by picking $2$ of the leaf indices $\implies \displaystyle {4 \choose 2} = 6$ ways to create labeled trees with thus Prufer code
+**Note**: The tree is determined by picking $2$ of the leaf indices (from one side) $\implies \displaystyle {4 \choose 2} = 6$ ways to create labeled trees with this Prufer code
 
-This follows from swapping labels on either ends of the tree correspond to the same tree. That is
+This follows from the fact that there is no ordering of the subtrees. That is
 
 &nbsp;
 
@@ -2242,7 +2245,7 @@ $$C_n = \frac{\displaystyle {2n \choose n}}{n+1}$$
     \draw[] (2) -- (3);
     \end{tikzpicture}
   &
-    $\implies 3$ ways (choose root and order vertices)
+    $\implies 3$ ways (choose root)
   \\ \\
   \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
     \node[main] (1) {$3$};
@@ -2253,7 +2256,7 @@ $$C_n = \frac{\displaystyle {2n \choose n}}{n+1}$$
     \draw[] (2) -- (3);
     \end{tikzpicture}
   &
-    $\implies 3$ ways (choose root and order vertices)
+    $\implies 3$ ways (choose root)
   \\ \\
   \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
     \node[main] (1) {$1$};
@@ -2264,7 +2267,7 @@ $$C_n = \frac{\displaystyle {2n \choose n}}{n+1}$$
     \draw[] (2) -- (3);
     \end{tikzpicture}
   &
-    $\implies 3$ ways (choose root and order vertices)
+    $\implies 3$ ways (choose root)
   \end{tabular}
 \end{center}
 
@@ -2352,7 +2355,7 @@ First, create a circular parking lot with $n + 1$ spots, still with $n$ cars
 
 Now there are $(n+1)^n$ preferences
 
-Note that the circular parking lot ensures that there will always be a valid parking preference sequence, always with $1$ spot not used
+Note that the circular parking lot ensures there will always be a valid parking preference sequence, always with $1$ spot not used
 
 A successful parking job occurs if the spot $n+1$ is open
 
@@ -2380,7 +2383,7 @@ $$P(n) = (n+1)^{n-1}$$
 
 Note that the number of rooted forests on $n+1$ vertices is
 
-$$P(n+1) = \sum_{i=}^{n} \displaystyle {n \choose i} (i+1) P(i) P(n-i)$$
+$$P(n+1) = \sum_{i=1}^{n} \displaystyle {n \choose i} (i+1) P(i) P(n-i)$$
 
 *Proof*:
 
@@ -2424,7 +2427,7 @@ $$P(n+1) = \sum_{i=}^{n} \displaystyle {n \choose i} (i+1) P(i) P(n-i)$$
     \end{tikzpicture}
 \end{center}
 
-Above, the edges $1 ~ 2$ and $3 ~4$ form a matching.
+Above, the edges $1 \sim 2$ and $3 \sim 4$ form a matching.
 
 - **Note**: No perfect matching is possible since there is an odd number of vertices
 
@@ -2497,7 +2500,7 @@ The above is a **maximum matching**
 
 &nbsp;
 
-**Hall's Marriage Theorem**: Let $G$ be a birpartite graph and $A, B$, be the partite sets where $|A| = r$ and $|B| = s$. Then $G$ has a matching that saturates $A$ if and only if for all $S \subseteq A, |N(S)| \geq |S|$
+**Hall's Marriage Theorem**: Let $G$ be a bipartite graph and $A, B$, be the partite sets where $|A| = r$ and $|B| = s$. Then $G$ has a matching that saturates $A$ if and only if for all $S \subseteq A, |N(S)| \geq |S|$
 
 - Here $1 \leq r \leq s$ means there are $r$ women and $s$ men.
 
@@ -2587,7 +2590,7 @@ Finally, $|N(A')| = |B'| = |A'| - 1 < |A'|$. Thus $|N(A')| < |A'|$
 
 &nbsp;
 
-**Definition - k-factorable**: A graph is k-factorable if there exists k-factors $F_1, \ldots, F_t$ that decompose the edges of $G$ such that the sets are disjoint
+**Definition - k-factorable**: A graph is k-factorable if there exists k-factors $F_1, \ldots, F_k$ that decompose the edges of $G$ such that the sets are disjoint
 
 &nbsp;
 
@@ -2720,3 +2723,755 @@ Thus any $m \times n$ (where $m < n$) Latin rectangle can be completed to a Lati
 
 **Definition - System of Distinct Representations (SDR)**: Let $A_1, \ldots, A_n$ be sets (not necessarily distinct). The collection of sets is an **SDR** if there are $n$ distinct elements $a_1, \ldots, a_n$ such that each $a_i \in A_i$
 
+Recall **Hall's Theorem**: Matching saturating $A \iff$ for any $S \subseteq A$, $|N(s)| \geq |S|$
+
+Now create a Bipartite Graph where edges $A_i \sim a_j \iff a_i \in A_i$
+
+By this construction,we have an SDR (perfect matching) if and only if for any $k$ subsets $A_1, \ldots, A_k$, the size of the union ($A_1 \cup A_2 \cup \cdots \cup A_k)$, is at least $k$
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$A_1$};
+    \node[main] (2) [below of=1] {$A_2$};
+    \node[main] (3) [below of=2] {$\vdots$};
+    \node[main] (4) [below of=3] {$A_n$};
+
+    \node[main] (5) [right =2cm of 1]{$a_1$};
+    \node[main] (6) [below of=5] {$a_2$};
+    \node[main] (7) [below of=6] {$\vdots$};
+    \node[main] (8) [below of=7] {$a_n$};
+
+    \draw[] (1) -- (5);
+    \draw[] (2) -- (6);
+    \draw[] (4) -- (8);
+    \end{tikzpicture}
+\end{center}
+
+**Upshot**: Thus to show there is NO SDR, simply find $k$ sets whose union has fewer than $k$ elements
+
+&nbsp;
+
+**Example**: $A_1 = \{\mathbf{1}, 2, 3\}, A_2 = \{1, \mathbf{2}, 3\}, A_3 = \{1, \mathbf{4}\}, A_4 = \{1, \mathbf{5}\}$
+
+- $1 \in A_1, 2 \in A_2, 4 \in A_3, 5 \in A_4$. Thus an SDR is $1, 2, 4, 5$
+
+
+# Graphs
+
+## Eulerian
+
+Given $G$, can we start at a vertex and traverse each edge exactly once
+
+- If the start and end vertices are different, it is called an **Eulerian trail**
+
+**Definition - Eulerian Circuit**: Circuit that traverses all edges exactly once with the same start and end vertices
+
+- We say that $G$ is **Eulerian** if this holds
+
+&nbsp;
+
+**Theorem**: Let $G$ be a connected graph. Then $G$ is Eulerian if and only if every vertex has an even degree
+
+*Proof*: $\implies$ Given a circuit exists, for any intermediate vertex (not the start/end vertex), we must first go "in" and end on an "out", so the total "ins" = "outs".
+
+Thus we must have an even degree for the intermediary vertices
+
+For the start/end vertex, the argument is the same as "in" and "out" reversed
+
+$\impliedby$ Suppose each vertex has even degree and consider a $uv$-trail of maximum length, we show that $u = v$
+
+BWOC, assume that $u \neq v$. Since the trail ends at $v$, we have traversed "in" one more than "out"
+
+However, $v$ has an even degree, so we can extend the trail, contradicting it is the longest trail
+
+Thus a circuit must exist
+
+If all edges are used, we are done
+
+Otherwise suppose that $x \sim y$ is NOT in the circuit $C$ of maximal length, and assume that vertex $x$ is in the circuit
+
+We construct $H = G \setminus E(C)$ where each vertex in $C$ has even degree, so each vertex in $H$ has even degree (might not be connected)
+
+Let $H_1$ be the component of $H$ containing $x \sim y$
+
+From this component, create a trail of maximal length, which must be a circuit using the same argument earlier
+
+Joining these $2$ circuits creates a circuit of larger length. Contradiction
+
+Thus $x \sim y$ is in the circuit $C$
+
+&nbsp;
+
+**Corollary**: Graph $G$ has a **Eulerian Trail** if and only if exactly $2$ vertices have odd degree. These odd vertices must be the start and end of the trail
+
+*Proof*: $\implies$ Suppose that $G$ contains a Eulerian trail $T$
+
+We can construct a new connected graph $H$ by adding a new vertex $x$ of degree $2$ and joining it to $u, v$.
+
+Then $C = (T, x, u)$ is an Eulerian circuit and thus every vertex in $H$ must have even degree
+
+Now consider $G = H - x$. Only $u, v$ have odd degrees
+
+$\impliedby$ Let $G$ be a connected graph containing exactly $2$ vertices $u, v$ of odd degree.
+
+We show that $G$ contains an Eulerian trail $T$ with endpoints $u, v$
+
+Construct a new connected graph $H$ by adding a new vertex $x$ of degree $2$ and joining it to $u, v$
+
+Therefore $H$ is a graph with vertices of even degree and thus contains an Eulerian circuit $C$
+
+Since it is irrelevant which vertex of $C$ is the initial vertex, we assume that $C$ is an $x$ - $x$ circuit
+
+Since $x$ is incident to only $ux$ and $vx$, deleting $x$ from $C$ creates a Eulerian trail $T$ that begins and ends on $u, v$
+
+## Hamiltonian Graphs
+
+**Definition - Hamiltonian Cycle**: A cycle (vertices are used only once except the start/end) that contains all vertices of $G$
+
+- A path containing all vertices is a **Hamiltonian Path**
+
+- **Note**: If a graph contains a Hamiltonian cycle, it must have a Hamiltonian path (remove any edge). However, if a graph contains a Hamiltonian path, it doesn't necessarily have a Hamiltonian cycle (consider $P_n$)
+
+&nbsp;
+
+**Non-Example**:
+
+![Non-Hamiltonian Graph](./assets/non-hamiltonian.png){ height=200px}
+
+BWOC, suppose that $G$ is Hamiltonian. That means $G$ contains an Hamiltonian cycle $C$
+
+Since $C$ contains vertex $t$, which has degree $2$, both $tu$ and $tz$ lie on $C$
+
+By a similar argument, $xy$ and $xz$, and $vw$ and $vz$ lie on $C$
+
+But then this says that $z$ is incident with $3$ edges on $C$, which is impossible
+
+Thus $G$ is not Hamiltonian
+
+\newpage
+
+**Example**: Consider the Peterson Graph, a 3-regular graph of order 10 (this can be constructed from two 5-cycles and adding necessary intermediary edges)
+
+![Petersen Graph (Non-Hamiltonian)](./assets/petersen-graph.png){ height=200px}
+
+**TODO FINISH**
+
+&nbsp;
+
+**Definition - t-tough**: A graph is $t$-tough if $\displaystyle t \leq \frac{|S|}{c(G \setminus S)}$ where $S$ runs through all subsets of vertices that disconnect $G$
+
+- The value $c(G \setminus S)$ is the total **components** of the graph after deleting the vertices in $S$
+
+- The **toughness** of $G$ is $\displaystyle t(G) = \min_S \frac{|S|}{c(G \setminus S)}$ where $S$ runs through all subsets of vertices disconnecting $G$
+
+&nbsp;
+
+**Example**: Consider the graph
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {};
+    \node[main] (2) [right of=1] {$1$};
+    \node[main] (3) [below of=1] {};
+    \node[main] (4) [right = 0.5cm of 3] {$2$};
+    \node[main] (5) [right of=2] {};
+    \node[main] (6) [below of=5] {};
+    \node[main] (7) [left = 0.5cm of 6] {$3$};
+
+    \draw[] (1) -- (2);
+    \draw[] (1) -- (3);
+    \draw[] (2) -- (3);
+    \draw[] (3) -- (4);
+    \draw[] (2) -- (4);
+    \draw[] (2) -- (5);
+    \draw[] (5) -- (6);
+    \draw[] (6) -- (7);
+    \draw[] (2) -- (7);
+    \end{tikzpicture}
+\end{center}
+
+And consider the set $S = \{1, 2, 3\}$
+
+Then $G \setminus S$ is
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {};
+    \node[main] (3) [below of=1] {};
+    \node[main] (5) [right of=2] {};
+    \node[main] (7) [left = 0.5cm of 6] {$3$};
+
+    \draw[] (1) -- (3);
+    \end{tikzpicture}
+\end{center}
+
+- Thus the toughness is $\displaystyle \frac{|S|}{c(G \setminus S)} = \frac{3}{3} = 1$
+
+Now consider if $S = \{1\}$, then the toughness is $\displaystyle \frac{1}{2}$, which is minimal
+
+&nbsp;
+
+**Theorem**: If $G$ is Hamiltonian, then $t(G) \geq 1$, i.e. $\forall$ disconnecting set $S$, $|S| \geq c(G \setminus S)$
+
+*Proof*: Let $S$ be a disconnecting set, so $c(G \setminus S) = k$
+
+Since a Hamiltonian cycle exists in $G$, WLOC suppose it starts in $C_1$
+
+Then the traversal path is $C_1 \rightarrow S \rightarrow C_2 \rightarrow S$.
+
+Continuing, we must traverse through at least $k$ distinct vertices in $S$
+
+Thus $|S| \geq c(G \setminus S)$ as desired
+
+**Corollary**: If there exists a subset of vertices where $\displaystyle |S| < c(G \setminus S)$, then the graph is not Hamiltonian
+
+&nbsp;
+
+**Theorem (Ore)**: Let $G$ have order $n \geq 3$. If $\deg(u) + \deg(v) \geq n$ for any $2$ non-adjacent vertices, then $G$ is Hamiltonian
+
+- **Note**: This is a sufficient but NOT necessary condition. Consider $C_n$. Clearly non-adjacent vertices have degree $\deg(u) + \deg(v) < n$
+
+*Proof by Contraposition*: Assume $H$ is not Hamiltonian. We show the existence of non-adjacent vertices $u, v$ where $\deg(u) + \deg(v) \leq n - 1$
+
+First we add edges to $G$ so that any additional edge would make $G$ Hamiltonian
+
+This graph cannot be $K_n$ (which has a cycle), so there exists non-adjacent vertices $u, v$
+
+Now consider the graph $H$ such that $H + uv$ is Hamiltonian and consider the path $u - v$ and suppose that $u \sim u_i$
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$u$};
+    \node[main] (2) [below right of=1] {$u_2$};
+    \node[main] (3) [below right of=2] {$u_3$};
+    \node[main] (4) [below right of=3] {$\ldots$};
+    \node[main] (5) [below right of=4] {$u_{i-1}$};
+    \node[main] (6) [above right of = 5] {$u_i$};
+    \node[main] (7) [above right of = 6] {$u_{i+1}$};
+    \node[main] (8) [above right of = 7] {$\ldots$};
+    \node[main] (9) [above right of = 8] {$v$};
+
+    \draw[] (1) -- (2);
+    \draw[] (2) -- (3);
+    \draw[] (3) -- (4);
+    \draw[] (4) -- (5);
+    \draw[] (5) -- (6);
+    \draw[] (6) -- (7);
+    \draw[] (7) -- (8);
+    \draw[] (8) -- (9);
+
+    \draw[] (1) -- (6);
+    \end{tikzpicture}
+\end{center}
+
+From the diagram above, it's clear that $v$ cannot be adjacent to $u_{i - 1}$ since otherwise this would create a Hamiltonian cycle
+
+Thus $\deg(v) = n - 1 - \deg(u) \implies \deg(u) + \deg(v) \leq n - 1$
+
+&nbsp;
+
+**Example**: Every 6-regular graph on 10 vertices must be Hamiltonian by Ore's Theorem
+
+## Planar Graphs
+
+**Definition - Planar**: A graph is **planar** if it can be drawn on the plane with no edges crossing
+
+**Example**: $K_4$ is planar
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {};
+    \node[main] (2) [right of=1] {};
+    \node[main] (3) [below of=1] {};
+    \node[main] (4) [below of=2] {};
+
+    \draw[] (1) -- (2);
+    \draw[] (1) -- (3);
+    \draw[] (2) -- (3);
+    \draw[] (2) -- (4);
+    \draw[] (3) -- (4);
+    \draw (1) to [out=70, in=330, looseness=3] (4);
+    \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+**Euler's Identity**: If $G$ is a connected, planar graph on $n$ vertices, $m$ edges, and $f$ faces, then
+
+$$n - m + f = 2$$
+
+*Proof by Induction on m*:
+
+Base case: Clearly if $m = 0 \implies n = 1, f = 1 \implies 1 - 0 + 1 = 2$
+
+IH: Assume the statement is true for all connected, planar graphs up to $m$ edges
+
+IS: Let $G$ be on $m + 1$ edges
+
+- If $G$ is a tree, then we have $m + 1$ edges, $m + 2$ vertices, and $1$ face (no cycles)
+
+    Thus we see that $m + 2 - (m + 1) + 1 = 2$
+
+- Otherwise  $G$ is not a tree so it must have a cycle
+
+    Delete an edge in the cycle, call the new graph $H$
+
+    Thus $H$ has $1$ less face than $G$
+
+    By IH, we have
+
+\begin{align*}
+2 &= V(H) - m + f(H) \\
+&= V(G) - m + f(G) - 1\\
+&= V(G) - (m + 1) + f(G)
+\end{align*}
+
+&nbsp;
+
+**Example**:
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {};
+    \node[main] (2) [above right of=1] {};
+    \node[main] (3) [below right of=2] {};
+    \node[main] (4) [above right of=3] {};
+    \node[main] (5) [below right of=4] {};
+    \node[main] (6) [below right of=1] {};
+
+    \draw[] (1) -- (2);
+    \draw[] (2) -- (3);
+    \draw[] (3) -- (4);
+    \draw[] (4) -- (5);
+    \draw[] (1) -- (6);
+    \draw[] (1) -- (3);
+    \draw[] (3) -- (5);
+    \draw[] (3) -- (6);
+    \end{tikzpicture}
+\end{center}
+
+The graph above has $n = 6$ vertices, $m = 8$ edges, and $f = 4$ faces (3 triangles and 1 outer region)
+
+Thus $n - m + f = 6 - 8 + 4 = 2$
+
+&nbsp;
+
+**Theorem**: Let $G$ be a connected planar graph of order $\geq 3$, then
+
+$$m \leq 3n - 6$$
+
+*Proof*: If $n = 3$ and it's a tree, then the theorem clearly holds
+
+Now let $R_1, \ldots, R_f$ be the regions of the graph and let $m_i$ be the total edges on the boundary of $R_i$
+
+For each region, there must be at least $3$ edges on the boundary of $R_i$, so
+
+$$\sum_{i=1}^{f}m_i \geq 3f$$
+
+Moreover, each edge is counted at most twice (once if it is a bridge). Thus
+
+$$\sum_{i=1}^{f}m_i \leq 2m$$
+
+Thus we have
+
+$$3f \leq 2m$$
+
+Applying Euler's Identity, we have that
+
+$$6 = 3(2) = 3(n - m + f) = \underbrace{3n - 3m + 3f}_{3f \leq 2m} \leq 3n - 3m + 2m \implies m \leq 3n - 6$$
+
+&nbsp;
+
+**Corollary**: If $G$ is planar, there is a vertex of degree $\leq 5$
+
+*Proof*: BWOC, suppose all vertices have degree $\geq 6$. Then
+
+$$\sum_{v \in G}^{}\deg(v) = 2m \geq 6n \implies m \geq 3n$$
+
+This contradicts that $3m \leq 3n - 6$
+
+&nbsp;
+
+**Non-Example**: If $G = K_5$, then $m = \displaystyle {5 \choose 2} = 10$
+
+But $n - 6 = 9 \implies m > 3n - 6$
+
+Thus $K_5$ is not planar
+
+&nbsp;
+
+**Example Utilities Problem**: Given 3 houses and 3 utilities (water, gas, electric), can all the utility lines hook up to all houses without crossing?
+
+This question is equivalent to asking if $K_{3, 3}$ is planar
+
+$n = 6, m = 9 \implies 9 = m \leq 3(6) - 6$, which is inconclusive
+
+BWOC, assume $K_{3, 3}$ is planar
+
+By Euler's Identity, we have that $6 - 9 + f = 2 \implies f = 5$
+
+Since $K_{3, 3}$ is bipartite, no $3$-cycles exist. Thus necessarily each boundary requires $\geq 4$ edges
+
+Thus we have
+
+$$\sum_{i=1}^{f} m_i \geq 5(4) = 20$$
+
+Moreover, in $K_{3, 3}$, there are no bridges, so each edge appears exactly twice in the sum. Thus
+
+$$2m = 18 \leq 20$$
+
+Contradiction. Thus $K_{3,3}$ is not planar
+
+&nbsp;
+
+**Definition - Subdivision**: A **subdivision** of edge $u \sim v$ is the operation of replacing edge $u \sim v$ with a path $uwv$ for some new vertex $w$
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$u$};
+    \node[main] (2) [right of=1] {$v$};
+    \node[main] (3) [right = 2cm of 2] {$u$};
+    \node[main] (4) [right of = 3] {$w$};
+    \node[main] (5) [right of = 4] {$v$};
+
+    \draw[] (1) -- (2);
+    \draw[] (3) -- (4);
+    \draw[] (4) -- (5);
+    \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+**Definition - Subdivision of Graph H**: a graph obtained by successive edge subdivisions
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {};
+    \node[main] (2) [right of=1] {};
+    \node[main] (3) [right of = 2] {};
+    \node[main] (4) [below of = 2] {};
+    \node[main] (5) [right of = 4] {};
+
+    \node[main, red] (6) [right = 2cm of 3] {};
+    \node[main] (7) [right = of 6] {};
+    \node[main] (8) [right = of 7] {};
+    \node[main, red] (9) [right = of 8] {};
+    \node[main, red] (11) [below = of 8] {};
+    \node[main] (12) [right = of 11] {};
+    \node[main] (13) [right = of 12] {};
+    \node[main, red] (14) [right = of 13] {};
+    \node[main, red] (10) [above = of 14] {};
+
+    \draw[] (1) -- (2);
+    \draw[] (2) -- (3);
+    \draw[] (2) -- (4);
+    \draw[] (4) -- (5);
+    \draw[] (3) -- (5);
+
+    \draw[] (6) -- (7);
+    \draw[] (7) -- (8);
+    \draw[] (8) -- (9);
+    \draw[] (9) -- (10);
+    \draw[] (9) -- (11);
+    \draw[] (10) -- (14);
+    \draw[] (11) -- (12);
+    \draw[] (12) -- (13);
+    \draw[] (13) -- (14);
+    \end{tikzpicture}
+\end{center}
+
+&nbsp;
+
+So far, our examples conclude that if $G$ has $K_5$ or $K_{3, 3}$ or any subdivision of either, $G$ cannot be planar. However, the converse is also true
+
+&nbsp;
+
+**Keratowski Theorem**: $G$ is planar if and only if $G$ doesn't contain $K_5$ or $K_{3, 3}$, or a subdivision of either
+
+&nbsp;
+
+**Example**: Consider the Peterson Graph
+
+![Petersen Graph (Non-Hamiltonian)](./assets/petersen-graph.png){ height=200px}
+
+Clearly there is no $K_5$ since no vertex has degree $4$
+
+We show that $G$ also contain $K_{3, 3}$ and thus is not-planar
+
+Indeed, if we consider the vertices
+
+- $u_1 \rightarrow u_2, u_5, v_1$
+
+- $v_4 \rightarrow (v_2, u_2), (u_4, u_5), v_1$
+
+- $v_3 \rightarrow (u_3, u_2), (v_5, u_5), v_1$
+
+Thus $G$ contains $K_{3, 3}$ and is not-planar
+
+**Note**: Cannot repeat vertices in the subdivision
+
+&nbsp;
+
+We can also draw graphs on different planes (e.g. **torus**, a doughnut-shaped surface)
+
+A torus can be constructed by taking a sphere, drilling two hols into its surface, then attaching a handle on the sphere. In this manner, we can actually embed $K_5$ on the torus
+
+![Torus](./assets/torus.png){ height=200px}
+
+**Definition - Cross Number**: The minimum edge crossing in a graph $G$ drawn on a plane is the **crossing number**, denoted $\Cr(G)$
+
+**Definition - Genus**: Fewest number of handles needed to draw $G$ without edge crossings
+
+- **Note**: Might differ from the crossing number
+
+## Coloring Graphs
+
+**Definition - Proper Coloring**: Assignment of colors to vertices of $G$ such that adjacent vertices are colored differently
+
+**Definition - Chromatic Number**: Smallest number of colors in any coloring of $G$, denoted $\chi(X)$
+
+**Definition - k-colorable**: It is possible to color vertices of $G$ using a set of $k$ colors
+
+**Definition - k-chromatic**: $G$ such that $\chi(G) = k$
+
+&nbsp;
+
+**Definition - Independent Set**: Set $S$ of vertices where no two vertices of $S$ are adjacent
+
+- **Maximum** if it is the largest independent set in $G$
+
+- **Maximal** if no more vertices can be added into the set
+
+- **Note**: If $G$ is $k$-chromatic, then $V(G)$ can be partitioned into $k$ independent sets $V_1, \ldots, V_k$ called **color classes** but it is NOT possible to partition $V(G)$ into $k-1$ independent sets
+
+**Definition - Vetex Independence Number**: Number vertices in a maximum independent set of $G$, denoted $\alpha(G)$
+
+&nbsp;
+
+**Theorem**: $\chi(G) = 2$ if and only if $G$ is a non-empty bipartite graph
+
+- **Corollary**: If $G$ has an odd cycle, then $\chi(G) \geq 3$
+
+- **Note**: For even $n$, $\chi(C_n) = 2$ and for odd $n$, $\chi(C_n) = 3$
+
+&nbsp;
+
+Steps to show that $\chi(G) = k$
+
+1. Show that at least $k$ colors are needed to color $G$
+
+2. Show that there is a $k$-coloring of $G$
+
+&nbsp;
+
+**Example**:
+
+![3-chromatic Graph](./assets/chromatic-example1.png){ height=200px}
+
+Here $G$ contains a triangle, thus $\chi(G) \geq 3$. Also contains a 5-cycle $\implies \chi(G) \geq 3$
+
+Clearly from the diagram above, $G$ has a 3-coloring
+
+Thus $\chi(G) = 3$
+
+&nbsp;
+
+**Example**:
+
+![4-chromatic Graph](./assets/chromatic-example2.png){ height=200px}
+
+Here $G$ contains a odd cycle (GT, S, AC, G, MA, GT) so $\chi(G) \geq 3$
+
+However, all of these vertices are adjacent to LA, we must have that $\chi(G) \geq 4$
+
+Clearly from the diagram, $G$ has a 4-coloring
+
+Thus $\chi(G) = 4$
+
+&nbsp;
+
+**Miscellaneous**
+
+- $\chi(K_n) = n$
+
+- For $G \neq K_n$, $G$ has two nonadjacent vertices $u, v$. Thus we can assign these vertices the same color and the remaining $n-2$ vertices different colors $\implies \chi(G) \leq n - 1$
+
+- For a subgraph $H$ of $G$, any coloring of $G$ produces a coloring of $H$. Since it may be possible to color $H$ with fewer colors, we have $\chi(H) \leq \chi(G)$
+
+&nbsp;
+
+**Theorem**: The chromatic number of every planar graph is at most $4$
+
+*Proof*: BWOC, suppose the chromatic number for an arbitrary graph is $\chi(G) \geq 5$
+
+- If $G$ contains $K_5$, then clearly $G$ is not planar
+
+- **TODO FINISH** this proof when $G$ doesn't contain $K_5$
+
+&nbsp;
+
+**Definition - Clique**: Complete subgraph of $G$
+
+**Definition - Clique Number**: Size of the largest clique of $G$, denoted $\omega(G)$
+
+&nbsp;
+
+**Theorem**:
+
+$$\alpha(G) = k \iff \omega(\overline{G}) = k$$
+
+&nbsp;
+
+**Theorem 10.5**: For every graph $G$
+
+$$\chi(G) \geq \omega(G) \quad \quad \chi(G) \geq \frac{n}{\alpha(G)}$$
+
+*Proof*: Let $H$ be a clique of $G$ with order $\omega(G)$. Then $\chi(H) = \omega(G)$
+
+Since $H$ is a subgraph of $G$, it follows that $\chi(H) \leq \chi(G) \implies \omega(G) \leq \chi(G)$
+
+Now suppose that $\chi(G) = k$, then $V(G)$ can be partitioned into $k$ independent sets $V_1, \ldots, V_k$. Thus
+
+$$n = |V(G)| = |V_1 \cup V_2 \cup \cdots \cup V_k| = \sum_{i=1}^{k}|V_i| \leq k \alpha(G) \implies \chi(G) = k \geq \frac{n}{\alpha(G)}$$
+
+&nbsp;
+
+**Example**: Consider $C_3 + C_5$ (so each vertex in $C_3$ is adjacent to each vertex in $C_5$)
+
+- $\alpha(G) = 2$ (comes from 2 vertices in $C_5$)
+
+- $\omega(G) = 5$ ($C_3 = K_3$ and take a $K_2 \subset C_5$ to form a $K_5$)
+
+- $\chi(G) = 6$
+
+&nbsp;
+
+General coloring algorithm
+
+1. Color $v_1$ color 1
+
+2. If $v_2 \not \sim v_1$, then color $v_2$ color 1. Otherwise color $v_2$ color 2
+
+3. Repeat for $v_i$
+
+Generally, color $v_i$ the lowest index not used in $N(v_i)$
+
+&nbsp;
+
+**Theorem**: $\chi(G) \leq \Delta(G) + 1$
+
+*Proof*: Suppose that the vertex with degree $\Delta(G)$ is contained in a complete subgraph (this is the worst case possible). Then we must have that $\chi(G) \leq \Delta(G) + 1$
+
+&nbsp;
+
+**Example**: Consider $C_5$, it is 2-regular and thus $\Delta(G) = 2 \implies \chi(G) \leq 3$
+
+&nbsp;
+
+**Brooks' Theorem**: For any connected graph where $G$ is not an odd cycle or a complete graph
+
+$$\chi(G) \leq \Delta(G)$$
+
+&nbsp;
+
+**Example**: Consider the Peterson Graph. It is 3-regular, and isn't a cycle or a complete graph
+
+Thus by Brooks' Theorem, $\chi(G) \leq \Delta(G) = 3$
+
+Furthermore, the Peterson Graph contains a 5 cycle, thus $\chi(G) \geq 3$
+
+Thus we have that $\chi(G) = 3$
+
+## Mycielski's Construction
+
+The goal is to construct a family of graphs where $\omega(G) = 2$ but $\chi(G)$ is arbitrarily large
+
+Let $v_1, \ldots, v_n$ be vertices of $G$ with no $K_3$. Using these vertices, we construct a new graph
+
+1. Add $n+1$ new vertices $w, u_1, \ldots, u_n$
+
+2. Join $w$ to all $u_i$'s such that $u_i$'s are NOT adjacent to each other
+
+3. Join vertex $u_i$ to $w$ AND $v_j$ where $v_j \sim v_i$
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main] (1) {$v_3$};
+    \node[main] (2) [below of=1] {$v_2$};
+    \node[main] (3) [below of = 2] {$v_1$};
+    \node[main] (4) [right of=1] {$u_1$};
+    \node[main] (5) [below of=4] {$u_2$};
+    \node[main] (6) [below of=5] {$u_3$};
+    \node[main] (7) [right of=5] {$w$};
+
+    \draw[] (1) -- (2);
+    \draw[] (2) -- (3);
+    \draw[] (4) -- (7);
+    \draw[] (5) -- (7);
+    \draw[] (6) -- (7);
+
+    \draw[blue] (1) -- (5);
+    \draw[blue] (2) -- (4);
+    \draw[blue] (2) -- (6);
+    \draw[blue] (3) -- (5);
+    \end{tikzpicture}
+\end{center}
+
+We claim that this new graph doesn't contain $K_3$
+
+- Clearly $u_i$'s and $w$ never form a $K_3$ since $u_i$'s are not adjacent to each other
+
+- Similarly, $u_i, u_j, v_k$ cannot form $K_3$ since $u_i \not \sim u_j$
+
+- What about $K_3$ using $u_i, v_j, v_k$?
+
+  We see that
+
+  - $v_j \sim u_i \implies v_i \sim v_j$
+
+  - $v_k \sim u_i \implies v_i \sim v_k$
+
+  If $v_j$ and $v_k$ were also adjacent to each other, then $v_i \sim v_j, v_j \sim v_k, v_k \sim v_i$ would create a $K_3$ in the original graph. Contradiction
+
+Thus the new graph doesn't contain $K_3$ and $\omega(G') = 2$
+
+&nbsp;
+
+Now we show that $\chi(G)$ increases
+
+Let $G_m$ be the original graph and $G_{m+1}$ be the next construction.
+
+We color $G_{m+1}$ by coloring $u_i$ the same color as $v_i$
+
+Suppose this uses k-colors, then we have that $\chi(G_m) = k$
+
+Now color $w$ with color $k + 1 \implies \chi(G_{m+1}) \leq k + 1$
+
+BWOC, assume that $\chi(G_{m+1}) = k$ and assume that $w$ has color $k$ (so $u_1, \ldots, u_n$) only use $k-1$ colors
+
+Necessarily, some vertex $v_i$ is colored $k$ since $\chi(G_m) = k$. We show that this would allow $G_m$ to be colored with $k-1$ colors
+
+We recolor each $v_i$ to be the same color as $u_i \implies$ we only use $k-1$ colors in $G_m$
+
+\begin{center}
+  \begin{tikzpicture}[node distance={15mm}, main/.style = {draw, circle}]
+    \node[main, red] (1) {$v_i$};
+    \node[main, brown] (2) [below of=1] {$v_1$};
+    \node[main, red] (4) [right of=1] {$u_1$};
+    \node[main, blue] (7) [right of=4] {$w$};
+
+    \draw[] (1) -- (2);
+    \draw[] (2) -- (4);
+    \draw[] (4) -- (7);
+    \end{tikzpicture}
+\end{center}
+
+We claim that we can color $v_i$ Red since $v_i$ is adjacent to all vertices adjacent to $u_i \implies$ all of these cannot be Red
+
+This would allow $G_m$ to be colored with $k-1$ colors. Contradiction
+
+Thus $\chi(G_{m+1}) = k + 1$
+
+&nbsp;
+
+**Theorem**: There exists a graph $G$ such that $\omega(G) = 2$ but $\chi(G)$ is arbitrary large
