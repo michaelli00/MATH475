@@ -3532,7 +3532,26 @@ $$R(a, a) > 2^{a/2}$$
 
 *Proof*: Let $A_s$ be the event that the subset of "a" vertices are all red or all blue edges
 
-$$P(\bigcup_{\substack{S \subseteq V(G) \\ |S| = a}} A_s) \leq P(A_{s_1}) + P(A_{s_2}) + \cdots + P(A_{s_{{N \choose a}}})$$
+\begin{align*}
+P(\bigcup_{\substack{S \subseteq V(G) \\ |S| = a}} A_s) &\leq P(A_{s_1}) + P(A_{s_2}) + \cdots + P(A_{s_{{N \choose a}}}) \\
+&= \displaystyle {N \choose a} P(A_s) \\
+&= \displaystyle {N \choose a}\frac{2}{2^{\displaystyle {a \choose 2}}} \\
+&= \displaystyle {N \choose a}2^{1 - \frac{a(a-1)}{2}} \\
+&\leq \frac{N^a}{a!}2^{1 - \frac{a(a-1)}{2}} \\
+\end{align*}
+
+Now set $N = 2^{\frac{a}{2}}$, then we see that the above is equal to
+
+$$\frac{2 * 2^{a/2}}{a!} = \frac{2 (2 * 2 * 2 \cdots)}{a (a-1) \cdots} < 1$$
+
+Since the numerator only has $a/2$ terms and the bottom has $a$ terms
+
+Thus if we color $K_{2^{a/2}}$ randomly, we will not get an all red or blue $K_a$ 100\% of the time
+
+Thus there exists a coloring of $K_{2^{a/2}}$ that doesn't contain a red or blue $K_a$, which means that $R(a, a) > 2^{a/2}$
+
+
+
 
 ## Turan's Theorem
 
@@ -3540,7 +3559,7 @@ What is the maximum edges that can be placed in a graph on $n$ vertices such tha
 
 &nbsp;
 
-**Mante Theorem**: If $G$ is on $n$ vertices with $m$ edges and no $K_3$ then
+**Mantel Theorem**: If $G$ is on $n$ vertices with $m$ edges and no $K_3$ then
 
 $$m \leq \lfloor \frac{n^2}{4} \rfloor$$
 
