@@ -3475,3 +3475,157 @@ Thus $\chi(G_{m+1}) = k + 1$
 &nbsp;
 
 **Theorem**: There exists a graph $G$ such that $\omega(G) = 2$ but $\chi(G)$ is arbitrary large
+
+# Research Topics
+
+## Ramsey Theory
+
+Here, we color the edges of $K_n$ red or blue
+
+**Definition - Ramsey Number**: The **ramsey number**, denoted $R(s, t)$ is the smallest $N$ such that for any red-blue coloring of $K_n$, there exists an all blue $K_s$ or all red $K_t$
+
+&nbsp;
+
+If $R(s, t) = N$, we must show that
+
+1. $K_{N-1}$ has the existence of a coloring with no blue $K_s$ or red $K_t$
+
+    - Showing the existence of a color $\alpha$ with no red $K_s$ and blue $K_t$ in $K_m$ shows that $R(s, t) > m$
+
+2. For any edge coloring of $K_N$, there is always a red $K_s$ or blue $K_t$
+
+    - Showing that all colorings have a red $K_s$ or blue $K_t$ in $K_m$ shows that $R(s, t) \leq m$
+
+&nbsp;
+
+**Example**: Show that $R(3, 3) = 6$
+
+$K_5$ has a coloring such that there is no red or blue $R_3$. Namely we color the outer pentagon red and the inner star blue
+
+Thus $R(3, 3) > 5$
+
+Now we show that $R(3, 3) \leq 6$ by looking at $K_6$
+
+Firstly, since we only have 2 colors and each vertex has 5 edges, by PHP, one of the color must occur $\geq 3$ times. WLOG, suppose it's red
+
+If we look at the graphs induced on these 3 vertices, we necessarily have to have a clique that is all red or blue
+
+Thus $R(3, 3) \leq 6$
+
+Finally we see that $5 < R(3, 3) \leq 6 \implies R(3, 3) = 6$
+
+&nbsp;
+
+**Lemmas**:
+
+- For any events $A, B$,
+
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B) \leq P(A) + P(B)$$
+
+- For positive integers $n \geq k$,
+
+$$\displaystyle {n \choose k} \leq \frac{n^k}{k!}$$
+
+**Theorem**: For $a \geq 3$, we have that
+
+$$R(a, a) > 2^{a/2}$$
+
+*Proof*: Let $A_s$ be the event that the subset of "a" vertices are all red or all blue edges
+
+$$P(\bigcup_{\substack{S \subseteq V(G) \\ |S| = a}} A_s) \leq P(A_{s_1}) + P(A_{s_2}) + \cdots + P(A_{s_{{N \choose a}}})$$
+
+## Turan's Theorem
+
+What is the maximum edges that can be placed in a graph on $n$ vertices such that there are no triangles ($K_3)$
+
+&nbsp;
+
+**Mante Theorem**: If $G$ is on $n$ vertices with $m$ edges and no $K_3$ then
+
+$$m \leq \lfloor \frac{n^2}{4} \rfloor$$
+
+Equality only occurs if and only if $G$ is $K_{\lfloor \frac{n}{2}, \lceil \frac{n}{2} \rceil}$
+
+*Proof by Induction*: We look at $n$, the number of vertices in $G$
+
+It can be easily verified that the theorem holds for $n = 2, 3, 4$
+
+Now assume the theorem holds for all values up to some $N \geq 4$
+
+Let $G$ be on $n + 1$ vertices and take an edge $x \sim y$
+
+Note that $x, y$ CANNOT share any neighbors, otherwise a $K_3$ forms
+
+Now consider $G \setminus \{x, y\}$, which by IH has at most $\displaystyle \lfloor \frac{(n-2)^2}{4} \rfloor$ edges
+
+Thus $G$ has at most $\displaystyle \lfloor \frac{(n-2)^2}{4}\rfloor + \underbrace{n-2}_{\text{neighbors}} + \underbrace{1}_{x \sim y}$
+
+The above equal is equal to $\displaystyle \lfloor \frac{n^2}{4} \rfloor$ as claimed
+
+If the equality holds, clearly $x, y$ join to all $n - 2$ vertices
+
+Also observe that the graph induced on $N(x)$ has no edges (otherewise a $K_3$ forms)
+
+Thus we can take $N(x) \cup \{y\}$ and $N(y) \cup \{x\}$ as two partite sets
+
+Clearly the total edges is maximized when the sizes are as equal as possible
+
+&nbsp;
+
+**Definition - r-partite graph**: An **r-partite graph** is a graph whose vertices are partitioned in $r$ independent sets of size $t_1, \ldots, t_r$
+
+The complete r-partite graph, denoted $K_{t_1, \ldots, t_r}$ is the r-partite graph such that any 2 vertices in different sets are adjacent
+
+**Note**: For an r-partite graph, there won't be a $K_{r + 1}$ subgraph
+
+&nbsp;
+
+Now we consider when $k_{t_1, \ldots, t_r}$ where each patite set is nearly the same size, that is
+
+$$t_1 \leq t_2 \leq \cdots \leq t_r \quad \quad t_r - t_1 \leq 1$$
+
+This graph is called the **Turan graph**: $T_{n, r}$
+
+&nbsp;
+
+**Example**: $K_{1, 3, 3}$ is NOT a Turan Graph
+
+&nbsp;
+
+**Example**: $K_{2, 2, 3} \cong T_{7, 3}$
+
+This is extremal graph on 7 vertices with the most number of edges avoiding a $K_4$
+
+&nbsp;
+
+**Turan Theorem**: Let $2 \leq r \leq n- 1$ be fixed where $n \geq 3$
+
+The Turan graph $T_{n, r}$ doesn't contain a $K_{r + 1}$ subgraph and for a given $n$, $T_{n, r}$ has the max number of possible edges and it is the unique graph holding this property
+
+&nbsp;
+
+**Example**: A circular town of radius 4 miles has 18 phones. 2 phones can communicate if they are $< 6$ miles away from each other. Prove that no matter how the phones are placed, there exists $\geq 2$ phones each of which can transmit to at least 5 phones
+
+Define a graph on 18 vertices with $i \sim j$ if the phones can communicate
+
+BWOC, suppose the claim doesn't hold. Then the maximum number of edges we could have is, one vertex is adjacent to all other vertices, and all other vertices have degree $\leq 4$
+
+$$\sum_{v \in V(G)} \deg(v) \leq 17 + 4(17) = 85$$
+
+First, we claim that given 4 phones in the town, at least 2 can communicate with each other
+
+We create a square of maximal size (diagonal is the diameter of length 8). Then the sides of the square have length $4 \sqrt{2}$
+
+Thus by PHP, if we are given 4 phones, at least 2 phones can communicate with each other
+
+Thus any subset of $G$ with 4 vertices has at least 1 edge
+
+Thus $\overline{G}$ doesn't have a $K_4$
+
+Thus by Turan's Theorem, $\overline{G} = T_{18, 3} = K_{6, 6, 6}$
+
+Thus $\overline{G}$ has at most $\displaystyle {3 \choose 2} 36 = 108$ edges
+
+Thus in $G$, there are at least $\displaystyle {18 \choose 2} - 108 = 45$ edges
+
+Thus the sum of degrees of vertices in $G$ is at least $90 \geq 85$, contradicting the maximality of $85$
